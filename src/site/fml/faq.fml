@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="Frequently Asked Questions">
+    <part id="General">
+        <faq id="needed-libraries">
+            <question>De quelles librairies a besoin JTheque UTils ?</question>
+            <answer>
+                <p>
+                    JTheque Utils nécessite seulement la présence de Apache Commons Logging. Si aucune implémentation
+                    de Apache Commons Logging n'est présente, vous verrez apparaître plusieurs warning sur la
+                    console.
+                </p>
+            </answer>
+        </faq>
+        <faq id="needed-jtheque-core">
+            <question>Est-ce que JTheque Utils est dépendant de JTheque Core</question>
+            <answer>
+                <p>
+                    Non. Comme il est dit dans la question précédente, JTheque Utils nécessite seulement
+                    Apache Commons Logging pour fonctionner.
+                </p>
+            </answer>
+        </faq>
+    </part>
+</faqs>

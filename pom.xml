@@ -1,0 +1,166 @@
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://maven.apache.org/POM/4.0.0
+            http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.jtheque</groupId>
+        <artifactId>jtheque-utilities</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jtheque</groupId>
+    <artifactId>jtheque-utils</artifactId>
+    <packaging>jar</packaging>
+    <name>JTheque Utils</name>
+    <version>1.1.2</version>
+
+    <url>http://jtheque.developpez.com/utilities/utils</url>
+
+    <ciManagement>
+        <system>TeamCity 4.5.4</system>
+        <url>http://wichtounet.homedns.org:8080/hudson/</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>Redmine</system>
+        <url>http://projets.developpez.com/projects/jtheque-utils/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:svn:http://subversion.developpez.com/projets/JTheque/utils/utils/</connection>
+        <url>http://subversion.developpez.com/projets/JTheque/utils/utils/</url>
+    </scm>
+
+    <distributionManagement>
+        <site>
+            <id>jtheque-web-server</id>
+            <name>JTheque FTP Server</name>
+            <url>ftp://developpez.com/utilities/utils</url>
+        </site>
+    </distributionManagement>
+
+    <build>
+        <directory>${env.BUILD_HOME}/utils/jtheque-utils</directory>
+
+        <outputDirectory>${env.BUILD_HOME}/utils/jtheque-utils/classes/production</outputDirectory>
+        <testOutputDirectory>${env.BUILD_HOME}/utils/jtheque-utils/classes/test</testOutputDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-5</version>
+            </extension>
+        </extensions>
+    </build>
+
+    <reporting>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <targetJdk>1.6</targetJdk>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </reporting>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
+            <artifactId>file-unit</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <sonar.dynamicAnalysis>true</sonar.dynamicAnalysis>
+    </properties>
+
+</project>

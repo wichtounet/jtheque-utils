@@ -1,0 +1,12 @@
+News
+
+* 18.11.2009 Version 1.1.2
+
+    The version 1.1.2 include new utility classes (DataUtils, ReflectionUtils and HashCodeUtils). There is also new unit tests. 
+    This version is also more stable and efficiently coded. 
+
+* 03.09.2009  New Site
+
+    I'm pleased to announce the new site of the JTheque Utils library. This site is now generated using
+    Maven 2. It's easier for me to manage and it's an well-kwown site architecture for the
+    java developer. 
