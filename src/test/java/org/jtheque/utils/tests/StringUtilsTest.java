@@ -210,13 +210,4 @@ public class StringUtilsTest {
         assertEquals(StringUtils.removeNumbers(test1), test1);
         assertEquals(StringUtils.removeNumbers(test2), "withnumbers");
     }
-
-    @Test
-    public void removeUnicode() {
-        String value1 = "\\u00e0asdf\\u00fc";
-        String value2 = "asdf";
-
-        assertEquals(StringUtils.removeUnicode(value1), "\u00e0asdf\u00fc");
-        assertEquals(StringUtils.removeUnicode(value2), "asdf");
-    }
 }
