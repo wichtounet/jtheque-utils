@@ -158,7 +158,7 @@ public class FileUtilsTest {
 
         List<String> lines = new ArrayList<String>(FileUtils.getLinesOf(getInputStream("test23.txt")));
 
-        assertEquals(lines.size(), 2);
+        assertEquals(2, lines.size());
         assertEquals("Salut la compagnie, c'est moi Arthur le Booli ", lines.get(0));
         assertEquals("A+", lines.get(1));
     }
@@ -305,12 +305,9 @@ public class FileUtilsTest {
     public void download() throws FileException {
         addFile("downloaded.txt");
 
-        String url = "http://baptiste-wicht.developpez.com/dl.txt";
-        String expectedContent = "download me !";
-
-        FileUtils.downloadFile(url, getPath("downloaded.txt"));
+        FileUtils.downloadFile("http://baptiste-wicht.developpez.com/dl.txt", getPath("downloaded.txt"));
 
         assertFileExists("downloaded.txt");
-        assertFileContentEquals("downloaded.txt", expectedContent);
+        assertFileContentEquals("downloaded.txt", "download me !");
     }
 }
