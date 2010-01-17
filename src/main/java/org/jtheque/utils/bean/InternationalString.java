@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class InternationalString {
-    private final Map<String, String> resources = new HashMap<String, String>(10);
+    private final Map<String, String> resources = new HashMap<String, String>(5);
 
     /**
      * Put a new value.
