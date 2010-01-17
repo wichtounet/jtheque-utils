@@ -1,12 +1,9 @@
 <project name="JTheque Utils">
     <skin>
-        <groupId>com.anasoft.os</groupId>
-        <artifactId>m2st-stylus-ext-skin</artifactId>
-        <version>2.0</version>
+        <groupId>org.jtheque</groupId>
+        <artifactId>jtheque-maven-skin</artifactId>
+        <version>1.0</version>
     </skin>
-
-    <publishDate position="right"/>
-    <version position="right"/>
 
     <body>
         <links>
@@ -15,12 +12,10 @@
         </links>
 
         <breadcrumbs>
-            <item name="JTheque Utils" href="http://jtheque.developpez.com/utilities/utils/"/>
-        </breadcrumbs>
-
-        <menu name="Parent">
+            <item name="JTheque" href="http://jtheque.developpez.com/en/"/>
             <item name="JTheque Utilities" href="http://jtheque.developpez.com/utilities/en/"/>
-        </menu>
+            <item name="JTheque Utils" href="http://jtheque.developpez.com/utilities/utils/en/"/>
+        </breadcrumbs>
 
         <menu name="JTheque Utils">
             <item name="Overview" href="index.html"/>
