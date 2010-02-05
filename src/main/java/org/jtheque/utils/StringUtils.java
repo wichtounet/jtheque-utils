@@ -232,4 +232,18 @@ public final class StringUtils {
     public static String removeNumbers(CharSequence value) {
         return NUMBER_PATTERN.matcher(value).replaceAll("");
     }
+
+    public static String delete(String string, Object... toDeletes){
+        String cleared = string;
+
+        for(Object toDelete : toDeletes){
+            cleared = delete(cleared, toDelete.toString());
+        }
+
+        return cleared;
+    }
+
+    public static String delete(String string, CharSequence toDelete){
+        return string.replace(toDelete, "");
+    }
 }

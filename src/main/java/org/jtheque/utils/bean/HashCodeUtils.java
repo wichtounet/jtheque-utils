@@ -76,6 +76,23 @@ public final class HashCodeUtils {
         return result;
     }
 
+	/**
+	 * Return the hash code of an object, using the properties in the given list.
+	 *
+	 * @param properties The properties to use to generate the hash code.
+	 *
+	 * @return The hash code of the bean . If there is no properties, the hash code will be 17.
+	 */
+	public static int hashCodeDirect(Object... properties){
+		int result = Constants.HASH_CODE_START;
+
+		for (Object property : properties){
+			result = computeValue(result, property);
+        }
+
+		return result;
+	}
+
     /**
      * Compute the value with the current result.
      *

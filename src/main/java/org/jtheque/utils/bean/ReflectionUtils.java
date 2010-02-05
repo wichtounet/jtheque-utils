@@ -71,6 +71,37 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Return the name of the setter for the specified property name.
+     *
+     * @param property The property name.
+     *
+     * @return The name of the setter for the specified property.
+     */
+    public static String getSetter(String property) {
+        return "set" + StringUtils.setFirstLetterUpper(property);
+    }
+
+    /**
+     * Return the setter method for the property of the specified bean.
+     *
+     * @param bean     The bean to set the property to.
+     * @param property The property name.
+     *
+     * @return The setter Method object or null if there is no setter for this property.
+     */
+    public static Method getSetterMethod(Object bean, String property) {
+        String setter = getSetter(property);
+
+        for(Method m : bean.getClass().getMethods()){
+            if(m.getName().equals(setter)){
+                return m;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Return the value of the property of the specified bean.
      *
      * @param bean     The bean to get the value from.

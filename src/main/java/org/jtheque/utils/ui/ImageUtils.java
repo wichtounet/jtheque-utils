@@ -31,6 +31,7 @@ import java.awt.Image;
 import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,6 +56,7 @@ public final class ImageUtils {
      *
      * @param image              The source image.
      * @param requestedThumbSize The requested size.
+     * 
      * @return The thumbnail
      */
     public static BufferedImage createThumbnail(BufferedImage image, int requestedThumbSize) {
@@ -93,9 +95,27 @@ public final class ImageUtils {
     }
 
     /**
+     * Read an image from a file.
+     *
+     * @param file The file to read from.
+     *
+     * @return The buffered image from the file.
+     */
+    public static BufferedImage read(File file){
+        try {
+            return ImageIO.read(file);
+        } catch (IOException e) {
+            LogFactory.getLog(ImageUtils.class).error("Unable to read image", e);
+        }
+
+        return null;
+    }
+
+    /**
      * Open an image from an input stream.
      *
      * @param stream The stream to read from.
+     *
      * @return The buffered image from the stream.
      */
     public static BufferedImage read(InputStream stream) {
@@ -109,48 +129,68 @@ public final class ImageUtils {
     }
 
     /**
-     * Create a compatible image.
+     * Create a compatible image.In headless mode, this method will return a simple BufferedImage of type ARGB.
      *
      * @param width  The width.
      * @param height The height.
      * 
      * @return A compatible image.
+     *
+     * @see ImageUtils#isHeadless()
      */
     public static Image createCompatibleImage(int width, int height) {
+        if(isHeadless()){
+            return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        }
+
         return getGraphicsConfiguration().createCompatibleImage(width, height);
     }
 
     /**
-     * Create a compatible image.
+     * Create a compatible image. In headless mode, this method will return a simple BufferedImage. 
      *
      * @param width  The width.
      * @param height The height.
      * @param type   The type of the image.
+     *
      * @return A compatible image.
+     *
+     * @see ImageUtils#isHeadless()
      */
     public static BufferedImage createCompatibleImage(int width, int height, int type) {
+        if(isHeadless()){
+            return new BufferedImage(width, height, type);
+        }
+
         return getGraphicsConfiguration().createCompatibleImage(width, height, type);
     }
 
     /**
      * Return the graphics configuration of the system.
      *
-     * @return The graphics configuration of the environment.
+     * @return The graphics configuration of the environment or null if we are in headless mode.
+     *
+     * @see ImageUtils#isHeadless()
      */
     private static GraphicsConfiguration getGraphicsConfiguration() {
+        if(isHeadless()){
+            return null;
+        }
+
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
     }
 
     /**
-     * Create a compatible image from an existing image.
+     * Create a compatible image from an existing image. In headless mode, this method will not affect the image. 
      *
      * @param image The image to make compatible.
+     *
      * @return A compatible image filled with the base image.
      */
     public static BufferedImage createCompatibleImage(BufferedImage image) {
         GraphicsConfiguration gc = getGraphicsConfiguration();
 
-        if (image.getColorModel().equals(gc.getColorModel())) {
+        if (image.getColorModel().equals(gc.getColorModel()) || isHeadless()) {
             return image;
         } else {
             BufferedImage compatibleImage = createCompatibleImage(image.getWidth(), image.getHeight(), image.getTransparency());
@@ -164,9 +204,19 @@ public final class ImageUtils {
     }
 
     /**
+     * Indicate if we are in a headless mode or normal.
+     *
+     * @return true if we are in headless mode else false. 
+     */
+    public static boolean isHeadless() {
+        return GraphicsEnvironment.isHeadless() || GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance();
+    }
+
+    /**
      * Create a reflection of the image.
      *
      * @param image The image to reflect.
+     * 
      * @return The reflection image.
      */
     public static BufferedImage createReflection(BufferedImage image) {
@@ -221,6 +271,10 @@ public final class ImageUtils {
      * @return The image or null if the file doesn't exist.
      */
     public static BufferedImage openCompatibleImageFromFileSystem(String path) {
+        if(isHeadless()){
+            return read(new File(path));
+        }
+
         try {
             return openCompatibleImage(FileUtils.asInputStream(path));
         } catch (FileNotFoundException e) {

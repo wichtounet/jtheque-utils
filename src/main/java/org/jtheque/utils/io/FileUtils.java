@@ -17,11 +17,14 @@ package org.jtheque.utils.io;
  */
 
 import org.apache.commons.logging.LogFactory;
+import org.jtheque.utils.StringUtils;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,6 +38,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
@@ -165,7 +170,7 @@ public final class FileUtils {
      */
     public static void downloadFile(String filePath, String destination) throws FileException {
         InputStream is = null;
-
+        
         try {
             URL url = new URL(filePath);
 
@@ -640,6 +645,148 @@ public final class FileUtils {
                 zipFile.close();
             } catch (IOException e) {
                 LogFactory.getLog(FileUtils.class).error("Unable to close zip file", e);
+            }
+        }
+    }
+
+    /**
+     * Return an existing file.
+     *
+     * @return An existing file object.
+     */
+    public static File getAnExistingFile(){
+        for(File root : File.listRoots()){
+            for(File f : root.listFiles()){
+                if(f.isFile() && f.length() > 0){
+                    return f;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Return the size of the file specified by the path.
+     *
+     * @param path The path to the file.
+     *
+     * @return The size of the file or 0 if the file doesn't exist.
+     */
+    public static long getFileSize(String path){
+        if(StringUtils.isEmpty(path)){
+            return 0;
+        }
+
+        return getFileSize(new File(path));
+    }
+
+    /**
+     * Return the size of the specified file.
+     *
+     * @param file The file to calc the size.
+     *
+     * @return The size of the file or 0 if the file doesn't exist.
+     */
+    public static long getFileSize(File file){
+        if(file == null || !file.exists()){
+            return 0;
+        }
+
+        return file.length();
+    }
+
+    /**
+     * Return the date of the last modification of the file denoted by the specified path.
+     *
+     * @param path The path to the file.
+     *
+     * @return The date of the last modification of the file or null if the file doesn't not exists.
+     */
+    public static Date getLastModifiedDate(String path){
+        if(StringUtils.isEmpty(path)){
+            return null;
+        }
+
+        return getLastModifiedDate(new File(path));
+    }
+
+    /**
+     * Return the date of the last modification of the specified file. 
+     *
+     * @param file The file.
+     *
+     * @return The date of the last modification of the file or null if the file doesn't not exists.
+     */
+    public static Date getLastModifiedDate(File file){
+        if(file == null || !file.exists()){
+            return null;
+        }
+
+        long lastModified = file.lastModified();
+
+        return lastModified == 0L ? null : new Date(lastModified);
+    }
+
+    /**
+     * Return the next free name for the specified name in the specified folder.
+     * If there is also a file named name in the specified folder, it will search for files
+     * name[n].extension while it find a not existing file.
+     *
+     * @param folder The folder to search free name in.
+     * @param name   The name to add.
+     * @return The next free name for the specified name in the specified folder.
+     */
+    public static String getFreeName(String folder, String name) {
+        if (new File(folder, name).exists()) {
+            int count = 1;
+
+            String freeName;
+
+            do {
+                freeName = name.substring(0, name.lastIndexOf('.')) + '[' + count + ']' + name.substring(name.lastIndexOf('.'));
+                count++;
+            } while (new File(folder, freeName).exists());
+
+            return freeName;
+        }
+
+        return name;
+    }
+
+    /**
+     * Return all the files of the folder include the sub files and folders with no level limit.
+     *
+     * @param folder The folder to get the files from.
+     * @param fileFilter The filter to use to select the files.
+     *
+     * @return A Collection containing all the files of the folder and his sub folders selected by the specified file filter.
+     */
+    public static Collection<File> getFilesOfFolder(File folder, FileFilter fileFilter) {
+        if(folder.isDirectory()){
+            Collection<File> files = new ArrayList<File>(50);
+
+            readFolder(folder, files, fileFilter);
+
+            return files;
+        }
+
+        return Collections.emptyList();
+    }
+
+    /**
+     * Read the folder and all the files of the folder in the collection.
+     *
+     * @param folder The folder to read.
+     * @param files  The collection to add the files to.
+     * @param fileFilter The filter to get the files with.
+     */
+    private static void readFolder(File folder, Collection<File> files, FileFilter fileFilter) {
+        for (File file : folder.listFiles(fileFilter)) {
+            if (file.isDirectory()) {
+                readFolder(file, files, fileFilter);
+            } else {
+                files.add(file);
             }
         }
     }
