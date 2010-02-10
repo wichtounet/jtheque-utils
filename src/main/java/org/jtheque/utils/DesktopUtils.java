@@ -16,7 +16,7 @@ package org.jtheque.utils;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -45,7 +45,7 @@ public final class DesktopUtils {
             try {
                 Desktop.getDesktop().mail();
             } catch (IOException e) {
-                LogFactory.getLog(DesktopUtils.class).error("Unable to open mailer", e);
+                LoggerFactory.getLogger(DesktopUtils.class).error("Unable to open mailer", e);
             }
         }
     }
@@ -60,9 +60,9 @@ public final class DesktopUtils {
             try {
                 Desktop.getDesktop().mail(mail.getURI());
             } catch (IOException e) {
-                LogFactory.getLog(DesktopUtils.class).error("Unable to open mailer", e);
+                LoggerFactory.getLogger(DesktopUtils.class).error("Unable to open mailer", e);
             } catch (URISyntaxException e) {
-                LogFactory.getLog(DesktopUtils.class).error("Unable to open mailer", e);
+                LoggerFactory.getLogger(DesktopUtils.class).error("Unable to open mailer", e);
             }
         }
     }
@@ -77,7 +77,7 @@ public final class DesktopUtils {
             try {
                 Desktop.getDesktop().open(file);
             } catch (IOException e) {
-                LogFactory.getLog(DesktopUtils.class).error("Unable to open file", e);
+                LoggerFactory.getLogger(DesktopUtils.class).error("Unable to open file", e);
             }
         }
     }
@@ -92,9 +92,9 @@ public final class DesktopUtils {
             try {
                 Desktop.getDesktop().browse(new URI(url));
             } catch (IOException e) {
-                LogFactory.getLog(DesktopUtils.class).error("Unable to open browser", e);
+                LoggerFactory.getLogger(DesktopUtils.class).error("Unable to open browser", e);
             } catch (URISyntaxException e) {
-                LogFactory.getLog(DesktopUtils.class).error("Unable to open browser", e);
+                LoggerFactory.getLogger(DesktopUtils.class).error("Unable to open browser", e);
             }
         }
     }

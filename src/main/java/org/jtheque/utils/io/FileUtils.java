@@ -16,10 +16,9 @@ package org.jtheque.utils.io;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.apache.commons.logging.LogFactory;
 import org.jtheque.utils.StringUtils;
+import org.slf4j.LoggerFactory;
 
-import javax.xml.crypto.Data;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -75,7 +74,7 @@ public final class FileUtils {
             boolean created = file.mkdirs();
 
             if (!created) {
-                LogFactory.getLog(FileUtils.class).debug("The folder (" + file.getAbsolutePath() + ") can not be created. ");
+                LoggerFactory.getLogger(FileUtils.class).debug("The folder (" + file.getAbsolutePath() + ") can not be created. ");
             }
         }
     }
@@ -104,7 +103,7 @@ public final class FileUtils {
 
             return getContentOfStream(stream);
         } catch (FileNotFoundException e) {
-            LogFactory.getLog(FileUtils.class).error("Unable to get the text of " + path, e);
+            LoggerFactory.getLogger(FileUtils.class).error("Unable to get the text of " + path, e);
         }
 
         return null;
@@ -361,9 +360,9 @@ public final class FileUtils {
                 entry = zis.getNextEntry();
             }
         } catch (FileNotFoundException e) {
-            LogFactory.getLog(FileUtils.class).error("Exception occurred during unzipping " + e);
+            LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during unzipping " + e);
         } catch (IOException e) {
-            LogFactory.getLog(FileUtils.class).error("Exception occurred during unzipping " + e);
+            LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during unzipping " + e);
         } finally {
             close(zis);
         }
@@ -410,7 +409,7 @@ public final class FileUtils {
         try {
             zip(files, new BufferedOutputStream(new FileOutputStream(destination)));
         } catch (FileNotFoundException e) {
-            LogFactory.getLog(FileUtils.class).error("Exception occurred during zipping " + e);
+            LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during zipping " + e);
         }
     }
 
@@ -429,7 +428,7 @@ public final class FileUtils {
 
             zipFiles(files, zos);
         } catch (Exception e) {
-            LogFactory.getLog(FileUtils.class).error("Exception occurred during zipping " + e);
+            LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during zipping " + e);
         } finally {
             close(zos);
         }
@@ -498,7 +497,7 @@ public final class FileUtils {
         boolean deleted = file.delete();
 
         if (!deleted) {
-            LogFactory.getLog(FileUtils.class).debug("The file (" + file.getAbsolutePath() + ") can not be deleted. ");
+            LoggerFactory.getLogger(FileUtils.class).debug("The file (" + file.getAbsolutePath() + ") can not be deleted. ");
         }
     }
 
@@ -515,10 +514,10 @@ public final class FileUtils {
                 boolean created = f.createNewFile();
 
                 if (!created) {
-                    LogFactory.getLog(FileUtils.class).fatal("The file " + path + " cannot be created. ");
+                    LoggerFactory.getLogger(FileUtils.class).error("The file " + path + " cannot be created. ");
                 }
             } catch (IOException e) {
-                LogFactory.getLog(FileUtils.class).error("Unable to create file " + e);
+                LoggerFactory.getLogger(FileUtils.class).error("Unable to create file " + e);
             }
         }
     }
@@ -540,7 +539,7 @@ public final class FileUtils {
 
             encoded = new String(md.digest());
         } catch (NoSuchAlgorithmException e) {
-            LogFactory.getLog(FileUtils.class).error("Unable to encrypt message " + e);
+            LoggerFactory.getLogger(FileUtils.class).error("Unable to encrypt message " + e);
         } finally {
             if (md != null) {
                 md.reset();
@@ -629,7 +628,7 @@ public final class FileUtils {
             try {
                 closable.close();
             } catch (IOException e) {
-                LogFactory.getLog(FileUtils.class).error("Unable to close stream", e);
+                LoggerFactory.getLogger(FileUtils.class).error("Unable to close stream", e);
             }
         }
     }
@@ -644,7 +643,7 @@ public final class FileUtils {
             try {
                 zipFile.close();
             } catch (IOException e) {
-                LogFactory.getLog(FileUtils.class).error("Unable to close zip file", e);
+                LoggerFactory.getLogger(FileUtils.class).error("Unable to close zip file", e);
             }
         }
     }

@@ -1,6 +1,6 @@
 package org.jtheque.utils;
 
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -48,7 +48,7 @@ public final class DatabaseUtils {
             try {
                 rs.close();
             } catch (SQLException e) {
-                LogFactory.getLog(DatabaseUtils.class).error("Unable to close resultset", e);
+                LoggerFactory.getLogger(DatabaseUtils.class).error("Unable to close resultset", e);
             }
         }
     }
@@ -63,7 +63,7 @@ public final class DatabaseUtils {
             try {
                 statement.close();
             } catch (SQLException e) {
-                LogFactory.getLog(DatabaseUtils.class).error("Unable to close statement", e);
+                LoggerFactory.getLogger(DatabaseUtils.class).error("Unable to close statement", e);
             }
         }
     }
@@ -78,7 +78,7 @@ public final class DatabaseUtils {
             try {
                 connection.close();
             } catch (SQLException e) {
-                LogFactory.getLog(DatabaseUtils.class).error("Unable to close connection", e);
+                LoggerFactory.getLogger(DatabaseUtils.class).error("Unable to close connection", e);
             }
         }
     }
@@ -98,7 +98,7 @@ public final class DatabaseUtils {
                 results.add(rs.getInt(column));
             }
         } catch (SQLException e) {
-            LogFactory.getLog(DatabaseUtils.class).error("Unable to read result set", e);
+            LoggerFactory.getLogger(DatabaseUtils.class).error("Unable to read result set", e);
         }
 
         return results;

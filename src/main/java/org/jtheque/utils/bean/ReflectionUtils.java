@@ -1,7 +1,7 @@
 package org.jtheque.utils.bean;
 
-import org.apache.commons.logging.LogFactory;
 import org.jtheque.utils.StringUtils;
+import org.slf4j.LoggerFactory;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -64,7 +64,7 @@ public final class ReflectionUtils {
 
             return bean.getClass().getMethod(getter);
         } catch (NoSuchMethodException e) {
-            LogFactory.getLog(ReflectionUtils.class).error("The getter doesn't exists", e);
+            LoggerFactory.getLogger(ReflectionUtils.class).error("The getter doesn't exists", e);
         }
 
         return null;
@@ -114,9 +114,9 @@ public final class ReflectionUtils {
 
             return m.invoke(bean);
         } catch (IllegalAccessException e) {
-            LogFactory.getLog(ReflectionUtils.class).error("Unable to access the property getter method", e);
+            LoggerFactory.getLogger(ReflectionUtils.class).error("Unable to access the property getter method", e);
         } catch (InvocationTargetException e) {
-            LogFactory.getLog(ReflectionUtils.class).error("Problem during getter invocation", e);
+            LoggerFactory.getLogger(ReflectionUtils.class).error("Problem during getter invocation", e);
         }
 
         return null;
@@ -139,9 +139,9 @@ public final class ReflectionUtils {
         try {
             o = m.invoke(bean);
         } catch (IllegalAccessException e) {
-            LogFactory.getLog(ReflectionUtils.class).error(e);
+            LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
         } catch (InvocationTargetException e) {
-            LogFactory.getLog(ReflectionUtils.class).error(e);
+            LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
         }
 
         return o;
@@ -162,7 +162,7 @@ public final class ReflectionUtils {
 
             return info.getPropertyDescriptors();
         } catch (IntrospectionException e) {
-            LogFactory.getLog(ReflectionUtils.class).error("Unable to get the properties", e);
+            LoggerFactory.getLogger(ReflectionUtils.class).error("Unable to get the properties", e);
 
             return EMPTY_PROPERTY_DESCRIPTOR_ARRAY;
         }

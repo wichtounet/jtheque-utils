@@ -1,6 +1,6 @@
 package org.jtheque.utils.io;
 
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -45,7 +45,7 @@ public final class SocketUtils {
             try {
                 socket.close();
             } catch (IOException e) {
-                LogFactory.getLog(SocketUtils.class).error(e);
+                LoggerFactory.getLogger(SocketUtils.class).error(e.getMessage(), e);
             }
         }
     }
@@ -60,7 +60,7 @@ public final class SocketUtils {
             try {
                 socket.close();
             } catch (IOException e) {
-                LogFactory.getLog(SocketUtils.class).error(e);
+                LoggerFactory.getLogger(SocketUtils.class).error(e.getMessage(), e);
             }
         }
     }

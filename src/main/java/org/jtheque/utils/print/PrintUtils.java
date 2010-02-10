@@ -16,8 +16,8 @@ package org.jtheque.utils.print;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.apache.commons.logging.LogFactory;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 import sun.print.DialogTypeSelection;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -92,7 +92,7 @@ public final class PrintUtils {
             try {
                 printJob.print();
             } catch (PrinterException pe) {
-                LogFactory.getLog(PrintUtils.class).debug("Unable to print", pe);
+                LoggerFactory.getLogger(PrintUtils.class).debug("Unable to print", pe);
             }
         }
     }
@@ -116,7 +116,7 @@ public final class PrintUtils {
             try {
                 job.print();
             } catch (PrinterException pe) {
-                LogFactory.getLog(PrintUtils.class).debug("Unable to print", pe);
+                LoggerFactory.getLogger(PrintUtils.class).debug("Unable to print", pe);
             }
         }
     }

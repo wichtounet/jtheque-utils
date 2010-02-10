@@ -16,8 +16,8 @@ package org.jtheque.utils.ui;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.apache.commons.logging.LogFactory;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
 import java.awt.AlphaComposite;
@@ -105,7 +105,7 @@ public final class ImageUtils {
         try {
             return ImageIO.read(file);
         } catch (IOException e) {
-            LogFactory.getLog(ImageUtils.class).error("Unable to read image", e);
+            LoggerFactory.getLogger(ImageUtils.class).error("Unable to read image", e);
         }
 
         return null;
@@ -122,7 +122,7 @@ public final class ImageUtils {
         try {
             return ImageIO.read(stream);
         } catch (IOException e) {
-            LogFactory.getLog(ImageUtils.class).error("Unable to read image", e);
+            LoggerFactory.getLogger(ImageUtils.class).error("Unable to read image", e);
         }
 
         return null;
@@ -278,7 +278,7 @@ public final class ImageUtils {
         try {
             return openCompatibleImage(FileUtils.asInputStream(path));
         } catch (FileNotFoundException e) {
-            LogFactory.getLog(ImageUtils.class).error("Unable to open file", e);
+            LoggerFactory.getLogger(ImageUtils.class).error("Unable to open file", e);
 
             return null;
         }
