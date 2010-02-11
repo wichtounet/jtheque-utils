@@ -1,5 +1,10 @@
 News
 
+* 11.02.2010 Version 1.1.3
+
+    La version 1.1.3 améliore surtout les classes existantes avec de nouvelles fonctionnalités. En plus de cela,
+    le système de logging est maintenant SLF4J en lieu et place de Commons Logging. 
+
 * 18.11.2009 Version 1.1.2
 
     La version 1.1.2 inclut de nouvelles classes utilitaires (DataUtils, ReflectionUtils et HashCodeUtils). Elle comprend

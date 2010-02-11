@@ -2,6 +2,12 @@ Versions
 
 Ce document présente les différentes versions de JTheque Utils. 
 
+* 1.1.3 11.02.2010 Amélioration des classes existantes
+
+    * Nouvelles fonctionnalités pour les classes existantes (ReflectionUtils, FileUtils, HashCodeUtils)
+    * Remplacement de Commongs Logging par SLF4J
+    * Support des systèmes headless pour les images
+
 * 1.1.2 18.11.2009 Structure des dossiers Maven 2
 
     * Nouveaux tests unitaires
