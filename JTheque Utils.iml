@@ -2,8 +2,11 @@
 <module MavenProjectsManager.isMavenModule="true" org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="false" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/utils/jtheque-utils/classes/JTheque_Utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
-        <additionalProperties />
+      <configuration osmorcControlsManifest="false" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/utils/jtheque-utils/classes/JTheque_Utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.core.utils.UtilsActivator" bundleSymbolicName="jtheque-utils" bundleVersion="1.1.4-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Export-Package" value="org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections, org.jtheque.utils.count, org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui" />
+        </additionalProperties>
         <additionalJARContents />
       </configuration>
     </facet>
