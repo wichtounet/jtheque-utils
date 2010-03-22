@@ -49,7 +49,7 @@ public final class SizeTracker {
     }
 
     /**
-     * Indicate if the size has changed from the last update.
+     * Indicate if the size has changed from the last org.jtheque.update.
      *
      * @return <code>true</code> if the size has changed else <code>false</code>.
      */
