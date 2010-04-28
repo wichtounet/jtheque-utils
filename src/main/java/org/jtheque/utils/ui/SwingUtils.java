@@ -16,8 +16,12 @@ package org.jtheque.utils.ui;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.utils.io.SimpleFilter;
+
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -36,6 +40,12 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+
+import org.jtheque.utils.ui.edt.Task;
+import org.jtheque.utils.ui.edt.SimpleTask;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide utility methods for Swing Components.
@@ -47,6 +57,8 @@ public final class SwingUtils {
     private static GraphicsDevice device;
 
     private static Font defaultFont;
+
+    private static JFileChooser chooser;
 
     /**
      * Private constructor, this class isn't instanciable.
@@ -216,6 +228,20 @@ public final class SwingUtils {
         return defaultFont;
     }
 
+    public static void inEdtSync(Runnable runnable) {
+        if (SwingUtilities.isEventDispatchThread()) {
+            runnable.run();
+        } else {
+            try {
+                SwingUtilities.invokeAndWait(runnable);
+            } catch (InterruptedException e) {
+                LoggerFactory.getLogger(SwingUtils.class).error("inEdt sync interrupted", e);
+            } catch (InvocationTargetException e) {
+                LoggerFactory.getLogger(SwingUtils.class).error("inEdt sync interrupted", e);
+            }
+        }
+    }
+
     /**
      * Executed the specified runnable in the EDT.
      *
@@ -241,5 +267,59 @@ public final class SwingUtils {
                 SwingUtilities.updateComponentTreeUI(component);
             }
         });
+    }
+
+    public static void execute(SimpleTask task) {
+        inEdt(task.asRunnable());
+    }
+
+    public static <T> T execute(Task<T> task) {
+        inEdt(task.asRunnable());
+
+        return task.getResult();
+    }
+
+    public static String chooseFile(SimpleFilter filter) {
+        File file = null;
+
+        if (chooser == null) {
+            chooser = new JFileChooser();
+        }
+
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        if (filter == null) {
+            chooser.setAcceptAllFileFilterUsed(true);
+        } else {
+            chooser.addChoosableFileFilter(new SwingFileFilter(filter));
+            chooser.setAcceptAllFileFilterUsed(false);
+        }
+
+        int answer = chooser.showOpenDialog(new JFrame());
+
+        if (answer == JFileChooser.APPROVE_OPTION) {
+            file = chooser.getSelectedFile();
+        }
+
+        return file == null ? null : file.getAbsolutePath();
+    }
+    
+    public static String chooseDirectory() {
+        File file = null;
+
+        if (chooser == null) {
+            chooser = new JFileChooser();
+        }
+
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        int returnCode = chooser.showOpenDialog(new JFrame());
+
+        if (returnCode == JFileChooser.APPROVE_OPTION) {
+            file = chooser.getSelectedFile();
+        }
+
+        return file == null ? null : file.getAbsolutePath();
     }
 }

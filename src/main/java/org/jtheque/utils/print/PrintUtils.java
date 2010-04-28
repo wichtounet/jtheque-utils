@@ -18,7 +18,6 @@ package org.jtheque.utils.print;
 
 import org.jtheque.utils.io.FileUtils;
 import org.slf4j.LoggerFactory;
-import sun.print.DialogTypeSelection;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
@@ -106,7 +105,6 @@ public final class PrintUtils {
         PrintRequestAttributeSet request = new HashPrintRequestAttributeSet();
 
         request.add(OrientationRequested.LANDSCAPE);
-        request.add(DialogTypeSelection.NATIVE);
 
         PrinterJob job = PrinterJob.getPrinterJob();
 

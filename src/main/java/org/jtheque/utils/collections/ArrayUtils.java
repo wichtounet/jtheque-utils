@@ -112,4 +112,14 @@ public final class ArrayUtils {
     public static <T> T[] copyOf(T[] array) {
         return Arrays.copyOf(array, array.length);
     }
+
+    public static <T> boolean search(T[] values, T searched) {
+        for (T value : values) {
+            if (value.equals(searched)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

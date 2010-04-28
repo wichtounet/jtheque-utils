@@ -27,6 +27,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -271,7 +272,7 @@ public final class FileUtils {
         } else if (source.exists()) {
             FileChannel in = null;
             FileChannel out = null;
-
+            
             FileInputStream inStream = null;
             FileOutputStream outStream = null;
 
@@ -293,6 +294,30 @@ public final class FileUtils {
             }
         } else {
             throw new CopyException("File doesn't exist: " + source.getAbsolutePath());
+        }
+    }
+
+    public static void copy(InputStream inputStream, File file) throws CopyException {
+        FilterInputStream input = null;
+        FileOutputStream output = null;
+
+        try {
+            input = new BufferedInputStream(inputStream);
+            output = new FileOutputStream(file);
+
+            byte[] buffer = new byte[1024];
+            int read = input.read(buffer);
+
+            while(read > 0){
+                output.write(buffer, 0, read);
+
+                read = input.read(buffer);
+            }
+        } catch (IOException e) {
+            throw new CopyException("Unable to copy the file due to IOException", e);
+        } finally {
+            FileUtils.close(input);
+            FileUtils.close(output);
         }
     }
 

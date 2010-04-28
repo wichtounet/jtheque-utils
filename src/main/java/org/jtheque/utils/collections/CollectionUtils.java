@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -64,6 +65,10 @@ public final class CollectionUtils {
      */
     public static <T> List<T> copyOf(Collection<T> list) {
         return new ArrayList<T>(list);
+    }
+
+    public static <K, V> Map<K, V> copyOf(Map<K, V> map) {
+        return new HashMap<K, V>(map);
     }
 
     /**

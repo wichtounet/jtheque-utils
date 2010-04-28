@@ -70,7 +70,10 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections, org.jtheque.utils.count, org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui</Export-Package>
+                        <Export-Package>
+                            org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections, org.jtheque.utils.count,
+                            org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui, org.jtheque.utils.ui.edt
+                        </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                     </instructions>
                 </configuration>

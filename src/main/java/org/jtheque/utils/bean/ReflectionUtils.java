@@ -7,6 +7,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -181,6 +182,18 @@ public final class ReflectionUtils {
         for (PropertyDescriptor p : getProperties(bean)) {
             if (p.getName().equals(property)) {
                 return getProperty(bean, p);
+            }
+        }
+
+        return null;
+    }
+    
+    public static Method getMethod(Class<? extends Annotation> annotationClass, Class<?> aClass) {
+        for(Method method : aClass.getMethods()){
+            if(method.isAnnotationPresent(annotationClass)){
+                method.setAccessible(true);
+
+                return method;
             }
         }
 
