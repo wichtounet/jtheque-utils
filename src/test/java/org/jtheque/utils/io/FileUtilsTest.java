@@ -16,6 +16,8 @@ package org.jtheque.utils.io;
  * limitations under the License.
  */
 
+import org.jtheque.utils.CryptoUtils;
+import org.jtheque.utils.Hasher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -293,12 +295,12 @@ public class FileUtilsTest {
     }
 
     @Test
-    public void encryptKey() {
+    public void hashMessage() {
         String key = "superclé";
-        String encrypted = FileUtils.encryptKey(key);
+        String encrypted = CryptoUtils.hashMessage(key, Hasher.SHA512);
 
         assertFalse(key.equals(encrypted));
-        assertEquals(encrypted, FileUtils.encryptKey(key));
+        assertEquals(encrypted, CryptoUtils.hashMessage(key, Hasher.SHA512));
     }
 
     @Test

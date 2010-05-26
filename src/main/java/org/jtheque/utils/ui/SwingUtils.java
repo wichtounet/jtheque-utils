@@ -17,6 +17,9 @@ package org.jtheque.utils.ui;
  */
 
 import org.jtheque.utils.io.SimpleFilter;
+import org.jtheque.utils.ui.edt.SimpleTask;
+import org.jtheque.utils.ui.edt.Task;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -42,10 +45,6 @@ import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-
-import org.jtheque.utils.ui.edt.Task;
-import org.jtheque.utils.ui.edt.SimpleTask;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide utility methods for Swing Components.
@@ -201,6 +200,12 @@ public final class SwingUtils {
     public static void addFieldValidateAction(JComponent field, Action action) {
         field.getActionMap().put("validate", action);
         field.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "validate");
+    }
+	
+    public static void addFieldsValidateAction(Action action, JComponent... components) {
+	    for(JComponent component : components){
+		    addFieldValidateAction(component, action);
+	    }
     }
 
     /**

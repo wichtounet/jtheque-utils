@@ -293,4 +293,20 @@ public final class ImageUtils {
     public static BufferedImage openCompatibleImage(InputStream stream) {
         return createCompatibleImage(read(stream));
     }
+
+    public static BufferedImage openCompatibleImage(File file) {
+        if(ImageUtils.isHeadless()){
+            return read(file);
+        }
+
+        try {
+            InputStream stream = FileUtils.asInputStream(file);
+
+            return openCompatibleImage(stream);
+        } catch (FileNotFoundException e) {
+            LoggerFactory.getLogger(ImageUtils.class).error("The specified file doesn't exist", e);
+
+            return null;
+        }
+    }
 }

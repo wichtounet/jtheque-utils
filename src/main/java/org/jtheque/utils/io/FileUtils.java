@@ -548,33 +548,6 @@ public final class FileUtils {
     }
 
     /**
-     * Encrypt the string with the SHA-256 Algorithm.
-     *
-     * @param key The string to encrypt.
-     * @return The encrypted key.
-     */
-    public static String encryptKey(String key) {
-        String encoded = "";
-        MessageDigest md = null;
-
-        try {
-            md = MessageDigest.getInstance("SHA-256");
-
-            md.update(key.getBytes());
-
-            encoded = new String(md.digest());
-        } catch (NoSuchAlgorithmException e) {
-            LoggerFactory.getLogger(FileUtils.class).error("Unable to encrypt message " + e);
-        } finally {
-            if (md != null) {
-                md.reset();
-            }
-        }
-
-        return encoded;
-    }
-
-    /**
      * Test if a file is in a directory.
      *
      * @param file   The file to test.
@@ -641,6 +614,10 @@ public final class FileUtils {
      */
     public static InputStream asInputStream(String path) throws FileNotFoundException {
         return new BufferedInputStream(new FileInputStream(path));
+    }
+
+    public static InputStream asInputStream(File file) throws FileNotFoundException {
+        return asInputStream(file.getAbsolutePath());
     }
 
     /**

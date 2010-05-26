@@ -183,7 +183,6 @@ public final class Version implements Comparable<Version> {
         }
 
         return !EqualsUtils.areNotEquals(strVersion, version.strVersion);
-
     }
 
     @Override
@@ -225,14 +224,12 @@ public final class Version implements Comparable<Version> {
      * @return  a negative integer, zero, or a positive integer as this object
      *		is less than, equal to, or greater than the specified object.
      */
-    private int compareTwoToken(String current, String other) {
+    private static int compareTwoToken(String current, String other) {
         String codeStrCurrent = extractCode(current);
         String codeStrOther = extractCode(other);
 
         if (StringUtils.isEmpty(codeStrCurrent) && StringUtils.isEmpty(codeStrOther)) {
-            int compare = Integer.valueOf(current).compareTo(Integer.valueOf(other));
-
-            return compare;
+	        return Integer.valueOf(current).compareTo(Integer.valueOf(other));
         } else {
             return compareCode(current, other, codeStrCurrent, codeStrOther) ? 1 : -1;
         }

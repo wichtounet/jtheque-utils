@@ -223,8 +223,15 @@
         </dependency>
 
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>file-unit</artifactId>
+            <artifactId>org.jtheque.unit.utils</artifactId>
             <version>1.0</version>
             <scope>test</scope>
         </dependency>
@@ -232,8 +239,8 @@
 
     <licenses>
         <license>
-            <name>GNU GPL V3</name>
-            <url>http://www.gnu.org/copyleft/gpl.html</url>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
