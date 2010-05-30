@@ -44,7 +44,6 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Provide utility methods for Swing Components.
@@ -233,16 +232,23 @@ public final class SwingUtils {
         return defaultFont;
     }
 
-    public static void inEdtSync(Runnable runnable) {
+    public static void inEdtSync(final Runnable runnable) {
         if (SwingUtilities.isEventDispatchThread()) {
             runnable.run();
         } else {
+            Thread thread = new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    inEdt(runnable);
+                }
+            });
+            
+            thread.start();
+
             try {
-                SwingUtilities.invokeAndWait(runnable);
+                thread.join();
             } catch (InterruptedException e) {
-                LoggerFactory.getLogger(SwingUtils.class).error("inEdt sync interrupted", e);
-            } catch (InvocationTargetException e) {
-                LoggerFactory.getLogger(SwingUtils.class).error("inEdt sync interrupted", e);
+                LoggerFactory.getLogger(SwingUtils.class).error(e.getMessage(), e);
             }
         }
     }
