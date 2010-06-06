@@ -36,6 +36,7 @@ import javax.swing.text.DocumentFilter;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.DisplayMode;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -262,7 +263,7 @@ public final class SwingUtils {
         if (SwingUtilities.isEventDispatchThread()) {
             runnable.run();
         } else {
-            SwingUtilities.invokeLater(runnable);
+            EventQueue.invokeLater(runnable);
         }
     }
 
