@@ -1,6 +1,8 @@
 package org.jtheque.utils.collections;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -111,6 +113,10 @@ public final class ArrayUtils {
      */
     public static <T> T[] copyOf(T[] array) {
         return Arrays.copyOf(array, array.length);
+    }
+
+    public static <T> Set<T> asSet(T... values){
+        return new HashSet<T>(Arrays.asList(values));
     }
 
     public static <T> boolean search(T[] values, T searched) {
