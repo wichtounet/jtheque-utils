@@ -15,14 +15,9 @@
     <url>http://jtheque.developpez.com/utilities/utils</url>
 
     <ciManagement>
-        <system>TeamCity 4.5.4</system>
+        <system>Hudson</system>
         <url>http://wichtounet.homedns.org:8080/hudson/</url>
     </ciManagement>
-
-    <issueManagement>
-        <system>Redmine</system>
-        <url>http://projets.developpez.com/projects/jtheque-utils/issues</url>
-    </issueManagement>
 
     <scm>
         <url>http://wichtounet.homedns.org/svn/jtheque-utils/</url>
@@ -112,11 +107,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <bottom>
-                        <![CDATA[Copyright © {inceptionYear}-{currentYear} {organizationName}. All Rights Reserved.]]>
-                    </bottom>
-                </configuration>
                 <executions>
                     <execution>
                         <id>bundle-project-javadoc</id>
