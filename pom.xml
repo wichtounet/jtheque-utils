@@ -223,13 +223,13 @@
             <id>wichtounet</id>
             <name>Baptiste Wicht</name>
             <email>baptistewicht@gmail.com</email>
-            <url>http://baptiste-wicht.developpez.com</url>
-            <organization>http://baptiste-wicht.developpez.com</organization>
-            <organizationUrl>http://baptiste-wicht.developpez.com</organizationUrl>
+            <url>http://baptiste-wicht.com</url>
+            <organization>http://baptiste-wicht.com</organization>
+            <organizationUrl>http://baptiste-wicht.com</organizationUrl>
 
             <roles>
-                <role>Administrateur</role>
-                <role>Développeur</role>
+                <role>Project Leader</role>
+                <role>Developer</role>
             </roles>
 
             <timezone>0</timezone>

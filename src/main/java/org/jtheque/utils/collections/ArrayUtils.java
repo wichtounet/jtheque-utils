@@ -148,7 +148,7 @@ public final class ArrayUtils {
      *
      * @param values   The array to search in.
      * @param searched The value to search.
-     * @param <T>      The type of objecsts.
+     * @param <T>      The type of objects.
      *
      * @return <code>true</code> if the array contains the searched value otherwise <code>false</code>.
      */

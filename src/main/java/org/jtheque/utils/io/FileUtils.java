@@ -349,7 +349,7 @@ public final class FileUtils {
      */
     private static void copyDirectory(File source, File target) throws CopyException {
         if (!target.exists() && !target.mkdirs()) {
-            throw new CopyException("Impossible de créer le répertoire " + target.getAbsolutePath());
+            throw new CopyException("Unable to create the target directory " + target.getAbsolutePath());
         }
 
         File[] files = source.listFiles();

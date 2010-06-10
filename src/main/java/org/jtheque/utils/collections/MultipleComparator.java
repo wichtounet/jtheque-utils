@@ -30,7 +30,7 @@ public class MultipleComparator<T> implements Comparator<T> {
     private final Comparator<T>[] comparators;
 
     /**
-     * Construct a new MultipleComparator using the givne comparators.
+     * Construct a new MultipleComparator using the given comparators.
      *
      * @param comparators The comparators to use to make the comparison. They will used in the given order.
      */

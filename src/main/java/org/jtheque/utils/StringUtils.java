@@ -244,7 +244,7 @@ public final class StringUtils {
     }
 
     /**
-     * Delete from the source all the occurences of the given char sequences.
+     * Delete from the source all the occurrences of the given char sequences.
      *
      * @param string    The string source.
      * @param toDeletes The char sequences to remove from the source.
