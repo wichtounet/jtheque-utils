@@ -21,21 +21,28 @@ import java.security.NoSuchAlgorithmException;
  * limitations under the License.
  */
 
+/**
+ * Utility class for cryptographic operations.
+ *
+ * @author Baptiste Wicht
+ */
 public class CryptoUtils {
 	/**
-     * Hash the string with the given algoritm.
+     * Hash the string with the given algorithm.
      *
-     * @param key The string to encrypt.
+     * @param message The message to hash.
+     * @param hasher The hasher to use.
+     *
      * @return The encrypted key.
      */
-    public static String hashMessage(String key, Hasher hasher) {
+    public static String hashMessage(String message, Hasher hasher) {
         String encoded = "";
         MessageDigest md = null;
 
         try {
             md = MessageDigest.getInstance(hasher.getAlgorithm());
 
-            md.update(key.getBytes());
+            md.update(message.getBytes());
 
             encoded = new String(md.digest());
         } catch (NoSuchAlgorithmException e) {
