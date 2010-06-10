@@ -28,8 +28,12 @@ import java.util.Locale;
  * @author Baptiste Wicht
  */
 public final class IntDate implements Serializable, Comparable<IntDate> {
-    private static final long serialVersionUID = -5493916511728423774L;
-    private static final int DATE_STR_LENGTH = 20;
+    private static final long serialVersionUID = -5493916511769583774L;
+
+    private static final IntDate TODAY_DATE = new IntDate(Calendar.getInstance());
+
+    private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final Calendar calendar;
 
     /**
      * This internal class contains all the different fields of an IntDate.
@@ -59,11 +63,6 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
             return field == MONTH || field == DAY || field == YEAR;
         }
     }
-
-    private static final IntDate TODAY_DATE = new IntDate(Calendar.getInstance());
-
-    private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-    private final Calendar calendar;
 
     /**
      * Construct a new int date from the int representation of the date.
@@ -157,7 +156,7 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
      * @param field The field to set the value to.
      * @param value The value to set to the field.
      */
-    public void set(final int field, final int value) {
+    public void set(int field, int value) {
         if (Fields.isValid(field)) {
             if (field == Fields.MONTH) {
                 calendar.set(Fields.MONTH, value - 1);
@@ -175,23 +174,7 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
      * @return A <code>String</code> representing the date.
      */
     public String getStrDate() {
-        StringBuilder builder = new StringBuilder(DATE_STR_LENGTH);
-
-        builder.append(getYear());
-
-        if (getMonth() < 10) {
-            builder.append('0');
-        }
-
-        builder.append(getMonth());
-
-        if (getDay() < 10) {
-            builder.append('0');
-        }
-
-        builder.append(getDay());
-
-        return builder.toString();
+        return Integer.toString(intValue());
     }
 
     /**
@@ -209,30 +192,12 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
      * @return A int representation of the date
      */
     public int intValue() {
-        return Integer.parseInt(getStrDate());
+        return getYear() * 10000 + getMonth() * 100 + getDay();
     }
 
     @Override
     public int compareTo(IntDate o) {
-        if (getYear() > o.getYear()) {
-            return 1;
-        } else if (getYear() < o.getYear()) {
-            return -1;
-        }
-
-        if (getMonth() > o.getMonth()) {
-            return 1;
-        } else if (getMonth() < o.getMonth()) {
-            return -1;
-        }
-
-        if (getDay() > o.getDay()) {
-            return 1;
-        } else if (getDay() < o.getDay()) {
-            return -1;
-        }
-
-        return 0;
+        return calendar.compareTo(o.calendar);
     }
 
     @Override
