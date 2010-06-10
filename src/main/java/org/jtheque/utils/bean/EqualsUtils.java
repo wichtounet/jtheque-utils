@@ -80,7 +80,7 @@ public final class EqualsUtils {
 			return true;
 		}
 
-		if (EqualsUtils.areObjectIncompatible(bean, other)){
+		if (areObjectIncompatible(bean, other)){
 			return false;
 		}
 

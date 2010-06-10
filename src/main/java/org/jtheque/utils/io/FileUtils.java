@@ -34,8 +34,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.FileChannel;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -316,8 +314,8 @@ public final class FileUtils {
         } catch (IOException e) {
             throw new CopyException("Unable to copy the file due to IOException", e);
         } finally {
-            FileUtils.close(input);
-            FileUtils.close(output);
+            close(input);
+            close(output);
         }
     }
 

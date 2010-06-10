@@ -51,7 +51,7 @@ public final class DocumentLengthFilterAvert extends DocumentLengthFilter {
     }
 
     @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String str,
+    public void replace(FilterBypass fb, int offset, int length, String str,
                         AttributeSet attrs) throws BadLocationException {
         if (str != null) {
             int newLength = fb.getDocument().getLength() - length + str.length();

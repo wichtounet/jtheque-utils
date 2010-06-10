@@ -295,7 +295,7 @@ public final class ImageUtils {
     }
 
     public static BufferedImage openCompatibleImage(File file) {
-        if(ImageUtils.isHeadless()){
+        if(isHeadless()){
             return read(file);
         }
 

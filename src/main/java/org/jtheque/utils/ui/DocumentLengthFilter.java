@@ -52,13 +52,13 @@ public class DocumentLengthFilter extends DocumentFilter {
     }
 
     @Override
-    public final void insertString(DocumentFilter.FilterBypass fb, int offset, String str,
+    public final void insertString(FilterBypass fb, int offset, String str,
                                    AttributeSet attrs) throws BadLocationException {
         replace(fb, offset, 0, str, attrs);
     }
 
     @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String str,
+    public void replace(FilterBypass fb, int offset, int length, String str,
                         AttributeSet attrs) throws BadLocationException {
         int newLength = fb.getDocument().getLength() - length + str.length();
 

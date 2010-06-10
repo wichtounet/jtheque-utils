@@ -50,8 +50,7 @@ public final class GenericsUtils {
      * @param <T>        The type.
      * @return a list of the raw classes for the actual type arguments.
      */
-    public static <T> Collection<Class<?>> getTypeArguments(final Class<T> baseClass,
-                                                            final Type childClass) {
+    public static <T> Collection<Class<?>> getTypeArguments(Class<T> baseClass, Type childClass) {
         Map<Type, Type> resolvedTypes = new HashMap<Type, Type>(10);
         Type type = childClass;
         // start walking up the inheritance hierarchy until we hit baseClass

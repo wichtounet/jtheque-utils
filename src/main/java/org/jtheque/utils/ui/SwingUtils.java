@@ -151,7 +151,7 @@ public final class SwingUtils {
      * @param value The value to set to the JOptionPane.
      */
     public static void setOptionPaneValue(Component c, Object value) {
-        JOptionPane optionPane = SwingUtils.getOptionPane(c);
+        JOptionPane optionPane = getOptionPane(c);
         if (optionPane != null) {
             optionPane.setValue(value);
         }
