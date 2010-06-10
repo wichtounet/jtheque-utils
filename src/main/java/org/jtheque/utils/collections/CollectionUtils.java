@@ -219,4 +219,28 @@ public final class CollectionUtils {
     public static <T> T first(Iterable<T> collection) {
         return collection.iterator().next();
     }
+
+    /**
+     * Construct a comparator that will use all the given comparators in the given order to make a comparison.
+     *
+     * @param comparators The comparators to use.
+     * @param <T>         The type of object.
+     *
+     * @return A comparator that use all the given comparators.
+     */
+    public static <T> Comparator<T> multipleComparator(Comparator<T>... comparators) {
+        return new MultipleComparator<T>(comparators);
+    }
+
+    /**
+     * Construct a comparator that use the reverse order than the given comparator.
+     *
+     * @param comparator The comparator to reverse.
+     * @param <T> The type of objects.
+     *
+     * @return A reverse comparator. 
+     */
+    public static <T> Comparator<T> reverseComparator(Comparator<T> comparator) {
+        return Collections.reverseOrder(comparator);
+    }
 }
