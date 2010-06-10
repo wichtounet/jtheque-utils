@@ -17,6 +17,7 @@ package org.jtheque.utils.tests;
  */
 
 import org.jtheque.utils.ui.SwingUtils;
+
 import org.junit.Test;
 
 import javax.swing.SwingUtilities;

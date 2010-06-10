@@ -82,6 +82,7 @@ public final class Version implements Comparable<Version> {
      * Indicate if the version is greater than an other version.
      *
      * @param otherVersion The version we want to compare to
+     *
      * @return true if the current version is greater than the other else false
      */
     public boolean isGreaterThan(Version otherVersion) {
@@ -95,6 +96,7 @@ public final class Version implements Comparable<Version> {
      * @param other          The other version.
      * @param codeStrCurrent The code of the current version.
      * @param codeStrOther   The code of the other version.
+     *
      * @return true if the current code is most valued than the other.
      */
     private static boolean compareCode(String current, String other, String codeStrCurrent, String codeStrOther) {
@@ -115,6 +117,7 @@ public final class Version implements Comparable<Version> {
      * Return the int code of the string code.
      *
      * @param strCode The string code.
+     *
      * @return The int value of the string code.
      */
     private static int intCode(String strCode) {
@@ -125,6 +128,7 @@ public final class Version implements Comparable<Version> {
      * Extract the code contained in the version.
      *
      * @param version The version string.
+     *
      * @return The code contained in the version or an empty String if there is no code in this version.
      */
     private static String extractCode(String version) {
@@ -201,10 +205,10 @@ public final class Version implements Comparable<Version> {
                 String other = otherTokens.nextToken();
 
                 int compare = compareTwoToken(current, other);
-                
+
                 //If the two tokens are not equals, we could assume than the result of the comparison is the result of the
                 //comparison of the complete version
-                if(compare != 0){
+                if (compare != 0) {
                     return compare;
                 }
             } else {
@@ -216,20 +220,20 @@ public final class Version implements Comparable<Version> {
     }
 
     /**
-     * Compare two tokens of two version. 
-     * 
-     * @param current The current token. 
-     * @param other The other token. 
-     * 
-     * @return  a negative integer, zero, or a positive integer as this object
-     *		is less than, equal to, or greater than the specified object.
+     * Compare two tokens of two version.
+     *
+     * @param current The current token.
+     * @param other   The other token.
+     *
+     * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than
+     *         the specified object.
      */
     private static int compareTwoToken(String current, String other) {
         String codeStrCurrent = extractCode(current);
         String codeStrOther = extractCode(other);
 
         if (StringUtils.isEmpty(codeStrCurrent) && StringUtils.isEmpty(codeStrOther)) {
-	        return Integer.valueOf(current).compareTo(Integer.valueOf(other));
+            return Integer.valueOf(current).compareTo(Integer.valueOf(other));
         } else {
             return compareCode(current, other, codeStrCurrent, codeStrOther) ? 1 : -1;
         }

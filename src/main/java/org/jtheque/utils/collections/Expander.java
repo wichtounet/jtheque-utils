@@ -17,8 +17,7 @@ package org.jtheque.utils.collections;
  */
 
 /**
- * An expander. It seems an objet who treat an object and return an another object
- * from the first.
+ * An expander. It seems an objet who treat an object and return an another object from the first.
  *
  * @author wichtounet
  * @param <S> The class of objects in collections.
@@ -29,6 +28,7 @@ public interface Expander<S, T> {
      * Expand the object to an another.
      *
      * @param o The object.
+     *
      * @return The expander object.
      */
     T expand(S o);

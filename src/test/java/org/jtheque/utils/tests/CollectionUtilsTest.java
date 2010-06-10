@@ -17,6 +17,7 @@ package org.jtheque.utils.tests;
  */
 
 import org.jtheque.utils.collections.CollectionUtils;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

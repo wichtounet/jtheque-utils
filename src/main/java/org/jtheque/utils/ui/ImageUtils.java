@@ -17,9 +17,11 @@ package org.jtheque.utils.ui;
  */
 
 import org.jtheque.utils.io.FileUtils;
+
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
+
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -37,7 +39,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Utility class for image processing.
+ * Utility class for image processing. This class support headless environment.
  *
  * @author Baptiste Wicht
  */
@@ -56,7 +58,7 @@ public final class ImageUtils {
      *
      * @param image              The source image.
      * @param requestedThumbSize The requested size.
-     * 
+     *
      * @return The thumbnail
      */
     public static BufferedImage createThumbnail(BufferedImage image, int requestedThumbSize) {
@@ -101,7 +103,7 @@ public final class ImageUtils {
      *
      * @return The buffered image from the file.
      */
-    public static BufferedImage read(File file){
+    public static BufferedImage read(File file) {
         try {
             return ImageIO.read(file);
         } catch (IOException e) {
@@ -133,13 +135,13 @@ public final class ImageUtils {
      *
      * @param width  The width.
      * @param height The height.
-     * 
+     *
      * @return A compatible image.
      *
      * @see ImageUtils#isHeadless()
      */
     public static Image createCompatibleImage(int width, int height) {
-        if(isHeadless()){
+        if (isHeadless()) {
             return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         }
 
@@ -147,7 +149,7 @@ public final class ImageUtils {
     }
 
     /**
-     * Create a compatible image. In headless mode, this method will return a simple BufferedImage. 
+     * Create a compatible image. In headless mode, this method will return a simple BufferedImage.
      *
      * @param width  The width.
      * @param height The height.
@@ -158,7 +160,7 @@ public final class ImageUtils {
      * @see ImageUtils#isHeadless()
      */
     public static BufferedImage createCompatibleImage(int width, int height, int type) {
-        if(isHeadless()){
+        if (isHeadless()) {
             return new BufferedImage(width, height, type);
         }
 
@@ -173,7 +175,7 @@ public final class ImageUtils {
      * @see ImageUtils#isHeadless()
      */
     private static GraphicsConfiguration getGraphicsConfiguration() {
-        if(isHeadless()){
+        if (isHeadless()) {
             return null;
         }
 
@@ -181,7 +183,7 @@ public final class ImageUtils {
     }
 
     /**
-     * Create a compatible image from an existing image. In headless mode, this method will not affect the image. 
+     * Create a compatible image from an existing image. In headless mode, this method will not affect the image.
      *
      * @param image The image to make compatible.
      *
@@ -206,7 +208,7 @@ public final class ImageUtils {
     /**
      * Indicate if we are in a headless mode or normal.
      *
-     * @return true if we are in headless mode else false. 
+     * @return true if we are in headless mode else false.
      */
     public static boolean isHeadless() {
         return GraphicsEnvironment.isHeadless() || GraphicsEnvironment.getLocalGraphicsEnvironment().isHeadlessInstance();
@@ -216,7 +218,7 @@ public final class ImageUtils {
      * Create a reflection of the image.
      *
      * @param image The image to reflect.
-     * 
+     *
      * @return The reflection image.
      */
     public static BufferedImage createReflection(BufferedImage image) {
@@ -258,6 +260,7 @@ public final class ImageUtils {
      * Open a image from the classpath at the specified path.
      *
      * @param path The path to the image.
+     *
      * @return The image.
      */
     public static BufferedImage openCompatibleImageFromClassPath(String path) {
@@ -268,10 +271,11 @@ public final class ImageUtils {
      * Open an image from the file system at the specified path.
      *
      * @param path The path to the image.
+     *
      * @return The image or null if the file doesn't exist.
      */
     public static BufferedImage openCompatibleImageFromFileSystem(String path) {
-        if(isHeadless()){
+        if (isHeadless()) {
             return read(new File(path));
         }
 
@@ -288,14 +292,22 @@ public final class ImageUtils {
      * Open a compatible image form an input stream.
      *
      * @param stream The stream to use to open the image.
+     *
      * @return The image.
      */
     public static BufferedImage openCompatibleImage(InputStream stream) {
         return createCompatibleImage(read(stream));
     }
 
+    /**
+     * Open a compatible image of the given file.
+     *
+     * @param file The file of the image.
+     *
+     * @return The image of the file.
+     */
     public static BufferedImage openCompatibleImage(File file) {
-        if(isHeadless()){
+        if (isHeadless()) {
             return read(file);
         }
 

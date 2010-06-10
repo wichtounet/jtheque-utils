@@ -49,6 +49,7 @@ public final class GridBagUtils extends GridBagConstraints {
      *
      * @param x The x position of the component.
      * @param y The y position of the component.
+     *
      * @return The GridBagConstraints object.
      */
     public GridBagConstraints gbcSet(int x, int y) {
@@ -66,6 +67,7 @@ public final class GridBagUtils extends GridBagConstraints {
      * @param x    The x position of the component.
      * @param y    The y position of the component.
      * @param fill The fill constraints.
+     *
      * @return The GridBagConstraints object.
      */
     public GridBagConstraints gbcSet(int x, int y, int fill) {
@@ -85,6 +87,7 @@ public final class GridBagUtils extends GridBagConstraints {
      * @param y      The y position of the component.
      * @param fill   The fill constraints.
      * @param anchor The anchor of the component.
+     *
      * @return The GridBagConstraints object.
      */
     public GridBagConstraints gbcSet(int x, int y, int fill, int anchor) {
@@ -107,6 +110,7 @@ public final class GridBagUtils extends GridBagConstraints {
      * @param anchor The anchor of the component.
      * @param width  The col span.
      * @param height The row span.
+     *
      * @return The GridBagConstraints object.
      */
     public GridBagConstraints gbcSet(int x, int y, int fill, int anchor, int width, int height) {
@@ -133,6 +137,7 @@ public final class GridBagUtils extends GridBagConstraints {
      * @param height  The row span.
      * @param weightx The col fill weight.
      * @param weighty The row fill weight.
+     *
      * @return The GridBagConstraints object.
      */
     public GridBagConstraints gbcSet(int x, int y, int fill, int anchor, int width, int height, double weightx, double weighty) {
@@ -163,6 +168,7 @@ public final class GridBagUtils extends GridBagConstraints {
      * @param weighty The row fill weight.
      * @param ipadx   The x internal padding width.
      * @param ipady   The y internal padding height.
+     *
      * @return The <code>GridBagConstraints</code> object.
      */
     public GridBagConstraints gbcSet(int x, int y, int fill, int anchor, int width, int height, double weightx, double weighty, int ipadx, int ipady) {
@@ -191,6 +197,7 @@ public final class GridBagUtils extends GridBagConstraints {
      * @param anchor  The anchor of the component.
      * @param weightx The col fill weight.
      * @param weighty The row fill weight.
+     *
      * @return The <code>GridBagConstraints</code> object.
      */
     public GridBagConstraints gbcSet(int x, int y, int fill, int anchor, double weightx, double weighty) {

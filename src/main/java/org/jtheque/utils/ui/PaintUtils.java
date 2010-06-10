@@ -176,8 +176,7 @@ public final class PaintUtils {
     }
 
     /**
-     * Draws an image on top of a component by doing a 3x3 grid stretch of the image
-     * using the specified insets.
+     * Draws an image on top of a component by doing a 3x3 grid stretch of the image using the specified insets.
      *
      * @param g         The graphics object to use.
      * @param component The component.

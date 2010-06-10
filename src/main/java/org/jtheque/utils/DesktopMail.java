@@ -33,6 +33,7 @@ public final class DesktopMail {
      * Return the URI for this mail.
      *
      * @return The URI.
+     *
      * @throws URISyntaxException When an errors occurs during the URI construction.
      */
     public URI getURI() throws URISyntaxException {

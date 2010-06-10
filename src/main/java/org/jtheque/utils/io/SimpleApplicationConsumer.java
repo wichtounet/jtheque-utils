@@ -52,8 +52,7 @@ public final class SimpleApplicationConsumer {
     }
 
     /**
-     * Consume all the streams of the process. All the streams are redirected to
-     * a simple StringBuilder.
+     * Consume all the streams of the process. All the streams are redirected to a simple StringBuilder.
      *
      * @throws IOException I/O error
      */
@@ -83,6 +82,7 @@ public final class SimpleApplicationConsumer {
      *
      * @param in  input stream.
      * @param out output stream.
+     *
      * @throws IOException I/O error
      */
     private static void dump(Reader in, PrintStream out) throws IOException {
@@ -144,9 +144,9 @@ public final class SimpleApplicationConsumer {
         }
 
         @Override
-        public void write(byte[] b) throws IOException{
-			write(b, 0, b.length);
-		}
+        public void write(byte[] b) throws IOException {
+            write(b, 0, b.length);
+        }
 
         /**
          * Return the result of the stream.

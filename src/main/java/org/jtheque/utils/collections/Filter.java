@@ -26,6 +26,7 @@ public interface Filter<T> {
      * Indicate if we accept the object or not.
      *
      * @param object The object to test.
+     *
      * @return true if we accept the object else false.
      */
     boolean accept(T object);

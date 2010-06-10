@@ -4,7 +4,7 @@
         xsi:schemaLocation="
             http://maven.apache.org/POM/4.0.0
             http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jtheque</groupId>
     <artifactId>org.jtheque.utils</artifactId>
@@ -41,7 +41,7 @@
             <url>http://wichtounet.homedns.org:8280/artifactory/libs-snapshots-local</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -52,7 +52,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -61,8 +61,10 @@
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections, org.jtheque.utils.count,
-                            org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui, org.jtheque.utils.ui.edt
+                            org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections,
+                            org.jtheque.utils.count,
+                            org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui,
+                            org.jtheque.utils.ui.edt
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                     </instructions>
@@ -117,7 +119,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>
-                  <locales>fr,en</locales>
+                    <locales>fr,en</locales>
                 </configuration>
             </plugin>
         </plugins>
@@ -237,7 +239,7 @@
     <properties>
         <!-- File encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
+
         <!-- Versions -->
         <java.version>1.6</java.version>
 

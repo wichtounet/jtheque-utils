@@ -88,6 +88,7 @@ public final class DatabaseUtils {
      *
      * @param rs     The result set.
      * @param column The column to get the data from.
+     *
      * @return A collection of Integer containing all the results of the specified column.
      */
     public static Collection<Integer> getAllIntResults(ResultSet rs, String column) {

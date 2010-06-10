@@ -32,17 +32,17 @@ public class ScannerUtils {
     }
 
     /**
-     * Return the line starting with starts using the given scanner. The scanner will be closed if we
-     * read all the lines.
+     * Return the line starting with starts using the given scanner. The scanner will be closed if we read all the
+     * lines.
      *
      * @param scanner The scanner to search in.
-     * @param starts The String we search a line starting with.
+     * @param starts  The String we search a line starting with.
      *
-     * @return The first line starting with starts in the scanner else an empty String if there is no line starting
-     * with starts. 
+     * @return The first line starting with starts in the scanner else an empty String if there is no line starting with
+     *         starts.
      */
-    public static String getLineStartingWith(Scanner scanner, String starts){
-        if(scanner != null){
+    public static String getLineStartingWith(Scanner scanner, String starts) {
+        if (scanner != null) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
 

@@ -42,12 +42,12 @@ public final class GenericsUtils {
     }
 
     /**
-     * Get the actual type arguments a child class has used to extend a generic
-     * base class.
+     * Get the actual type arguments a child class has used to extend a generic base class.
      *
      * @param baseClass  the base class
      * @param childClass the child class
      * @param <T>        The type.
+     *
      * @return a list of the raw classes for the actual type arguments.
      */
     public static <T> Collection<Class<?>> getTypeArguments(Class<T> baseClass, Type childClass) {
@@ -84,6 +84,7 @@ public final class GenericsUtils {
      *
      * @param resolvedTypes The resolved types.
      * @param type          The type.
+     *
      * @return The raw types.
      */
     private static Collection<Class<?>> determineRawClasses(Map<Type, Type> resolvedTypes, Type type) {
@@ -102,10 +103,10 @@ public final class GenericsUtils {
     }
 
     /**
-     * Get the underlying class for a type, or null if the type is a variable
-     * type.
+     * Get the underlying class for a type, or null if the type is a variable type.
      *
      * @param type the type
+     *
      * @return the underlying class
      */
     private static Class<?> getClass(Type type) {

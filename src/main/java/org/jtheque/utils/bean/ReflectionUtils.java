@@ -1,6 +1,7 @@
 package org.jtheque.utils.bean;
 
 import org.jtheque.utils.StringUtils;
+
 import org.slf4j.LoggerFactory;
 
 import java.beans.BeanInfo;
@@ -46,6 +47,7 @@ public final class ReflectionUtils {
      * Return the name of the getter for the specified property name.
      *
      * @param property The property name.
+     *
      * @return The name of the getter for the specified property.
      */
     public static String getGetter(String property) {
@@ -57,6 +59,7 @@ public final class ReflectionUtils {
      *
      * @param bean     The bean to get the property from.
      * @param property The property name.
+     *
      * @return The getter Method object or null if there is no getter for this property.
      */
     public static Method getGetterMethod(Object bean, String property) {
@@ -93,8 +96,8 @@ public final class ReflectionUtils {
     public static Method getSetterMethod(Object bean, String property) {
         String setter = getSetter(property);
 
-        for(Method m : bean.getClass().getMethods()){
-            if(m.getName().equals(setter)){
+        for (Method m : bean.getClass().getMethods()) {
+            if (m.getName().equals(setter)) {
                 return m;
             }
         }
@@ -107,6 +110,7 @@ public final class ReflectionUtils {
      *
      * @param bean     The bean to get the value from.
      * @param property The property name.
+     *
      * @return The value of the property or null if there is no getter method.
      */
     public static Object getPropertyValue(Object bean, String property) {
@@ -130,6 +134,7 @@ public final class ReflectionUtils {
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
+     *
      * @return the value of the property.
      */
     public static Object getProperty(Object bean, PropertyDescriptor property) {
@@ -154,6 +159,7 @@ public final class ReflectionUtils {
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean to extract the properties from.
+     *
      * @return An array containing all the properties of the bean or an empty array if there was an error during the
      *         property retrieving process.
      */
@@ -176,6 +182,7 @@ public final class ReflectionUtils {
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
+     *
      * @return the value of the property.
      */
     public static Object getProperty(Object bean, String property) {
@@ -187,10 +194,18 @@ public final class ReflectionUtils {
 
         return null;
     }
-    
+
+    /**
+     * Return the first method with the given annotation.
+     *
+     * @param annotationClass The annotation to search for.
+     * @param aClass          The class to search in.
+     *
+     * @return THe first Method where the given annotation is present
+     */
     public static Method getMethod(Class<? extends Annotation> annotationClass, Class<?> aClass) {
-        for(Method method : aClass.getMethods()){
-            if(method.isAnnotationPresent(annotationClass)){
+        for (Method method : aClass.getMethods()) {
+            if (method.isAnnotationPresent(annotationClass)) {
                 method.setAccessible(true);
 
                 return method;

@@ -38,7 +38,7 @@ public class CryptoUtils {
      * Hash the string with the given algorithm.
      *
      * @param message The message to hash.
-     * @param hasher The hasher to use.
+     * @param hasher  The hasher to use.
      *
      * @return The encrypted key.
      */

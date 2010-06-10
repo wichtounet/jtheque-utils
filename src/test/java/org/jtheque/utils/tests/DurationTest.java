@@ -1,6 +1,7 @@
 package org.jtheque.utils.tests;
 
 import org.jtheque.utils.bean.Duration;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

@@ -52,6 +52,7 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
          * Test the validity of a field.
          *
          * @param field The field to test.
+         *
          * @return <code>true</code> if the field is valid else <code>false</code>.
          */
         public static boolean isValid(int field) {
@@ -139,6 +140,7 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
      *
      * @param field The field to add the value to.
      * @param toAdd The value to add.
+     *
      * @throws IllegalArgumentException if the specified field is not valid.
      */
     public void add(int field, int toAdd) {

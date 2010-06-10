@@ -2,6 +2,7 @@ package org.jtheque.utils.collections;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /*
@@ -56,6 +57,7 @@ public final class ArrayUtils {
      *
      * @param object The object to search  for.
      * @param tab    The tab to search in.
+     *
      * @return The index of the objet in the tab else -1 if the object is not present in the tab.
      */
     public static int indexOf(Object object, Object[] tab) {
@@ -88,19 +90,20 @@ public final class ArrayUtils {
      * Test if the array is empty or contains only <code>null</code> values.
      *
      * @param array The array to test.
+     *
      * @return true if the array size is 0 or if the array contains only <code>null</code> values.
      */
     public static boolean isEmpty(Object[] array) {
-        if(array == null || array.length <= 0){
+        if (array == null || array.length <= 0) {
             return true;
         }
-        
-        for(Object o : array){
-            if(o != null){
+
+        for (Object o : array) {
+            if (o != null) {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -109,17 +112,47 @@ public final class ArrayUtils {
      *
      * @param array The array to copy.
      * @param <T>   The type of objects.
+     *
      * @return The copy of the array.
      */
     public static <T> T[] copyOf(T[] array) {
         return Arrays.copyOf(array, array.length);
     }
 
-    public static <T> Set<T> asSet(T... values){
+    /**
+     * Create a Set containing all the given values.
+     *
+     * @param values The values to put into the set.
+     * @param <T>    The type of objects.
+     *
+     * @return A Set containing all the given values.
+     */
+    public static <T> Set<T> asSet(T... values) {
         return new HashSet<T>(Arrays.asList(values));
     }
 
-    public static <T> boolean search(T[] values, T searched) {
+    /**
+     * Create a List containing all the given values.
+     *
+     * @param values The values to put into the list.
+     * @param <T>    The type of objects.
+     *
+     * @return A List containing all the given values.
+     */
+    public static <T> List<T> asList(T... values) {
+        return Arrays.asList(values);
+    }
+
+    /**
+     * Test if the given array contains the given value.
+     *
+     * @param values   The array to search in.
+     * @param searched The value to search.
+     * @param <T>      The type of objecsts.
+     *
+     * @return <code>true</code> if the array contains the searched value otherwise <code>false</code>.
+     */
+    public static <T> boolean contains(T[] values, T searched) {
         for (T value : values) {
             if (value.equals(searched)) {
                 return true;
