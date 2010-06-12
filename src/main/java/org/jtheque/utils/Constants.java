@@ -25,6 +25,7 @@ public final class Constants {
     public static final int HASH_CODE_START = 17;
     public static final int HASH_CODE_PRIME = 37;
     public static final int MINUTES_IN_AN_HOUR = 60;
+    public static final int MILLISECONDS_IN_A_SECOND = 1000;
 
     /**
      * This class is an utility class, not instanciable.
