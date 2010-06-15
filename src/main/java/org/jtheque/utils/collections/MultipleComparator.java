@@ -19,10 +19,10 @@ import java.util.Comparator;
  */
 
 /**
- * Comparator that uses multiple comparators to make chained comparisons. If the first comparator indicates that
- * the 2 objects are equals, we use the next comparator until we've used all the comparators. If all the comparators
- * indicates that the two objects are equals, then this comparator return that the two objects are equals.
- * The comparator are using in the order they are given.
+ * Comparator that uses multiple comparators to make chained comparisons. If the first comparator indicates that the 2
+ * objects are equals, we use the next comparator until we've used all the comparators. If all the comparators indicates
+ * that the two objects are equals, then this comparator return that the two objects are equals. The comparator are
+ * using in the order they are given.
  *
  * @author Baptiste Wicht
  */
@@ -42,10 +42,10 @@ public class MultipleComparator<T> implements Comparator<T> {
 
     @Override
     public int compare(T o1, T o2) {
-        for(Comparator<T> comparator : comparators){
+        for (Comparator<T> comparator : comparators) {
             int compare = comparator.compare(o1, o2);
 
-            if(compare != 0){
+            if (compare != 0) {
                 return compare;
             }
         }

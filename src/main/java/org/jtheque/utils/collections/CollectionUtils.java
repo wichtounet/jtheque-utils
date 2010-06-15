@@ -236,9 +236,9 @@ public final class CollectionUtils {
      * Construct a comparator that use the reverse order than the given comparator.
      *
      * @param comparator The comparator to reverse.
-     * @param <T> The type of objects.
+     * @param <T>        The type of objects.
      *
-     * @return A reverse comparator. 
+     * @return A reverse comparator.
      */
     public static <T> Comparator<T> reverseComparator(Comparator<T> comparator) {
         return Collections.reverseOrder(comparator);

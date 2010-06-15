@@ -45,5 +45,5 @@ public enum Hasher {
      */
     public String getAlgorithm() {
         return algorithm;
-	}
+    }
 }
