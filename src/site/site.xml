@@ -1,36 +1,23 @@
 <project name="JTheque Utils">
     <skin>
-        <groupId>org.jtheque</groupId>
-        <artifactId>jtheque-maven-skin</artifactId>
-        <version>1.0</version>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId>
+        <version>1.0.1</version>
     </skin>
 
     <body>
         <links>
-            <item name="Developpez.com" href="http://www.developpez.com"/>
+            <item name="baptiste-wicht.com" href="http://baptiste-wicht.com"/>
             <item name="Maven" href="http://maven.apache.org"/>
         </links>
 
         <breadcrumbs>
-            <item name="JTheque" href="http://jtheque.developpez.com/"/>
-            <item name="JTheque Utilities" href="http://jtheque.developpez.com/utilities/"/>
-            <item name="JTheque Utils" href="http://jtheque.developpez.com/utilities/utils/"/>
+            <item name="JTheque" href="http://jtheque.baptiste-wicht.com"/>
         </breadcrumbs>
 
         <menu name="JTheque Utils">
-            <item name="Introduction" href="index.html"/>
-            <item name="News" href="news.html"/>
-            <item name="FAQ" href="faq.html"/>
-            <item name="Forum JTheque" href="http://www.developpez.net/forums/f751/applications/projets/jtheque/"/>
-        </menu>
-
-        <menu name="Obtenir JTheque Utils">
-            <item name="Téléchargement" href="download.html"/>
-            <item name="Versions" href="versions.html"/>
-        </menu>
-
-        <menu name="Autres langues">
-            <item name="English" href="en/index.html"/>
+            <item name="Overview" href="index.html"/>
+            <item name="Download" href="download.html"/>
         </menu>
 
         <menu ref="reports"/>

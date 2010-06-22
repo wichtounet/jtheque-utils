@@ -1,11 +1,9 @@
-    Bienvenue sur le site de JTheque Utils. J'espère que vous y trouverez ce que vous cherchez. Ce site
-    contient la documentation utilisateur et développeur de JTheque Utils. 
+    Welcome to the JTheque Utils Site. I hope you will find here all 
+    the documentation you need. You will here here user documentation 
+    and developer information. 
 
-Qu'est-ce que JTheque Utils ? 
+What is JTheque Utils
 
-    JTheque Utils est une librairie pour les programmes Java. Elle fournit une série de
-    classes uilitaires, par exemple CollectionUtils, StringUtils ou ArrayUtils qui fournissent
-    plusieurs services, souvent redondants dans les projets Java. 
-    
-    JTheque Utils est utilisée par les différents modules de JTheque, mais elle en est complétement
-    indépendante. Elle est d'ailleurs issue de ces différents projets. 
+    JTheque Utils is a library for Java project. This library provide
+    some utility classes like CollectionUtils, StringUtils who can
+    facilitate the development of a Java project. 

@@ -12,23 +12,28 @@
     <packaging>bundle</packaging>
     <name>org.jtheque.utils</name>
 
-    <url>http://jtheque.developpez.com/utilities/utils</url>
+    <url>http://github.com/wichtounet/jtheque-utils</url>
 
     <ciManagement>
         <system>Hudson</system>
         <url>http://wichtounet.homedns.org:8280/hudson/</url>
     </ciManagement>
 
+    <issueManagement>
+        <system>GitHub</system>
+        <url>http://github.com/wichtounet/jtheque-utils/issues</url>
+	</issueManagement>
+
     <scm>
-        <connection>scm:git:git://github.com/wichtounet/jtheque-utils.git</connection>
-        <url>scm:git:git://github.com/wichtounet/jtheque-utils.git</url>
+        <url>http://github.com/wichtounet/jtheque-utils</url>
+        <connection>scm:git:git@github.com:wichtounet/jtheque-utils.git</connection>
     </scm>
 
     <distributionManagement>
         <site>
-            <id>jtheque-web-server</id>
-            <name>JTheque FTP Server</name>
-            <url>ftp://developpez.com/utilities/utils</url>
+            <id>bw-web-server</id>
+            <name>BW FTP Server</name>
+            <url>ftp://baptiste-wicht.com/jtheque/utils</url>
         </site>
         <repository>
             <id>Server-PC-releases</id>
@@ -117,7 +122,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>
-                  <locales>fr,en</locales>
+                  <locales>en</locales>
                 </configuration>
             </plugin>
         </plugins>
