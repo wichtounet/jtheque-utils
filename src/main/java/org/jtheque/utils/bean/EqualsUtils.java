@@ -36,6 +36,7 @@ public final class EqualsUtils {
      *
      * @param object The first object to test.
      * @param other  The second object to test.
+     *
      * @return true if the objects are incompatibles else false.
      */
     public static boolean areObjectIncompatible(Object object, Object other) {
@@ -51,6 +52,7 @@ public final class EqualsUtils {
      *
      * @param object The first object to test.
      * @param other  The second object to test.
+     *
      * @return true if the objects aren't equals else false.
      */
     public static boolean areNotEquals(Object object, Object other) {
@@ -65,48 +67,49 @@ public final class EqualsUtils {
         return false;
     }
 
-	/**
-	 * Test if the two objects are equals.
-	 *
-	 * @param bean The bean to test.
-	 * @param other The other bean to test for equality with the first one.
-	 * @param properties The properties to compare one by one. The properties n is compared to the property
-	 * n + (properties.length / 2). This array must be pair.
-	 *
-	 * @return A boolean indicating if the two objects are equals or not.
-	 */
-	public static boolean areEqualsDirect(Object bean, Object other, Object... properties){
-		if (bean == other){
-			return true;
-		}
+    /**
+     * Test if the two objects are equals.
+     *
+     * @param bean       The bean to test.
+     * @param other      The other bean to test for equality with the first one.
+     * @param properties The properties to compare one by one. The properties n is compared to the property n +
+     *                   (properties.length / 2). This array must be pair.
+     *
+     * @return A boolean indicating if the two objects are equals or not.
+     */
+    public static boolean areEqualsDirect(Object bean, Object other, Object... properties) {
+        if (bean == other) {
+            return true;
+        }
 
-		if (EqualsUtils.areObjectIncompatible(bean, other)){
-			return false;
-		}
+        if (areObjectIncompatible(bean, other)) {
+            return false;
+        }
 
         int numberOfProperties = properties.length / 2;
 
-		for (int i = 0; i < numberOfProperties; i++){
-			Object propertyBean = properties[i];
-			Object propertyOther = properties[i + numberOfProperties];
+        for (int i = 0; i < numberOfProperties; i++) {
+            Object propertyBean = properties[i];
+            Object propertyOther = properties[i + numberOfProperties];
 
-			if (propertyBean == null){
-				if (propertyOther != null){
-					return false;
-				}
-			} else if (!propertyBean.equals(propertyOther)){
-				return false;
-			}
-		}
+            if (propertyBean == null) {
+                if (propertyOther != null) {
+                    return false;
+                }
+            } else if (!propertyBean.equals(propertyOther)) {
+                return false;
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
     /**
      * Test if 2 files are not the sames files.
      *
      * @param file  The first file to test.
      * @param other The second file to test.
+     *
      * @return true if the files are not the same else false.
      */
     public static boolean areNotSameFile(File file, File other) {

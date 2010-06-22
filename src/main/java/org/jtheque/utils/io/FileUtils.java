@@ -17,6 +17,7 @@ package org.jtheque.utils.io;
  */
 
 import org.jtheque.utils.StringUtils;
+
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
@@ -30,12 +31,11 @@ import java.io.FileOutputStream;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.FileChannel;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -84,6 +84,7 @@ public final class FileUtils {
      * Return the text of the file.
      *
      * @param path The path to the file.
+     *
      * @return The content of the file
      */
     public static String getTextOfSystemResource(String path) {
@@ -96,11 +97,12 @@ public final class FileUtils {
      * Return the text of the file referenced by the specified path.
      *
      * @param path The path to the file.
+     *
      * @return The text of the path.
      */
     public static String getTextOf(String path) {
         try {
-            InputStream stream = new FileInputStream(new File(path));
+            InputStream stream = asInputStream(path);
 
             return getContentOfStream(stream);
         } catch (FileNotFoundException e) {
@@ -114,6 +116,7 @@ public final class FileUtils {
      * Return the content of the stream.
      *
      * @param stream The stream to read from.
+     *
      * @return all the content of the stream in a <code>String</code> object.
      */
     private static String getContentOfStream(InputStream stream) {
@@ -140,6 +143,7 @@ public final class FileUtils {
      * Return the lines of a stream.
      *
      * @param stream The stream to count the lines from.
+     *
      * @return The lines of the stream.
      */
     public static Collection<String> getLinesOf(InputStream stream) {
@@ -166,11 +170,12 @@ public final class FileUtils {
      *
      * @param filePath    The path to the file to download.
      * @param destination The path to the destination's file.
+     *
      * @throws FileException If an error occurs during the downloading process
      */
     public static void downloadFile(String filePath, String destination) throws FileException {
         InputStream is = null;
-        
+
         try {
             URL url = new URL(filePath);
 
@@ -201,7 +206,9 @@ public final class FileUtils {
      *
      * @param is     The input stream.
      * @param length The length to read.
+     *
      * @return The data into a byte array.
+     *
      * @throws IOException If an IO problem occurs during the reading.
      */
     private static byte[] downloadData(InputStream is, int length) throws IOException {
@@ -230,12 +237,13 @@ public final class FileUtils {
      *
      * @param destination The destination file path.
      * @param data        The data to write.
+     *
      * @throws IOException If an IO problem occurs during the writing.
      */
     private static void writeData(String destination, byte[] data) throws IOException {
-        FileOutputStream destinationFile = null;
+        OutputStream destinationFile = null;
         try {
-            destinationFile = new FileOutputStream(destination);
+            destinationFile = asOutputStream(destination);
 
             destinationFile.write(data);
 
@@ -250,6 +258,7 @@ public final class FileUtils {
      *
      * @param sourcePath The path of the source.
      * @param targetPath The path of the destination.
+     *
      * @throws CopyException Thrown if an error occurs during the copy.
      */
     public static void copy(String sourcePath, String targetPath) throws CopyException {
@@ -264,6 +273,7 @@ public final class FileUtils {
      *
      * @param source The source's file.
      * @param target The destination's file.
+     *
      * @throws CopyException Thrown when a problem occurs during the copy.
      */
     public static void copy(File source, File target) throws CopyException {
@@ -272,7 +282,7 @@ public final class FileUtils {
         } else if (source.exists()) {
             FileChannel in = null;
             FileChannel out = null;
-            
+
             FileInputStream inStream = null;
             FileOutputStream outStream = null;
 
@@ -297,18 +307,26 @@ public final class FileUtils {
         }
     }
 
+    /**
+     * Copy the input stream content into the given file.
+     *
+     * @param inputStream The input stream to read from.
+     * @param file        The file to write from.
+     *
+     * @throws CopyException Thrown if an error occurs during the writing or reading.
+     */
     public static void copy(InputStream inputStream, File file) throws CopyException {
         FilterInputStream input = null;
-        FileOutputStream output = null;
+        OutputStream output = null;
 
         try {
             input = new BufferedInputStream(inputStream);
-            output = new FileOutputStream(file);
+            output = asOutputStream(file);
 
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[BUFFER_SIZE];
             int read = input.read(buffer);
 
-            while(read > 0){
+            while (read > 0) {
                 output.write(buffer, 0, read);
 
                 read = input.read(buffer);
@@ -316,8 +334,8 @@ public final class FileUtils {
         } catch (IOException e) {
             throw new CopyException("Unable to copy the file due to IOException", e);
         } finally {
-            FileUtils.close(input);
-            FileUtils.close(output);
+            close(input);
+            close(output);
         }
     }
 
@@ -326,11 +344,12 @@ public final class FileUtils {
      *
      * @param source The source.
      * @param target The target.
+     *
      * @throws CopyException Thrown if an error occurs during the copying process.
      */
     private static void copyDirectory(File source, File target) throws CopyException {
         if (!target.exists() && !target.mkdirs()) {
-            throw new CopyException("Impossible de créer le répertoire " + target.getAbsolutePath());
+            throw new CopyException("Unable to create the target directory " + target.getAbsolutePath());
         }
 
         File[] files = source.listFiles();
@@ -351,6 +370,7 @@ public final class FileUtils {
      *
      * @param sourcePath The path of the source.
      * @param targetPath The path of the destination.
+     *
      * @throws CopyException Thrown if an error occurs during the move.
      */
     public static void move(String sourcePath, String targetPath) throws CopyException {
@@ -367,6 +387,7 @@ public final class FileUtils {
      *
      * @param source            The source buffer
      * @param destinationFolder The destination folder.
+     *
      * @return All the files of the zip
      */
     public static Collection<File> unzip(InputStream source, String destinationFolder) {
@@ -401,7 +422,9 @@ public final class FileUtils {
      * @param destinationFolder The folder to store the unzipped entry to.
      * @param zis               The zip input stream.
      * @param entry             The current entry.
+     *
      * @return The written file.
+     *
      * @throws IOException If an error occurs during the file processing.
      */
     private static File readFile(String destinationFolder, ZipInputStream zis, ZipEntry entry) throws IOException {
@@ -409,7 +432,7 @@ public final class FileUtils {
 
         File file = new File(destinationFolder + '/' + entry.getName());
 
-        BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file), BUFFER_SIZE);
+        OutputStream outputStream = asOutputStream(file);
 
         int count = zis.read(data, 0, BUFFER_SIZE);
 
@@ -432,7 +455,7 @@ public final class FileUtils {
      */
     public static void zip(Iterable<File> files, File destination) {
         try {
-            zip(files, new BufferedOutputStream(new FileOutputStream(destination)));
+            zip(files, asOutputStream(destination));
         } catch (FileNotFoundException e) {
             LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during zipping " + e);
         }
@@ -444,7 +467,7 @@ public final class FileUtils {
      * @param files  The files we have to zip.
      * @param buffer The destination stream.
      */
-    public static void zip(Iterable<File> files, BufferedOutputStream buffer) {
+    public static void zip(Iterable<File> files, OutputStream buffer) {
         ZipOutputStream zos = null;
         try {
             zos = new ZipOutputStream(buffer);
@@ -464,15 +487,16 @@ public final class FileUtils {
      *
      * @param files The files to zip.
      * @param zos   The output stream to write in.
+     *
      * @throws IOException If an IO problem occurs during the zipping.
      */
     private static void zipFiles(Iterable<File> files, ZipOutputStream zos) throws IOException {
         byte[] buf = new byte[BUFFER_SIZE];
 
         for (File f : files) {
-            FileInputStream in = null;
+            InputStream in = null;
             try {
-                in = new FileInputStream(f);
+                in = asInputStream(f);
 
                 ZipEntry entry = new ZipEntry(f.getName());
 
@@ -552,6 +576,7 @@ public final class FileUtils {
      *
      * @param file   The file to test.
      * @param folder The folder to test.
+     *
      * @return true if the file is in the directory.
      */
     public static boolean isFileInDirectory(File file, File folder) {
@@ -559,8 +584,7 @@ public final class FileUtils {
     }
 
     /**
-     * Clear the folder. It seems delete all files tags starting with deleted and the file who the start tags refer
-     * to.
+     * Clear the folder. It seems delete all files tags starting with deleted and the file who the start tags refer to.
      *
      * @param folder The folder to clean.
      */
@@ -589,6 +613,7 @@ public final class FileUtils {
      *
      * @param file   The file.
      * @param folder The folder.
+     *
      * @return true if the file is now in directory.
      */
     public static boolean putFileInDirectoryIfNot(File file, File folder) {
@@ -606,18 +631,55 @@ public final class FileUtils {
     }
 
     /**
-     * Return an input stream to the path.
+     * Return an input stream to the path. The stream will be buffered.
      *
      * @param path The path to get an input stream for.
+     *
      * @return An input stream to the file path.
+     *
      * @throws FileNotFoundException If the path doesn't represent an existing file.
      */
     public static InputStream asInputStream(String path) throws FileNotFoundException {
-        return new BufferedInputStream(new FileInputStream(path));
+        return new BufferedInputStream(new FileInputStream(path), BUFFER_SIZE);
     }
 
+    /**
+     * Return an input stream to the file. The stream will be buffered.
+     *
+     * @param file The file to get an input stream for.
+     *
+     * @return An input stream to the file.
+     *
+     * @throws FileNotFoundException If the file doesn't exist.
+     */
     public static InputStream asInputStream(File file) throws FileNotFoundException {
-        return asInputStream(file.getAbsolutePath());
+        return new BufferedInputStream(new FileInputStream(file), BUFFER_SIZE);
+    }
+
+    /**
+     * Return an output stream to the file path. The stream will be buffered.
+     *
+     * @param path The file's path to get an output stream for.
+     *
+     * @return An output stream to the file's path.
+     *
+     * @throws FileNotFoundException If the file is a directory or cannot be opened.
+     */
+    public static OutputStream asOutputStream(String path) throws FileNotFoundException {
+        return new BufferedOutputStream(new FileOutputStream(path), BUFFER_SIZE);
+    }
+
+    /**
+     * Return an output stream to the file. The stream will be buffered.
+     *
+     * @param file The file to get an output stream for.
+     *
+     * @return An output stream to the file.
+     *
+     * @throws FileNotFoundException If the file is a directory or cannot be opened.
+     */
+    public static OutputStream asOutputStream(File file) throws FileNotFoundException {
+        return new BufferedOutputStream(new FileOutputStream(file), BUFFER_SIZE);
     }
 
     /**
@@ -655,10 +717,10 @@ public final class FileUtils {
      *
      * @return An existing file object.
      */
-    public static File getAnExistingFile(){
-        for(File root : File.listRoots()){
-            for(File f : root.listFiles()){
-                if(f.isFile() && f.length() > 0){
+    public static File getAnExistingFile() {
+        for (File root : File.listRoots()) {
+            for (File f : root.listFiles()) {
+                if (f.isFile() && f.length() > 0) {
                     return f;
                 }
             }
@@ -674,8 +736,8 @@ public final class FileUtils {
      *
      * @return The size of the file or 0 if the file doesn't exist.
      */
-    public static long getFileSize(String path){
-        if(StringUtils.isEmpty(path)){
+    public static long getFileSize(String path) {
+        if (StringUtils.isEmpty(path)) {
             return 0;
         }
 
@@ -689,8 +751,8 @@ public final class FileUtils {
      *
      * @return The size of the file or 0 if the file doesn't exist.
      */
-    public static long getFileSize(File file){
-        if(file == null || !file.exists()){
+    public static long getFileSize(File file) {
+        if (file == null || !file.exists()) {
             return 0;
         }
 
@@ -704,8 +766,8 @@ public final class FileUtils {
      *
      * @return The date of the last modification of the file or null if the file doesn't not exists.
      */
-    public static Date getLastModifiedDate(String path){
-        if(StringUtils.isEmpty(path)){
+    public static Date getLastModifiedDate(String path) {
+        if (StringUtils.isEmpty(path)) {
             return null;
         }
 
@@ -713,14 +775,14 @@ public final class FileUtils {
     }
 
     /**
-     * Return the date of the last modification of the specified file. 
+     * Return the date of the last modification of the specified file.
      *
      * @param file The file.
      *
      * @return The date of the last modification of the file or null if the file doesn't not exists.
      */
-    public static Date getLastModifiedDate(File file){
-        if(file == null || !file.exists()){
+    public static Date getLastModifiedDate(File file) {
+        if (file == null || !file.exists()) {
             return null;
         }
 
@@ -730,12 +792,12 @@ public final class FileUtils {
     }
 
     /**
-     * Return the next free name for the specified name in the specified folder.
-     * If there is also a file named name in the specified folder, it will search for files
-     * name[n].extension while it find a not existing file.
+     * Return the next free name for the specified name in the specified folder. If there is also a file named name in
+     * the specified folder, it will search for files name[n].extension while it find a not existing file.
      *
      * @param folder The folder to search free name in.
      * @param name   The name to add.
+     *
      * @return The next free name for the specified name in the specified folder.
      */
     public static String getFreeName(String folder, String name) {
@@ -758,13 +820,14 @@ public final class FileUtils {
     /**
      * Return all the files of the folder include the sub files and folders with no level limit.
      *
-     * @param folder The folder to get the files from.
+     * @param folder     The folder to get the files from.
      * @param fileFilter The filter to use to select the files.
      *
-     * @return A Collection containing all the files of the folder and his sub folders selected by the specified file filter.
+     * @return A Collection containing all the files of the folder and his sub folders selected by the specified file
+     *         filter.
      */
     public static Collection<File> getFilesOfFolder(File folder, FileFilter fileFilter) {
-        if(folder.isDirectory()){
+        if (folder.isDirectory()) {
             Collection<File> files = new ArrayList<File>(50);
 
             readFolder(folder, files, fileFilter);
@@ -778,8 +841,8 @@ public final class FileUtils {
     /**
      * Read the folder and all the files of the folder in the collection.
      *
-     * @param folder The folder to read.
-     * @param files  The collection to add the files to.
+     * @param folder     The folder to read.
+     * @param files      The collection to add the files to.
      * @param fileFilter The filter to get the files with.
      */
     private static void readFolder(File folder, Collection<File> files, FileFilter fileFilter) {

@@ -19,6 +19,7 @@ package org.jtheque.utils.ui;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.utils.ui.edt.Task;
+
 import org.slf4j.LoggerFactory;
 
 import javax.swing.Action;
@@ -33,6 +34,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.DisplayMode;
@@ -45,6 +47,7 @@ import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Provide utility methods for Swing Components.
@@ -128,6 +131,7 @@ public final class SwingUtils {
      * Return the JOptionPane parent.
      *
      * @param c The component.
+     *
      * @return The parent JOptionPane.
      */
     public static JOptionPane getOptionPane(Component c) {
@@ -151,7 +155,7 @@ public final class SwingUtils {
      * @param value The value to set to the JOptionPane.
      */
     public static void setOptionPaneValue(Component c, Object value) {
-        JOptionPane optionPane = SwingUtils.getOptionPane(c);
+        JOptionPane optionPane = getOptionPane(c);
         if (optionPane != null) {
             optionPane.setValue(value);
         }
@@ -161,6 +165,7 @@ public final class SwingUtils {
      * Create a button bar for actions.
      *
      * @param actions The actions to create the bar for.
+     *
      * @return A Bar containing a button for each action.
      */
     public static Component createButtonBar(Action... actions) {
@@ -172,6 +177,7 @@ public final class SwingUtils {
      *
      * @param leftAligned A boolean flag indicating if we want a left to right alignment or not.
      * @param actions     The actions to add to the menu bar.
+     *
      * @return The builded button bar.
      */
     public static Component createButtonBar(boolean leftAligned, Action... actions) {
@@ -201,11 +207,17 @@ public final class SwingUtils {
         field.getActionMap().put("validate", action);
         field.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "validate");
     }
-	
+
+    /**
+     * Add an action to execute when the validation key (Enter) is pressed on all the given components.
+     *
+     * @param action     The action to execute on validate.
+     * @param components The components to apply the action on.
+     */
     public static void addFieldsValidateAction(Action action, JComponent... components) {
-	    for(JComponent component : components){
-		    addFieldValidateAction(component, action);
-	    }
+        for (JComponent component : components) {
+            addFieldValidateAction(component, action);
+        }
     }
 
     /**
@@ -233,29 +245,8 @@ public final class SwingUtils {
         return defaultFont;
     }
 
-    public static void inEdtSync(final Runnable runnable) {
-        if (SwingUtilities.isEventDispatchThread()) {
-            runnable.run();
-        } else {
-            Thread thread = new Thread(new Runnable(){
-                @Override
-                public void run() {
-                    inEdt(runnable);
-                }
-            });
-            
-            thread.start();
-
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                LoggerFactory.getLogger(SwingUtils.class).error(e.getMessage(), e);
-            }
-        }
-    }
-
     /**
-     * Executed the specified runnable in the EDT.
+     * Execute the specified runnable in the EDT.
      *
      * @param runnable The runnable to run in EDT.
      */
@@ -264,6 +255,25 @@ public final class SwingUtils {
             runnable.run();
         } else {
             EventQueue.invokeLater(runnable);
+        }
+    }
+
+    /**
+     * Execute the specified runnable in the EDT and wait for its end.
+     *
+     * @param runnable The runnable to run in EDT.
+     */
+    private static void inEdtSync(Runnable runnable) {
+        if (SwingUtilities.isEventDispatchThread()) {
+            runnable.run();
+        } else {
+            try {
+                EventQueue.invokeAndWait(runnable);
+            } catch (InterruptedException e) {
+                LoggerFactory.getLogger(SwingUtils.class).error(e.getMessage(), e);
+            } catch (InvocationTargetException e) {
+                LoggerFactory.getLogger(SwingUtils.class).error(e.getMessage(), e);
+            }
         }
     }
 
@@ -281,19 +291,37 @@ public final class SwingUtils {
         });
     }
 
+    /**
+     * Execute the given task in EDT.
+     *
+     * @param task The task to execute.
+     */
     public static void execute(SimpleTask task) {
         inEdt(task.asRunnable());
     }
 
+    /**
+     * Execute the given task in EDT and return its result.
+     *
+     * @param task The task to execute.
+     * @param <T>  The return type of the task.
+     *
+     * @return The return of the task.
+     */
     public static <T> T execute(Task<T> task) {
-        inEdt(task.asRunnable());
+        inEdtSync(task.asRunnable());
 
         return task.getResult();
     }
 
-    public static String chooseFile(SimpleFilter filter) {
-        File file = null;
-
+    /**
+     * Ask the user of a file.
+     *
+     * @param filter The filter to use to filter the file chooser view.
+     *
+     * @return The File chosen by the user or null if the user has canceled the view.
+     */
+    public static File chooseFile(SimpleFilter filter) {
         if (chooser == null) {
             chooser = new JFileChooser();
         }
@@ -310,15 +338,18 @@ public final class SwingUtils {
         int answer = chooser.showOpenDialog(new JFrame());
 
         if (answer == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();
+            return chooser.getSelectedFile();
         }
 
-        return file == null ? null : file.getAbsolutePath();
+        return null;
     }
-    
-    public static String chooseDirectory() {
-        File file = null;
 
+    /**
+     * Ask the user of a directory.
+     *
+     * @return The directory chosen by the user or null if the user has canceled the view.
+     */
+    public static File chooseDirectory() {
         if (chooser == null) {
             chooser = new JFileChooser();
         }
@@ -329,9 +360,9 @@ public final class SwingUtils {
         int returnCode = chooser.showOpenDialog(new JFrame());
 
         if (returnCode == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();
+            return chooser.getSelectedFile();
         }
 
-        return file == null ? null : file.getAbsolutePath();
+        return null;
     }
 }

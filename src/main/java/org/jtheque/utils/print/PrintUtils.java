@@ -17,6 +17,7 @@ package org.jtheque.utils.print;
  */
 
 import org.jtheque.utils.io.FileUtils;
+
 import org.slf4j.LoggerFactory;
 
 import javax.print.attribute.HashPrintRequestAttributeSet;
@@ -26,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.RepaintManager;
 import javax.swing.text.JTextComponent;
+
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Window;
@@ -135,6 +137,7 @@ public final class PrintUtils {
      *
      * @param pgFormat  The <code>PageFormat</code> in which we want to print
      * @param component The component to print
+     *
      * @return The number of pages
      */
     static int getTotalPageForComponent(PageFormat pgFormat, Component component) {
@@ -159,6 +162,7 @@ public final class PrintUtils {
      * @param metrics    The <code>FontMetrics</code> of the component
      * @param pageFormat The PageFormat in which we want to print
      * @param increment  The space between the lines
+     *
      * @return The necessary number of pages
      */
     public static int getTotalPageForList(int lines, FontMetrics metrics, PageFormat pageFormat, int increment) {

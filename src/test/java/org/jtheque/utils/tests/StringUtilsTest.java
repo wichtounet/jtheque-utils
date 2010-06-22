@@ -1,6 +1,7 @@
 package org.jtheque.utils.tests;
 
 import org.jtheque.utils.StringUtils;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

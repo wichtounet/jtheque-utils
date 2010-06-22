@@ -1,6 +1,7 @@
 package org.jtheque.utils.bean;
 
 import org.jtheque.utils.Constants;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -20,6 +20,11 @@ import java.lang.reflect.Field;
  * limitations under the License.
  */
 
+/**
+ * Utility class to work with beans.
+ *
+ * @author Baptiste Wicht
+ */
 public final class BeanUtils {
     /**
      * Utility class, not instanciable.
@@ -31,10 +36,9 @@ public final class BeanUtils {
     /**
      * Create a quick memento using the specified fields.
      *
-     * @param bean The bean to create the memento from.
+     * @param bean   The bean to create the memento from.
      * @param fields The fields to use.
-     *
-     * @param <T> The type of data.
+     * @param <T>    The type of data.
      *
      * @return A memento of the bean.
      */
@@ -59,9 +63,9 @@ public final class BeanUtils {
     /**
      * Restore the quick memento to the bean.
      *
-     * @param bean The bean to restore.
+     * @param bean    The bean to restore.
      * @param memento The memento to restore.
-     * @param fields The fields to use.
+     * @param fields  The fields to use.
      */
     public static void restoreQuickMemento(Object bean, Object memento, String... fields) {
         try {
@@ -75,7 +79,14 @@ public final class BeanUtils {
         }
     }
 
-    public static void set(Object bean, String field, Object value){
+    /**
+     * Modify the value of the bean.
+     *
+     * @param bean  The bean to modify.
+     * @param field The field to modify.
+     * @param value The value to set to the field.
+     */
+    public static void set(Object bean, String field, Object value) {
         try {
             Field f = bean.getClass().getDeclaredField(field);
             f.setAccessible(true);
@@ -87,6 +98,15 @@ public final class BeanUtils {
         }
     }
 
+    /**
+     * Return the value of the field of the bean.
+     *
+     * @param bean  The bean to get the value for.
+     * @param field The field to get the value for.
+     * @param <T>   The type of the field.
+     *
+     * @return The value of the field else null if an error occurs.
+     */
     public static <T> T get(Object bean, String field) {
         try {
             Field f = bean.getClass().getDeclaredField(field);
@@ -101,6 +121,15 @@ public final class BeanUtils {
         return null;
     }
 
+    /**
+     * Return the value of the static field of the class.
+     *
+     * @param aClass The class to get the static field for.
+     * @param field  The field to get the value for.
+     * @param <T>    The type of the field.
+     *
+     * @return The value of the field else null if an error occurs.
+     */
     public static <T> T getStatic(Class<?> aClass, String field) {
         try {
             Field f = aClass.getDeclaredField(field);

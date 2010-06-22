@@ -3,6 +3,7 @@ package org.jtheque.utils.ui;
 import org.jtheque.utils.io.SimpleFilter;
 
 import javax.swing.filechooser.FileFilter;
+
 import java.io.File;
 
 /*

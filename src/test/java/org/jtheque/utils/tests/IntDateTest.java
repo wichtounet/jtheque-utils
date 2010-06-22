@@ -1,6 +1,7 @@
 package org.jtheque.utils.tests;
 
 import org.jtheque.utils.bean.IntDate;
+
 import org.junit.Test;
 
 import java.util.Calendar;

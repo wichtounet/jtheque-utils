@@ -18,6 +18,7 @@ package org.jtheque.utils.tests;
 
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
+
 import org.junit.Test;
 
 import java.util.Arrays;

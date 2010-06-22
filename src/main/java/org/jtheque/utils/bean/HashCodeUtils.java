@@ -39,6 +39,7 @@ public final class HashCodeUtils {
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean.
+     *
      * @return A hash code based on all the properties of the bean.
      */
     public static int hashCode(Object bean) {
@@ -62,6 +63,7 @@ public final class HashCodeUtils {
      *
      * @param bean       The bean to generate the hash code from.
      * @param properties The properties to use to generate the hash code.
+     *
      * @return The hash code of the bean . If there is no properties, the hash code will be 17.
      */
     public static int hashCode(Object bean, String... properties) {
@@ -76,28 +78,29 @@ public final class HashCodeUtils {
         return result;
     }
 
-	/**
-	 * Return the hash code of an object, using the properties in the given list.
-	 *
-	 * @param properties The properties to use to generate the hash code.
-	 *
-	 * @return The hash code of the bean . If there is no properties, the hash code will be 17.
-	 */
-	public static int hashCodeDirect(Object... properties){
-		int result = Constants.HASH_CODE_START;
+    /**
+     * Return the hash code of an object, using the properties in the given list.
+     *
+     * @param properties The properties to use to generate the hash code.
+     *
+     * @return The hash code of the bean . If there is no properties, the hash code will be 17.
+     */
+    public static int hashCodeDirect(Object... properties) {
+        int result = Constants.HASH_CODE_START;
 
-		for (Object property : properties){
-			result = computeValue(result, property);
+        for (Object property : properties) {
+            result = computeValue(result, property);
         }
 
-		return result;
-	}
+        return result;
+    }
 
     /**
      * Compute the value with the current result.
      *
      * @param result The current hash code result.
      * @param value  The value to compute to the result.
+     *
      * @return The result computed with the value.
      */
     private static int computeValue(int result, Object value) {

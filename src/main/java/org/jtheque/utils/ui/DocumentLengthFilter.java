@@ -19,6 +19,7 @@ package org.jtheque.utils.ui;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
+
 import java.awt.Toolkit;
 
 
@@ -33,8 +34,8 @@ public class DocumentLengthFilter extends DocumentFilter {
     private static final int DEFAULT_LENGTH_LIMIT = 50;
 
     /**
-     * Construct a new <code>DocumentLengthFilter</code> with a default maximum number of characters. By default,
-     * only 50 characters are accepted.
+     * Construct a new <code>DocumentLengthFilter</code> with a default maximum number of characters. By default, only
+     * 50 characters are accepted.
      */
     public DocumentLengthFilter() {
         this(DEFAULT_LENGTH_LIMIT);
@@ -52,13 +53,13 @@ public class DocumentLengthFilter extends DocumentFilter {
     }
 
     @Override
-    public final void insertString(DocumentFilter.FilterBypass fb, int offset, String str,
+    public final void insertString(FilterBypass fb, int offset, String str,
                                    AttributeSet attrs) throws BadLocationException {
         replace(fb, offset, 0, str, attrs);
     }
 
     @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String str,
+    public void replace(FilterBypass fb, int offset, int length, String str,
                         AttributeSet attrs) throws BadLocationException {
         int newLength = fb.getDocument().getLength() - length + str.length();
 

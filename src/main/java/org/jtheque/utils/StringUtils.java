@@ -26,8 +26,9 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
     public static final String EMPTY_STRING = "";
-
     private static final Pattern NUMBER_PATTERN = Pattern.compile("[0-9]");
+    private static final Pattern HTML_BR = Pattern.compile("<br[ ]?[/]?>");
+    private static final Pattern HTML_SIMPLE_QUOTE = Pattern.compile("&#39;");
 
     /**
      * Construct a new StringUtils. This constructor is private, all the methods are static.
@@ -40,6 +41,7 @@ public final class StringUtils {
      * Set the first letter of the String to upper. All the others chars will be lower case.
      *
      * @param word The string to modify.
+     *
      * @return The modified string.
      */
     public static String setFirstLetterOnlyUpper(String word) {
@@ -58,6 +60,7 @@ public final class StringUtils {
      * Set the first letter of the String to upper.
      *
      * @param word The string to modify.
+     *
      * @return The modified string.
      */
     public static String setFirstLetterUpper(String word) {
@@ -76,6 +79,7 @@ public final class StringUtils {
      * Test if a string is empty or not.
      *
      * @param string The string to test.
+     *
      * @return true if the string is empty else false.
      */
     public static boolean isEmpty(CharSequence string) {
@@ -86,6 +90,7 @@ public final class StringUtils {
      * Return true if the string is not empty.
      *
      * @param string The string to test.
+     *
      * @return true if the string is not empty else false.
      */
     public static boolean isNotEmpty(CharSequence string) {
@@ -107,12 +112,13 @@ public final class StringUtils {
      * Remove the HTML entities of a string.
      *
      * @param htmlString The string to clear.
+     *
      * @return The cleared string.
      */
-    public static String removeHTMLEntities(String htmlString) {
-        String cleaned = htmlString.replaceAll("&#39;", "'");
+    public static String removeHTMLEntities(CharSequence htmlString) {
+        String cleaned = HTML_SIMPLE_QUOTE.matcher(htmlString).replaceAll("'");
 
-        cleaned = cleaned.replaceAll("<br[ ]?[/]?>", "\n");
+        cleaned = HTML_BR.matcher(cleaned).replaceAll("\n");
 
         return cleaned;
     }
@@ -122,6 +128,7 @@ public final class StringUtils {
      *
      * @param str The string to test.
      * @param c   The char to test.
+     *
      * @return true if the string is surrounded by c else false.
      */
     public static boolean isStringSurroundedWith(CharSequence str, char c) {
@@ -136,6 +143,7 @@ public final class StringUtils {
      * Remove the first and the test chars.
      *
      * @param str The string to edit.
+     *
      * @return The string without his surrounded chars.
      */
     public static String removeSurroundedChars(String str) {
@@ -150,9 +158,9 @@ public final class StringUtils {
      * Remove the unicode characters from a string.
      *
      * @param value The string to clean.
+     *
      * @return The cleaned string.
      */
-    @SuppressWarnings({"DynamicRegexReplaceableByCompiledPattern"})
     public static String removeUnicode(String value) {
         String refreshed = value.replace("\\\\u00e0", "\u00e0");
         refreshed = refreshed.replace("\\\\u00e2", "\u00e2");
@@ -178,6 +186,7 @@ public final class StringUtils {
      *
      * @param value The String value to test.
      * @param ends  The possible ends.
+     *
      * @return true if the String value ends with one of the specified ends.
      */
     public static boolean endsWithOneOf(String value, String... ends) {
@@ -191,13 +200,11 @@ public final class StringUtils {
     }
 
     /**
-     * Test if an array of String is empty. An array of strings is empty if one of these rule matches :
-     * <ul>
-     * <li>The array is empty</li>
-     * <li>The array contains only null and empty String<li>
-     * </ul>
+     * Test if an array of String is empty. An array of strings is empty if one of these rule matches : <ul> <li>The
+     * array is empty</li> <li>The array contains only null and empty String<li> </ul>
      *
      * @param strings The array to test.
+     *
      * @return true if the array is empty else false.
      */
     public static boolean isEmpty(String[] strings) {
@@ -216,7 +223,9 @@ public final class StringUtils {
      * Test if an array of string is not empty.
      *
      * @param strings The array of Strings to test.
+     *
      * @return true if the array is not empty else false.
+     *
      * @see StringUtils#isEmpty(String[] strings);
      */
     public static boolean isNotEmpty(String[] strings) {
@@ -227,23 +236,40 @@ public final class StringUtils {
      * Remove all numbers of the given string.
      *
      * @param value The string.
+     *
      * @return The given string without any numbers.
      */
     public static String removeNumbers(CharSequence value) {
         return NUMBER_PATTERN.matcher(value).replaceAll("");
     }
 
-    public static String delete(String string, Object... toDeletes){
+    /**
+     * Delete from the source all the occurrences of the given char sequences.
+     *
+     * @param string    The string source.
+     * @param toDeletes The char sequences to remove from the source.
+     *
+     * @return A new string representing the source without the given char sequences.
+     */
+    public static String delete(String string, Object... toDeletes) {
         String cleared = string;
 
-        for(Object toDelete : toDeletes){
+        for (Object toDelete : toDeletes) {
             cleared = delete(cleared, toDelete.toString());
         }
 
         return cleared;
     }
 
-    public static String delete(String string, CharSequence toDelete){
+    /**
+     * Delete from the source string a sequence of char.
+     *
+     * @param string   The string source.
+     * @param toDelete The char sequence to remove from the source.
+     *
+     * @return A new string representing the source without the given char sequence.
+     */
+    public static String delete(String string, CharSequence toDelete) {
         return string.replace(toDelete, "");
     }
 }

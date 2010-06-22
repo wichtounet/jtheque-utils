@@ -11,7 +11,7 @@ this library into your maven repository :
 You should now be able to do a full build of `jtheque-unit-utils`:
 
     $ git clone git://github.com/wichtounet/jtheque-utils.git
-    $ cd jtheque-unit-utils
+    $ cd jtheque-utils
     $ mvn clean install
 
 To use this library in your projects, add the following to the `dependencies` section of your `pom.xml`:

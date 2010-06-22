@@ -39,7 +39,9 @@ public final class DataUtils {
      * Return the name and the first name of the complete name of a person.
      *
      * @param name The name of a person.
-     * @return An array containing at his index 0 the name of the person and at his index 1 the first name of the person.
+     *
+     * @return An array containing at his index 0 the name of the person and at his index 1 the first name of the
+     *         person.
      */
     public static String[] getNameAndFirstName(CharSequence name) {
         if (StringUtils.isEmpty(name)) {

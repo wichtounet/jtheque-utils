@@ -18,6 +18,7 @@ package org.jtheque.utils.io;
 
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

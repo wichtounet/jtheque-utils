@@ -18,32 +18,32 @@ package org.jtheque.utils;
 
 /**
  * An hasher algorithm enum to use with CryptoUtils.
- * 
+ *
  * @author Baptiste Wicht
  */
 public enum Hasher {
-	MD5 ("MD5"),
-	SHA256 ("SHA-256"),
-	SHA384 ("SHA-384"),
-	SHA512 ("SHA-512");
+    MD5("MD5"),
+    SHA256("SHA-256"),
+    SHA384("SHA-384"),
+    SHA512("SHA-512");
 
-	private final String algorithm;
+    private final String algorithm;
 
     /**
      * Create a new Hasher with the given algorithm.
      *
      * @param algorithm The algorithm.
      */
-	Hasher(String algorithm) {
-		this.algorithm = algorithm;
-	}
+    Hasher(String algorithm) {
+        this.algorithm = algorithm;
+    }
 
     /**
      * Return the algorithm of the hasher.
      *
-     * @return The algorithm of the hasher. 
+     * @return The algorithm of the hasher.
      */
-	public String getAlgorithm() {
-		return algorithm;
-	}
+    public String getAlgorithm() {
+        return algorithm;
+    }
 }

@@ -19,12 +19,12 @@ package org.jtheque.utils.ui;
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
+
 import java.awt.Toolkit;
 
 /**
- * A document filter used to limit the length of a field. This filter avert the user with a popup when he go to
- * the limit.
+ * A document filter used to limit the length of a field. This filter avert the user with a popup when he go to the
+ * limit.
  *
  * @author Baptiste Wicht
  */
@@ -33,8 +33,8 @@ public final class DocumentLengthFilterAvert extends DocumentLengthFilter {
     private final JTextField field;
 
     /**
-     * Construct a new <code>DocumentLengthFilterAvert</code> associated with a specific field and with a
-     * maximum number of characters.
+     * Construct a new <code>DocumentLengthFilterAvert</code> associated with a specific field and with a maximum number
+     * of characters.
      *
      * @param max   The maximum numbers of characters.
      * @param field The field we want to associate to fhe filter.
@@ -51,7 +51,7 @@ public final class DocumentLengthFilterAvert extends DocumentLengthFilter {
     }
 
     @Override
-    public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String str,
+    public void replace(FilterBypass fb, int offset, int length, String str,
                         AttributeSet attrs) throws BadLocationException {
         if (str != null) {
             int newLength = fb.getDocument().getLength() - length + str.length();

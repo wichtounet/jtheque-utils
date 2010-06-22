@@ -37,8 +37,7 @@ public final class CollectionUtils {
     private static final Object EMPTY_LIST = Collections.unmodifiableList(new ArrayList<Object>(0));
 
     /**
-     * Construct a new CollectionUtils. This constructor is private because all the methods are
-     * static.
+     * Construct a new CollectionUtils. This constructor is private because all the methods are static.
      */
     private CollectionUtils() {
         super();
@@ -61,12 +60,22 @@ public final class CollectionUtils {
      *
      * @param list The List to copy.
      * @param <T>  The type contained in the list.
+     *
      * @return A copy of the list.
      */
     public static <T> List<T> copyOf(Collection<T> list) {
         return new ArrayList<T>(list);
     }
 
+    /**
+     * Make a copy of the map into a new hash map.
+     *
+     * @param map The map to copy.
+     * @param <K> The type of key.
+     * @param <V> The type of value.
+     *
+     * @return A copy of the given map.
+     */
     public static <K, V> Map<K, V> copyOf(Map<K, V> map) {
         return new HashMap<K, V>(map);
     }
@@ -77,6 +86,7 @@ public final class CollectionUtils {
      * @param <T>        The type of object in the collection.
      * @param collection The collection to expand.
      * @param expander   The expander object.
+     *
      * @return The expanded collection.
      */
     public static <S, T> Collection<T> expand(Collection<S> collection, Expander<S, T> expander) {
@@ -149,6 +159,7 @@ public final class CollectionUtils {
      * Return an empty list. This list is unmodifiable.
      *
      * @param <T> The Type of object to store in the list.
+     *
      * @return The empty list.
      */
     public static <T> List<T> emptyList() {
@@ -184,6 +195,7 @@ public final class CollectionUtils {
      *
      * @param enumeration The enumeration to convert to Collection.
      * @param <T>         The type of object stored in the enumeration.
+     *
      * @return A Collection containing all the elements of the enumeration.
      */
     public static <T> Collection<T> toCollection(Enumeration<T> enumeration) {
@@ -201,9 +213,34 @@ public final class CollectionUtils {
      *
      * @param collection The collection.
      * @param <T>        The objects stored in the collection.
+     *
      * @return The first element of the collection or null if the collection is empty.
      */
     public static <T> T first(Iterable<T> collection) {
         return collection.iterator().next();
+    }
+
+    /**
+     * Construct a comparator that will use all the given comparators in the given order to make a comparison.
+     *
+     * @param comparators The comparators to use.
+     * @param <T>         The type of object.
+     *
+     * @return A comparator that use all the given comparators.
+     */
+    public static <T> Comparator<T> multipleComparator(Comparator<T>... comparators) {
+        return new MultipleComparator<T>(comparators);
+    }
+
+    /**
+     * Construct a comparator that use the reverse order than the given comparator.
+     *
+     * @param comparator The comparator to reverse.
+     * @param <T>        The type of objects.
+     *
+     * @return A reverse comparator.
+     */
+    public static <T> Comparator<T> reverseComparator(Comparator<T> comparator) {
+        return Collections.reverseOrder(comparator);
     }
 }

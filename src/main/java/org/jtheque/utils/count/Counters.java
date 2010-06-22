@@ -51,6 +51,7 @@ public final class Counters implements Iterable<Entry<String, Counter>> {
      * Return the counter named with the specific name.
      *
      * @param name The name of the counter we search.
+     *
      * @return The searched counter.
      */
     public Counter getCounter(String name) {
@@ -61,6 +62,7 @@ public final class Counters implements Iterable<Entry<String, Counter>> {
      * Return the named counter or a new if the counter doesn't exist.
      *
      * @param name The name of the counter.
+     *
      * @return The searched counter or a new if we doesn't find one counter.
      */
     public Counter getCounterOrAdd(String name) {

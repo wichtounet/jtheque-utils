@@ -4,7 +4,7 @@
         xsi:schemaLocation="
             http://maven.apache.org/POM/4.0.0
             http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jtheque</groupId>
     <artifactId>org.jtheque.utils</artifactId>
@@ -46,7 +46,7 @@
             <url>http://wichtounet.homedns.org:8280/artifactory/libs-snapshots-local</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -57,7 +57,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -66,8 +66,10 @@
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections, org.jtheque.utils.count,
-                            org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui, org.jtheque.utils.ui.edt
+                            org.jtheque.utils, org.jtheque.utils.bean, org.jtheque.utils.collections,
+                            org.jtheque.utils.count,
+                            org.jtheque.utils.io, org.jtheque.utils.print, org.jtheque.utils.ui,
+                            org.jtheque.utils.ui.edt
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                     </instructions>
@@ -226,13 +228,13 @@
             <id>wichtounet</id>
             <name>Baptiste Wicht</name>
             <email>baptistewicht@gmail.com</email>
-            <url>http://baptiste-wicht.developpez.com</url>
-            <organization>http://baptiste-wicht.developpez.com</organization>
-            <organizationUrl>http://baptiste-wicht.developpez.com</organizationUrl>
+            <url>http://baptiste-wicht.com</url>
+            <organization>http://baptiste-wicht.com</organization>
+            <organizationUrl>http://baptiste-wicht.com</organizationUrl>
 
             <roles>
-                <role>Administrateur</role>
-                <role>Développeur</role>
+                <role>Project Leader</role>
+                <role>Developer</role>
             </roles>
 
             <timezone>0</timezone>
@@ -242,7 +244,7 @@
     <properties>
         <!-- File encoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
+
         <!-- Versions -->
         <java.version>1.6</java.version>
 

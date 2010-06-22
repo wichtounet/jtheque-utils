@@ -41,8 +41,7 @@ public final class Duration {
     }
 
     /**
-     * Construct a new duration with only minutes. If there is more than 60 minutes, we dispatch the
-     * time to the hours.
+     * Construct a new duration with only minutes. If there is more than 60 minutes, we dispatch the time to the hours.
      *
      * @param minutes The minutes of the duration
      */

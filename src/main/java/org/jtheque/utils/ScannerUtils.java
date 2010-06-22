@@ -18,9 +18,31 @@ import java.util.Scanner;
  * limitations under the License.
  */
 
+/**
+ * Utility class to work with Scanner.
+ *
+ * @author Baptiste Wicht
+ */
 public class ScannerUtils {
-    public static String getLineStartingWith(Scanner scanner, String starts){
-        if(scanner != null){
+    /**
+     * Utility class, not instantiable.
+     */
+    private ScannerUtils() {
+        super();
+    }
+
+    /**
+     * Return the line starting with starts using the given scanner. The scanner will be closed if we read all the
+     * lines.
+     *
+     * @param scanner The scanner to search in.
+     * @param starts  The String we search a line starting with.
+     *
+     * @return The first line starting with starts in the scanner else an empty String if there is no line starting with
+     *         starts.
+     */
+    public static String getLineStartingWith(Scanner scanner, String starts) {
+        if (scanner != null) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
 
