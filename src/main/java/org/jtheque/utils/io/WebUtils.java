@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -134,9 +135,11 @@ public class WebUtils {
 
     public static boolean isURLReachable(URL url) {
         try {
-            URLConnection urlConnect = url.openConnection();
+            HttpURLConnection urlConnect = (HttpURLConnection) url.openConnection();
 
-            urlConnect.getContent();
+            if (urlConnect.getResponseCode() >= 300 || urlConnect.getContentLength() == -1) {
+                return false;
+            }
         } catch (UnknownHostException e) {
             return false;
         } catch (IOException e) {

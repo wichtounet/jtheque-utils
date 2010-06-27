@@ -89,7 +89,9 @@ public final class HashCodeUtils {
         int result = Constants.HASH_CODE_START;
 
         for (Object property : properties) {
-            result = computeValue(result, property);
+            if(property != null){
+                result = computeValue(result, property);
+            }
         }
 
         return result;

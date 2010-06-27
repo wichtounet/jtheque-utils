@@ -16,9 +16,9 @@ package org.jtheque.utils.bean;
  * limitations under the License.
  */
 
-import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
 
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -29,18 +29,17 @@ import java.util.regex.Pattern;
  *
  * @author Baptiste Wicht
  */
-public final class Version implements Comparable<Version> {
-    private final String strVersion;
-
-    private int hash;
-    private final boolean snapshot;
-
+public final class Version implements Comparable<Version>, Serializable {
+    private static final long serialVersionUID = -7956061709109064519L;
     private static final Map<String, Integer> CODES;
-
     private static final int HIGHEST_CODE = 10;
-
     private static final Pattern SNAPSHOT_PATTERN = Pattern.compile("-SNAPSHOT");
     private static final Pattern SNAPSHOT_PATTERN_2 = Pattern.compile("-snapshot");
+
+    private final String strVersion;
+    private final boolean snapshot;
+
+    private transient int hash;
 
     static {
         CODES = new LinkedHashMap<String, Integer>(11);
@@ -62,7 +61,7 @@ public final class Version implements Comparable<Version> {
     }
 
     /**
-     * Construct a new JThequeVersion with the String version.
+     * Construct a new Version with the String version.
      *
      * @param version The version
      */
@@ -76,6 +75,15 @@ public final class Version implements Comparable<Version> {
             snapshot = false;
             strVersion = version;
         }
+    }
+
+    /**
+     * Construct a new Version with the given Version.
+     *
+     * @param version The version to copy.
+     */
+    public Version(Version version){
+        this(version.strVersion);
     }
 
     /**
@@ -158,13 +166,7 @@ public final class Version implements Comparable<Version> {
     @Override
     public int hashCode() {
         if (hash == 0) {
-            hash = Constants.HASH_CODE_START;
-
-            if (strVersion != null) {
-                hash = Constants.HASH_CODE_PRIME * hash + strVersion.hashCode();
-            }
-
-            hash = Constants.HASH_CODE_PRIME * hash + (snapshot ? 1 : 0);
+            hash = HashCodeUtils.hashCodeDirect(strVersion, snapshot);
         }
 
         return hash;
@@ -172,21 +174,16 @@ public final class Version implements Comparable<Version> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
+        if(obj instanceof Version){
+            Version other = (Version)obj;
 
-        if (EqualsUtils.areObjectIncompatible(this, obj)) {
+            return EqualsBuilder.newBuilder(this, obj).
+                    addField(strVersion, other.strVersion).
+                    addField(snapshot, other.snapshot).
+                    areEquals();
+        } else {
             return false;
         }
-
-        Version version = (Version) obj;
-
-        if (version.snapshot != snapshot) {
-            return false;
-        }
-
-        return !EqualsUtils.areNotEquals(strVersion, version.strVersion);
     }
 
     @Override
