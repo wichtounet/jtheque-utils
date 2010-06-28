@@ -27,7 +27,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class ArrayUtils {
-    public static final Object[] ZERO_LENGTH_ARRAY = new Object[0];
+    public static final Object[] EMPTY_ARRAY = new Object[0];
 
     /**
      * Construct a new <code>ArrayUtils</code>. The constructor is private, all methods are static.
