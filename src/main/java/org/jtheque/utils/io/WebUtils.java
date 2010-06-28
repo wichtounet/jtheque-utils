@@ -137,9 +137,13 @@ public class WebUtils {
         try {
             HttpURLConnection urlConnect = (HttpURLConnection) url.openConnection();
 
-            if (urlConnect.getResponseCode() >= 300 || urlConnect.getContentLength() == -1) {
+            urlConnect.getInputStream();
+
+            if (urlConnect.getResponseCode() >= 300) {
                 return false;
             }
+
+            urlConnect.disconnect();
         } catch (UnknownHostException e) {
             return false;
         } catch (IOException e) {
