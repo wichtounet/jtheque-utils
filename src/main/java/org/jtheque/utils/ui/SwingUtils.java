@@ -331,8 +331,8 @@ public final class SwingUtils {
         if (filter == null) {
             chooser.setAcceptAllFileFilterUsed(true);
         } else {
-            chooser.addChoosableFileFilter(new SwingFileFilter(filter));
             chooser.setAcceptAllFileFilterUsed(false);
+            chooser.setFileFilter(new SwingFileFilter(filter));
         }
 
         int answer = chooser.showOpenDialog(new JFrame());

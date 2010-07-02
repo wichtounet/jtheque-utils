@@ -68,7 +68,7 @@ public class SimpleFilter implements FileFilter {
             }
         }
 
-        return fileName.endsWith(acceptedExtensions.get(acceptedExtensions.size() - 1));
+        return false;
     }
 
     /**
