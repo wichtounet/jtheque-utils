@@ -36,6 +36,7 @@ import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
 
@@ -187,5 +188,9 @@ public final class PrintUtils {
      */
     public static void printLineFiles(InputStream stream) {
         printArrayString(FileUtils.getLinesOf(stream));
+    }
+
+    public static void printLineFiles(File file) {
+        printArrayString(FileUtils.getLinesOf(file));
     }
 }

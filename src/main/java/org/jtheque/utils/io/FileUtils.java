@@ -17,6 +17,7 @@ package org.jtheque.utils.io;
  */
 
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +33,6 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -137,6 +135,16 @@ public final class FileUtils {
         }
 
         return content.toString();
+    }
+
+    public static Collection<String> getLinesOf(File file) {
+        try {
+            return getLinesOf(asInputStream(file));
+        } catch (FileNotFoundException e) {
+            LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during reading", e);
+        }
+
+        return CollectionUtils.emptyList();
     }
 
     /**
