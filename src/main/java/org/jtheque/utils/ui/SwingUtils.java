@@ -251,7 +251,7 @@ public final class SwingUtils {
      * @param runnable The runnable to run in EDT.
      */
     public static void inEdt(Runnable runnable) {
-        if (SwingUtilities.isEventDispatchThread()) {
+        if (isEDT()) {
             runnable.run();
         } else {
             EventQueue.invokeLater(runnable);
@@ -263,8 +263,8 @@ public final class SwingUtils {
      *
      * @param runnable The runnable to run in EDT.
      */
-    private static void inEdtSync(Runnable runnable) {
-        if (SwingUtilities.isEventDispatchThread()) {
+    public static void inEdtSync(Runnable runnable) {
+        if (isEDT()) {
             runnable.run();
         } else {
             try {
@@ -331,8 +331,8 @@ public final class SwingUtils {
         if (filter == null) {
             chooser.setAcceptAllFileFilterUsed(true);
         } else {
-            chooser.addChoosableFileFilter(new SwingFileFilter(filter));
             chooser.setAcceptAllFileFilterUsed(false);
+            chooser.setFileFilter(new SwingFileFilter(filter));
         }
 
         int answer = chooser.showOpenDialog(new JFrame());
@@ -364,5 +364,15 @@ public final class SwingUtils {
         }
 
         return null;
+    }
+
+    public static void assertNotEDT(String point){
+        if(isEDT()){
+            LoggerFactory.getLogger(SwingUtils.class).error("EDT Violation : {} must not be called in EDT", point);
+        }
+    }
+
+    public static boolean isEDT() {
+        return EventQueue.isDispatchThread();
     }
 }

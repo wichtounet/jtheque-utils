@@ -308,7 +308,7 @@ public class FileUtilsTest {
     public void download() throws FileException {
         addFile("downloaded.txt");
 
-        FileUtils.downloadFile("http://baptiste-wicht.developpez.com/dl.txt", getPath("downloaded.txt"));
+        WebUtils.downloadFile("http://baptiste-wicht.developpez.com/dl.txt", getPath("downloaded.txt"));
 
         assertFileExists("downloaded.txt");
         assertFileContentEquals("downloaded.txt", "download me !");

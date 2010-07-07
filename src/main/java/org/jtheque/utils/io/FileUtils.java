@@ -17,6 +17,7 @@ package org.jtheque.utils.io;
  */
 
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +33,6 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -139,6 +137,16 @@ public final class FileUtils {
         return content.toString();
     }
 
+    public static Collection<String> getLinesOf(File file) {
+        try {
+            return getLinesOf(asInputStream(file));
+        } catch (FileNotFoundException e) {
+            LoggerFactory.getLogger(FileUtils.class).error("Exception occurred during reading", e);
+        }
+
+        return CollectionUtils.emptyList();
+    }
+
     /**
      * Return the lines of a stream.
      *
@@ -163,94 +171,6 @@ public final class FileUtils {
         }
 
         return lines;
-    }
-
-    /**
-     * Download a file.
-     *
-     * @param filePath    The path to the file to download.
-     * @param destination The path to the destination's file.
-     *
-     * @throws FileException If an error occurs during the downloading process
-     */
-    public static void downloadFile(String filePath, String destination) throws FileException {
-        InputStream is = null;
-
-        try {
-            URL url = new URL(filePath);
-
-            URLConnection connection = url.openConnection();
-
-            int length = connection.getContentLength();
-
-            if (length == -1) {
-                throw new IOException("Empty file (" + filePath + ')');
-            }
-
-            is = new BufferedInputStream(connection.getInputStream());
-
-            byte[] data = downloadData(is, length);
-
-            writeData(destination, data);
-        } catch (MalformedURLException e) {
-            throw new FileException("Exception occurred during downloading", e);
-        } catch (IOException e) {
-            throw new FileException("Exception occurred during downloading", e);
-        } finally {
-            close(is);
-        }
-    }
-
-    /**
-     * Download data from a stream and return the data as a byte array.
-     *
-     * @param is     The input stream.
-     * @param length The length to read.
-     *
-     * @return The data into a byte array.
-     *
-     * @throws IOException If an IO problem occurs during the reading.
-     */
-    private static byte[] downloadData(InputStream is, int length) throws IOException {
-        byte[] data = new byte[length];
-
-        int offset = 0;
-
-        while (offset < length) {
-            int currentBit = is.read(data, offset, data.length - offset);
-
-            if (currentBit == -1) {
-                break;
-            }
-
-            offset += currentBit;
-        }
-
-        if (offset != length) {
-            throw new IOException("The file has not been fully read (Only " + offset + " of " + length + ')');
-        }
-        return data;
-    }
-
-    /**
-     * Write data to a file.
-     *
-     * @param destination The destination file path.
-     * @param data        The data to write.
-     *
-     * @throws IOException If an IO problem occurs during the writing.
-     */
-    private static void writeData(String destination, byte[] data) throws IOException {
-        OutputStream destinationFile = null;
-        try {
-            destinationFile = asOutputStream(destination);
-
-            destinationFile.write(data);
-
-            destinationFile.flush();
-        } finally {
-            close(destinationFile);
-        }
     }
 
     /**
