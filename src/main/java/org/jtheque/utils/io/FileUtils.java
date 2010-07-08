@@ -449,24 +449,26 @@ public final class FileUtils {
 
     /**
      * Delete a file.
-     *
-     * @param file The file.
+     * 
+     * @param files The files to delete
      */
-    public static void delete(File file) {
-        if (!file.exists()) {
-            return;
-        }
-
-        if (file.isDirectory()) {
-            for (File f : file.listFiles()) {
-                delete(f.getAbsolutePath());
+    public static void delete(File... files) {
+        for(File file : files){
+            if (!file.exists()) {
+                return;
             }
-        }
 
-        boolean deleted = file.delete();
+            if (file.isDirectory()) {
+                for (File f : file.listFiles()) {
+                    delete(f.getAbsolutePath());
+                }
+            }
 
-        if (!deleted) {
-            LoggerFactory.getLogger(FileUtils.class).debug("The file (" + file.getAbsolutePath() + ") can not be deleted. ");
+            boolean deleted = file.delete();
+
+            if (!deleted) {
+                LoggerFactory.getLogger(FileUtils.class).debug("The file (" + file.getAbsolutePath() + ") can not be deleted. ");
+            }
         }
     }
 
