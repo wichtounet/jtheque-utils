@@ -35,7 +35,7 @@ public final class DatabaseUtils {
      * Construct a new DatabaseUtils. This class is an utility class, it cannot be instantiated.
      */
     private DatabaseUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

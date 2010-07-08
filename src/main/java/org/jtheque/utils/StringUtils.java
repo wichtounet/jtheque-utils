@@ -34,7 +34,7 @@ public final class StringUtils {
      * Construct a new StringUtils. This constructor is private, all the methods are static.
      */
     private StringUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

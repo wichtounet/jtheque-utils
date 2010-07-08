@@ -33,7 +33,7 @@ public final class ArrayUtils {
      * Construct a new <code>ArrayUtils</code>. The constructor is private, all methods are static.
      */
     private ArrayUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

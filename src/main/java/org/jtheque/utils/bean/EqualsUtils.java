@@ -28,7 +28,7 @@ public final class EqualsUtils {
      * Construct a new DatabaseUtils. This class is an utility class, it cannot be instantiated.
      */
     private EqualsUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

@@ -60,7 +60,7 @@ public final class FileUtils {
      * Construct a new FileUtils. This constructor is private because all methods are static.
      */
     private FileUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

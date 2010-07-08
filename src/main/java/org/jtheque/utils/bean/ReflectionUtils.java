@@ -40,7 +40,7 @@ public final class ReflectionUtils {
      * Utility class, not instanciable.
      */
     private ReflectionUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

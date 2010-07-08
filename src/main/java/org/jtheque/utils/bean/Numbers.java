@@ -17,6 +17,10 @@ package org.jtheque.utils.bean;
  */
 
 public class Numbers {
+    private Numbers() {
+        throw new AssertionError();
+    }
+
     public static int compare(int i1, int i2){
         return i1 < i2 ? -1 : i1 == i2 ? 0 : 1;
     }

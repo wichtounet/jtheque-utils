@@ -30,7 +30,7 @@ public final class BeanUtils {
      * Utility class, not instanciable.
      */
     private BeanUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

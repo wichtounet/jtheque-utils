@@ -28,7 +28,7 @@ import java.net.UnknownHostException;
 
 public class WebUtils {
     private WebUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

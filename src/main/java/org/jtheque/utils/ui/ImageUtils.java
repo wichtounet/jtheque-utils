@@ -50,7 +50,7 @@ public final class ImageUtils {
      * Construct a new ImageUtils. This constructor is private, all the methods are static.
      */
     private ImageUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

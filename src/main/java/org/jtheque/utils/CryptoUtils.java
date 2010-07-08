@@ -31,7 +31,7 @@ public class CryptoUtils {
      * Utility class, not instantiable.
      */
     private CryptoUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

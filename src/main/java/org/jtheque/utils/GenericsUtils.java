@@ -38,7 +38,7 @@ public final class GenericsUtils {
      * Construct a new GenericsUtils.
      */
     private GenericsUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

@@ -28,7 +28,7 @@ public class ScannerUtils {
      * Utility class, not instantiable.
      */
     private ScannerUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

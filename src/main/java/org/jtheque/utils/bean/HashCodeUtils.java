@@ -30,7 +30,7 @@ public final class HashCodeUtils {
      * Utility class, not instanciable.
      */
     private HashCodeUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

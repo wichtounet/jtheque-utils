@@ -31,6 +31,6 @@ public final class Constants {
      * This class is an utility class, not instanciable.
      */
     private Constants() {
-        super();
+        throw new AssertionError();
     }
 }

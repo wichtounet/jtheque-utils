@@ -66,7 +66,7 @@ public final class SwingUtils {
      * Private constructor, this class isn't instanciable.
      */
     private SwingUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

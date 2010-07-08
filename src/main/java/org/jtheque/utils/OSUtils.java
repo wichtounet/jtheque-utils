@@ -26,7 +26,7 @@ public final class OSUtils {
      * Utility class, not instanciable.
      */
     private OSUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

@@ -32,7 +32,7 @@ public final class SocketUtils {
      * Construct a new SocketUtils. This class is an utility class, it cannot be instantiated.
      */
     private SocketUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

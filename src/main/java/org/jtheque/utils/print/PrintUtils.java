@@ -53,7 +53,7 @@ public final class PrintUtils {
      * Construct a new <code>PrintUtils</code>. This class is an utils code
      */
     private PrintUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

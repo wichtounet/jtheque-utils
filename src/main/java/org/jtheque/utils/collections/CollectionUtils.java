@@ -40,7 +40,7 @@ public final class CollectionUtils {
      * Construct a new CollectionUtils. This constructor is private because all the methods are static.
      */
     private CollectionUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

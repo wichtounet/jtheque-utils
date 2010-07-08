@@ -32,7 +32,7 @@ public final class DataUtils {
      * Utility class, not instanciable.
      */
     private DataUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

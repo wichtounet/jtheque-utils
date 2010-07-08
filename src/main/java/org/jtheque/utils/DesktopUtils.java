@@ -34,7 +34,7 @@ public final class DesktopUtils {
      * Construct a new DesktopUtils. This class isn't instanciable
      */
     private DesktopUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

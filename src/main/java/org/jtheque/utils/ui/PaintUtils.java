@@ -41,7 +41,7 @@ public final class PaintUtils {
      * Utility class, cannot be instantiated.
      */
     private PaintUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**
