@@ -37,16 +37,17 @@ public final class BeanUtils {
      * Create a quick memento using the specified fields.
      *
      * @param bean   The bean to create the memento from.
+     * @param type   The type of data.
      * @param fields The fields to use.
      * @param <T>    The type of data.
      *
      * @return A memento of the bean.
      */
-    public static <T> T createQuickMemento(T bean, String... fields) {
+    public static <T> T createQuickMemento(T bean, Class<T> type, String... fields) {
         T instance = null;
 
         try {
-            instance = (T) bean.getClass().newInstance();
+            instance = type.cast(bean.getClass().newInstance());
 
             for (String field : fields) {
                 Object value = ReflectionUtils.getPropertyValue(bean, field);
@@ -102,16 +103,17 @@ public final class BeanUtils {
      * Return the value of the field of the bean.
      *
      * @param bean  The bean to get the value for.
+     * @param type  The type of the field.
      * @param field The field to get the value for.
      * @param <T>   The type of the field.
      *
      * @return The value of the field else null if an error occurs.
      */
-    public static <T> T get(Object bean, String field) {
+    public static <T> T get(Object bean, Class<T> type, String field) {
         try {
             Field f = bean.getClass().getDeclaredField(field);
             f.setAccessible(true);
-            return (T) f.get(bean);
+            return type.cast(f.get(bean));
         } catch (NoSuchFieldException e) {
             LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
         } catch (IllegalAccessException e) {
@@ -124,17 +126,17 @@ public final class BeanUtils {
     /**
      * Return the value of the static field of the class.
      *
-     * @param aClass The class to get the static field for.
+     * @param type The class to get the static field for.
      * @param field  The field to get the value for.
      * @param <T>    The type of the field.
      *
      * @return The value of the field else null if an error occurs.
      */
-    public static <T> T getStatic(Class<?> aClass, String field) {
+    public static <T> T getStatic(Class<T> type, String field) {
         try {
-            Field f = aClass.getDeclaredField(field);
+            Field f = type.getDeclaredField(field);
             f.setAccessible(true);
-            return (T) f.get(null);
+            return type.cast(f.get(null));
         } catch (NoSuchFieldException e) {
             LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
         } catch (IllegalAccessException e) {
