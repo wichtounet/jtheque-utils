@@ -49,31 +49,6 @@ public class DurationTest {
     }
 
     /**
-     * Test the setters.
-     */
-    @Test
-    public void testSets() {
-        Duration d1 = new Duration(138);
-        Duration d2 = new Duration();
-
-        d1.setHours(6);
-
-        assertEquals(d1.getHours(), 6);
-        assertEquals(d1.getMinutes(), 18);
-
-        d1.setMinutes(22);
-
-        assertEquals(d1.getHours(), 6);
-        assertEquals(d1.getMinutes(), 22);
-
-        d2.setHours(2);
-        d2.setMinutes(25);
-
-        assertEquals(d2.getHours(), 2);
-        assertEquals(d2.getMinutes(), 25);
-    }
-
-    /**
      * Test the toString method.
      */
     @Test

@@ -19,13 +19,14 @@ import org.jtheque.utils.Constants;
  */
 
 /**
- * This class represent a duration of time. A Duration is a period of hours and minutes.
+ * This class represent a duration of time. A Duration is a period of hours and minutes. Instances of this
+ * class are immutable. 
  *
  * @author Baptiste Wicht
  */
 public final class Duration {
-    private int minutes;
-    private int hours;
+    private final int minutes;
+    private final int hours;
 
     /**
      * Construct a new duration with a certain number of hours and a certain number of minutes.
@@ -66,30 +67,12 @@ public final class Duration {
     }
 
     /**
-     * Set the hours of the duration.
-     *
-     * @param hours The new number of hours in the duration
-     */
-    public void setHours(int hours) {
-        this.hours = hours;
-    }
-
-    /**
      * Returns the minutes of the duration.
      *
      * @return The number of minutes in the duration
      */
     public int getMinutes() {
         return minutes;
-    }
-
-    /**
-     * Set the minutes of the duration.
-     *
-     * @param minutes The new number of minutes
-     */
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
     }
 
     @Override

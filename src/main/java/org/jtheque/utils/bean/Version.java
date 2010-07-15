@@ -25,7 +25,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 /**
- * A version of a module or an other part of the application.
+ * A version of a module or an other part of the application. Instances of the version
+ * class are immutable. 
  *
  * @author Baptiste Wicht
  */
