@@ -351,9 +351,11 @@ public final class SwingUtils {
     }
 
     public static void assertNotEDT(String point){
-        if(isEDT()){
-            LoggerFactory.getLogger(SwingUtils.class).error("EDT Violation : {} must not be called in EDT", point);
-        }
+        assert !isEDT() : "EDT Violation : " + point + " must not be called in EDT";
+    }
+
+    public static void assertEDT(String point) {
+        assert isEDT() : "EDT Violation : " + point + " must be called in EDT";
     }
 
     public static boolean isEDT() {
