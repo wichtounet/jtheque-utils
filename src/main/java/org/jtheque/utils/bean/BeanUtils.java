@@ -49,11 +49,7 @@ public final class BeanUtils {
         try {
             instance = type.cast(bean.getClass().newInstance());
 
-            for (String field : fields) {
-                Object value = ReflectionUtils.getPropertyValue(bean, field);
-
-                ReflectionUtils.getSetterMethod(instance, field).invoke(instance, value);
-            }
+            restoreQuickMemento(instance, bean, fields);
         } catch (Exception e) {
             LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
         }
@@ -133,16 +129,6 @@ public final class BeanUtils {
      * @return The value of the field else null if an error occurs.
      */
     public static <T> T getStatic(Class<T> type, String field) {
-        try {
-            Field f = type.getDeclaredField(field);
-            f.setAccessible(true);
-            return type.cast(f.get(null));
-        } catch (NoSuchFieldException e) {
-            LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
-            LoggerFactory.getLogger(ReflectionUtils.class).error(e.getMessage(), e);
-        }
-
-        return null;
+        return get(null, type, field);
     }
 }
