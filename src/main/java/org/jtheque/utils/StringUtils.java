@@ -273,9 +273,9 @@ public final class StringUtils {
         return string.replace(toDelete, "");
     }
 
-    public static boolean equalsOneOf(String content, String... values) {
-        for(String value : values){
-            if(content.equals(value)){
+    public static boolean equalsOneOf(String value, String... values) {
+        for(String v : values){
+            if(value.equals(v)){
                 return true;
             }
         }

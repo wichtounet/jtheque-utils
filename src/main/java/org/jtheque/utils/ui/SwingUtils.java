@@ -55,11 +55,16 @@ import java.lang.reflect.InvocationTargetException;
  * @author Baptiste Wicht
  */
 public final class SwingUtils {
-    private static DisplayMode mode;
-    private static GraphicsDevice device;
+    private static final DisplayMode DISPLAY_MODE;
+    private static final GraphicsDevice GRAPHICS_DEVICE;
+
+    static {
+        GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GRAPHICS_DEVICE = gEnv.getDefaultScreenDevice();
+        DISPLAY_MODE = GRAPHICS_DEVICE.getDisplayMode();
+    }
 
     private static Font defaultFont;
-
     private static JFileChooser chooser;
 
     /**
@@ -70,21 +75,12 @@ public final class SwingUtils {
     }
 
     /**
-     * Load the display information for this computer.
-     */
-    private static void loadDisplayInfos() {
-        GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        device = gEnv.getDefaultScreenDevice();
-        mode = device.getDisplayMode();
-    }
-
-    /**
      * Return the insets of the screen.
      *
      * @return The insets
      */
     private static Insets getInsets() {
-        return Toolkit.getDefaultToolkit().getScreenInsets(device.getDefaultConfiguration());
+        return Toolkit.getDefaultToolkit().getScreenInsets(GRAPHICS_DEVICE.getDefaultConfiguration());
     }
 
     /**
@@ -93,10 +89,6 @@ public final class SwingUtils {
      * @param frame The frame to be centered
      */
     public static void centerFrame(Window frame) {
-        if (mode == null) {
-            loadDisplayInfos();
-        }
-
         frame.setLocation((getWidth() - frame.getWidth()) / 2,
                 (getHeight() - frame.getHeight()) / 2);
     }
@@ -107,11 +99,7 @@ public final class SwingUtils {
      * @return The height
      */
     private static int getHeight() {
-        if (mode == null) {
-            loadDisplayInfos();
-        }
-
-        return mode.getHeight() - getInsets().bottom - getInsets().top;
+        return DISPLAY_MODE.getHeight() - getInsets().bottom - getInsets().top;
     }
 
     /**
@@ -120,11 +108,7 @@ public final class SwingUtils {
      * @return The width
      */
     private static int getWidth() {
-        if (mode == null) {
-            loadDisplayInfos();
-        }
-
-        return mode.getWidth() - getInsets().left - getInsets().right;
+        return DISPLAY_MODE.getWidth() - getInsets().left - getInsets().right;
     }
 
     /**
@@ -367,9 +351,11 @@ public final class SwingUtils {
     }
 
     public static void assertNotEDT(String point){
-        if(isEDT()){
-            LoggerFactory.getLogger(SwingUtils.class).error("EDT Violation : {} must not be called in EDT", point);
-        }
+        assert !isEDT() : "EDT Violation : " + point + " must not be called in EDT";
+    }
+
+    public static void assertEDT(String point) {
+        assert isEDT() : "EDT Violation : " + point + " must be called in EDT";
     }
 
     public static boolean isEDT() {

@@ -10,7 +10,7 @@
     <artifactId>org.jtheque.utils</artifactId>
     <version>1.1.4-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>org.jtheque.utils</name>
+    <name>JTheque Utils</name>
 
     <url>http://github.com/wichtounet/jtheque-utils</url>
 
