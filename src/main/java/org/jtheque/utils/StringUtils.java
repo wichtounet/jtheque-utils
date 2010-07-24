@@ -272,4 +272,14 @@ public final class StringUtils {
     public static String delete(String string, CharSequence toDelete) {
         return string.replace(toDelete, "");
     }
+
+    public static boolean equalsOneOf(String content, String... values) {
+        for(String value : values){
+            if(content.equals(value)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
