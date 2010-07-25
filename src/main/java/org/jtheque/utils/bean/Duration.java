@@ -1,6 +1,7 @@
 package org.jtheque.utils.bean;
 
 import org.jtheque.utils.Constants;
+import org.jtheque.utils.annotations.Immutable;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -24,6 +25,7 @@ import org.jtheque.utils.Constants;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class Duration {
     private final int minutes;
     private final int hours;

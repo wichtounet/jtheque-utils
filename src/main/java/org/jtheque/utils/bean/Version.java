@@ -17,6 +17,7 @@ package org.jtheque.utils.bean;
  */
 
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.Immutable;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
@@ -30,6 +31,7 @@ import java.util.regex.Pattern;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class Version implements Comparable<Version>, Serializable {
     private static final long serialVersionUID = -7956061709109064519L;
     private static final Map<String, Integer> CODES;
@@ -182,9 +184,9 @@ public final class Version implements Comparable<Version>, Serializable {
                     addField(strVersion, other.strVersion).
                     addField(snapshot, other.snapshot).
                     areEquals();
-        } else {
-            return false;
         }
+        
+        return false;
     }
 
     @Override
