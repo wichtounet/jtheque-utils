@@ -31,11 +31,11 @@ public class VersionTest {
      */
     @Test
     public void testIsGreaterThan() {
-        Version version1 = new Version("1.0.beta2");
-        Version version2 = new Version("5.0.5.beta19");
-        Version version3 = new Version("5.5.6.9");
-        Version version4 = new Version("1.0.0.0.0.1.beta9");
-        Version version5 = new Version("1.0.beta5");
+        Version version1 = Version.get("1.0.beta2");
+        Version version2 = Version.get("5.0.5.beta19");
+        Version version3 = Version.get("5.5.6.9");
+        Version version4 = Version.get("1.0.0.0.0.1.beta9");
+        Version version5 = Version.get("1.0.beta5");
 
         assertFalse(version2.isGreaterThan(version2));
 
@@ -61,8 +61,8 @@ public class VersionTest {
 
     @Test
     public void testIsGreaterThanEquals() {
-        Version versionTest1 = new Version("1.0");
-        Version versionTest2 = new Version("1.0");
+        Version versionTest1 = Version.get("1.0");
+        Version versionTest2 = Version.get("1.0");
 
         assertFalse(versionTest1.isGreaterThan(versionTest2));
         assertFalse(versionTest2.isGreaterThan(versionTest1));
@@ -73,10 +73,10 @@ public class VersionTest {
      */
     @Test
     public void testGetVersion() {
-        Version version1 = new Version("1.0.beta2");
-        Version version2 = new Version("5.0.5.beta19");
-        Version version3 = new Version("5.5.6.9");
-        Version version4 = new Version("1.0.0.0.0.1.beta9");
+        Version version1 = Version.get("1.0.beta2");
+        Version version2 = Version.get("5.0.5.beta19");
+        Version version3 = Version.get("5.5.6.9");
+        Version version4 = Version.get("1.0.0.0.0.1.beta9");
 
         assertEquals(version1.getVersion(), "1.0.beta2");
         assertEquals(version2.getVersion(), "5.0.5.beta19");
@@ -89,11 +89,11 @@ public class VersionTest {
      */
     @Test
     public void testToString() {
-        Object version1 = new Version("1.0.beta2");
-        Object version2 = new Version("5.0.5.beta19");
-        Object version3 = new Version("5.5.6.9");
-        Object version4 = new Version("1.0.0.0.0.1.beta9");
-        Object version5 = new Version("1.0.1-SNAPSHOT");
+        Object version1 = Version.get("1.0.beta2");
+        Object version2 = Version.get("5.0.5.beta19");
+        Object version3 = Version.get("5.5.6.9");
+        Object version4 = Version.get("1.0.0.0.0.1.beta9");
+        Object version5 = Version.get("1.0.1-SNAPSHOT");
 
         assertEquals(version1.toString(), "1.0.beta2");
         assertEquals(version2.toString(), "5.0.5.beta19");
@@ -107,12 +107,12 @@ public class VersionTest {
      */
     @Test
     public void testHashCode() {
-        Object version1 = new Version("1.0.beta2");
-        Object version2 = new Version("5.0.beta2");
-        Object version3 = new Version("1.0");
-        Object version4 = new Version("1.0");
-        Object version5 = new Version("1.0.1-snapshot");
-        Object version6 = new Version("1.0.1-SNAPSHOT");
+        Object version1 = Version.get("1.0.beta2");
+        Object version2 = Version.get("5.0.beta2");
+        Object version3 = Version.get("1.0");
+        Object version4 = Version.get("1.0");
+        Object version5 = Version.get("1.0.1-snapshot");
+        Object version6 = Version.get("1.0.1-SNAPSHOT");
 
         assertEquals(version3.hashCode(), version4.hashCode());
         assertEquals(version4.hashCode(), version3.hashCode());
@@ -137,11 +137,11 @@ public class VersionTest {
      */
     @Test
     public void testEquals() {
-        Object version1 = new Version("1.0.beta2");
-        Object version2 = new Version("5.0.beta2");
-        Object version3 = new Version("1.0");
-        Object version4 = new Version("1.0");
-        Object version5 = new Version("1.0.1-SNAPSHOT");
+        Object version1 = Version.get("1.0.beta2");
+        Object version2 = Version.get("5.0.beta2");
+        Object version3 = Version.get("1.0");
+        Object version4 = Version.get("1.0");
+        Object version5 = Version.get("1.0.1-SNAPSHOT");
         Object string = "asdf";
 
         assertEquals(version3, version4);
@@ -163,11 +163,11 @@ public class VersionTest {
 
     @Test
     public void testCodes() {
-        Version versionAlpha1 = new Version("1.0.alpha1");
-        Version versionAlpha2 = new Version("1.0.alpha2");
-        Version versionAlpha3 = new Version("1.0.a1");
-        Version versionBeta = new Version("1.0.beta1");
-        Version versionRC = new Version("1.0.rc1");
+        Version versionAlpha1 = Version.get("1.0.alpha1");
+        Version versionAlpha2 = Version.get("1.0.alpha2");
+        Version versionAlpha3 = Version.get("1.0.a1");
+        Version versionBeta = Version.get("1.0.beta1");
+        Version versionRC = Version.get("1.0.rc1");
 
         assertTrue(versionAlpha2.isGreaterThan(versionAlpha1));
         assertFalse(versionAlpha1.isGreaterThan(versionAlpha2));

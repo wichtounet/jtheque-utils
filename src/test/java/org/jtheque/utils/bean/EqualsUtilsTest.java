@@ -35,8 +35,8 @@ public class EqualsUtilsTest {
      */
     @Test
     public void testAreObjectIncompatible() {
-        Object version1 = new Version("1.2");
-        Object version2 = new Version("1.3");
+        Object version1 = Version.get("1.2");
+        Object version2 = Version.get("1.3");
         String version3 = "1.4";
 
         assertTrue(EqualsUtils.areObjectIncompatible(version3, version1));

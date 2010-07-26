@@ -23,21 +23,25 @@ import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.WeakHashMap;
 import java.util.regex.Pattern;
 
 /**
  * A version of a module or an other part of the application. Instances of the version
- * class are immutable. 
+ * class are immutable. Moreover, instance of these classes are unique, namely, two instances are equals
+ * only if this the same instance. The instances are stored using weak references. 
  *
  * @author Baptiste Wicht
  */
 @Immutable
 public final class Version implements Comparable<Version>, Serializable {
     private static final long serialVersionUID = -7956061709109064519L;
-    private static final Map<String, Integer> CODES;
+    private static final Map<String, Integer> CODES = new LinkedHashMap<String, Integer>(11);
     private static final int HIGHEST_CODE = 10;
     private static final Pattern SNAPSHOT_PATTERN = Pattern.compile("-SNAPSHOT");
     private static final Pattern SNAPSHOT_PATTERN_2 = Pattern.compile("-snapshot");
+    
+    private static final Map<String, Version> VERSIONS = new WeakHashMap<String, Version>(16);
 
     private final String strVersion;
     private final boolean snapshot;
@@ -45,8 +49,6 @@ public final class Version implements Comparable<Version>, Serializable {
     private transient int hash;
 
     static {
-        CODES = new LinkedHashMap<String, Integer>(11);
-
         CODES.put("beta", 2);
         CODES.put("b", 2);
         CODES.put("B", 2);
@@ -68,7 +70,7 @@ public final class Version implements Comparable<Version>, Serializable {
      *
      * @param version The version
      */
-    public Version(String version) {
+    private Version(String version) {
         super();
 
         if (version.endsWith("-SNAPSHOT") || version.endsWith("-snapshot")) {
@@ -80,13 +82,20 @@ public final class Version implements Comparable<Version>, Serializable {
         }
     }
 
-    /**
-     * Construct a new Version with the given Version.
-     *
-     * @param version The version to copy.
-     */
-    public Version(Version version){
-        this(version.strVersion);
+    public static Version get(String version) {
+        Version v = VERSIONS.get(version);
+
+        if (v == null) {
+            v = Version.get(version);
+
+            VERSIONS.put(version, v);
+        }
+
+        return v;
+    }
+
+    public static Version get(Version version) {
+        return get(version.strVersion);
     }
 
     /**
@@ -177,16 +186,7 @@ public final class Version implements Comparable<Version>, Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Version){
-            Version other = (Version)obj;
-
-            return EqualsBuilder.newBuilder(this, obj).
-                    addField(strVersion, other.strVersion).
-                    addField(snapshot, other.snapshot).
-                    areEquals();
-        }
-        
-        return false;
+        return this == obj; //Only two equals instance are equals
     }
 
     @Override

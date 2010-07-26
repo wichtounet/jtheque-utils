@@ -39,12 +39,12 @@ public class ArrayUtilsTest {
      */
     @Test
     public void testIndexOf() {
-        Object[] objects = {"Tests", 6.0, 4, new Version("1.2")};
+        Object[] objects = {"Tests", 6.0, 4, Version.get("1.2")};
 
         assertTrue(ArrayUtils.indexOf(objects[1], objects) == 1);
         assertTrue(ArrayUtils.indexOf(objects[3], objects) == 3);
         assertTrue(ArrayUtils.indexOf("Bonjour", objects) == -1);
-        assertTrue(ArrayUtils.indexOf(new Version("1.2"), objects) == -1);
+        assertTrue(ArrayUtils.indexOf(Version.get("1.2"), objects) == -1);
     }
 
     /**
@@ -52,8 +52,8 @@ public class ArrayUtilsTest {
      */
     @Test
     public void testReverseObjectArray() {
-        Object[] array = {"Tests", 6.0, 4, new Version("1.2")};
-        List<Object> list = Arrays.<Object>asList("Tests", 6.0, 4, new Version("1.2"));
+        Object[] array = {"Tests", 6.0, 4, Version.get("1.2")};
+        List<Object> list = Arrays.<Object>asList("Tests", 6.0, 4, Version.get("1.2"));
 
         ArrayUtils.reverse(array);
         Collections.reverse(list);
