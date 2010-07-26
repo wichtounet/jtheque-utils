@@ -27,9 +27,9 @@ import java.util.WeakHashMap;
 import java.util.regex.Pattern;
 
 /**
- * A version of a module or an other part of the application. Instances of the version
- * class are immutable. Moreover, instance of these classes are unique, namely, two instances are equals
- * only if this the same instance. The instances are stored using weak references. 
+ * A version of a module or an other part of the application. Instances of the version class are immutable. Moreover,
+ * instance of these classes are unique, namely, two instances are equals only if this the same instance. The instances
+ * are stored using weak references.
  *
  * @author Baptiste Wicht
  */
@@ -40,13 +40,15 @@ public final class Version implements Comparable<Version>, Serializable {
     private static final int HIGHEST_CODE = 10;
     private static final Pattern SNAPSHOT_PATTERN = Pattern.compile("-SNAPSHOT");
     private static final Pattern SNAPSHOT_PATTERN_2 = Pattern.compile("-snapshot");
-    
+
     private static final Map<String, Version> VERSIONS = new WeakHashMap<String, Version>(16);
 
     private final String strVersion;
     private final boolean snapshot;
 
     private transient int hash;
+
+    private static final Object LOCK = new Object();
 
     static {
         CODES.put("beta", 2);
@@ -82,13 +84,27 @@ public final class Version implements Comparable<Version>, Serializable {
         }
     }
 
+    /**
+     * This method return the Version corresponding to the given String. This method is thread safe using
+     * the double check idiom. 
+     *
+     * @param version The version name to get the instance for.
+     *
+     * @return The Version.
+     */
     public static Version get(String version) {
         Version v = VERSIONS.get(version);
 
         if (v == null) {
-            v = Version.get(version);
+            synchronized (LOCK) {
+                v = VERSIONS.get(version);
 
-            VERSIONS.put(version, v);
+                if (v == null) {
+                    v = new Version(version);
+
+                    VERSIONS.put(version, v);
+                }
+            }
         }
 
         return v;
