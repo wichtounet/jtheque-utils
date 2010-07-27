@@ -25,8 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * A TestCase to test the ArrayUtils class.
@@ -41,10 +40,10 @@ public class ArrayUtilsTest {
     public void testIndexOf() {
         Object[] objects = {"Tests", 6.0, 4, Version.get("1.2")};
 
-        assertTrue(ArrayUtils.indexOf(objects[1], objects) == 1);
-        assertTrue(ArrayUtils.indexOf(objects[3], objects) == 3);
-        assertTrue(ArrayUtils.indexOf("Bonjour", objects) == -1);
-        assertTrue(ArrayUtils.indexOf(Version.get("1.2"), objects) == -1);
+        assertEquals(1, ArrayUtils.indexOf(objects[1], objects));
+        assertEquals(3, ArrayUtils.indexOf(objects[3], objects));
+        assertEquals(-1, ArrayUtils.indexOf("Bonjour", objects));
+        assertEquals(3, ArrayUtils.indexOf(Version.get("1.2"), objects));
     }
 
     /**
@@ -59,7 +58,7 @@ public class ArrayUtilsTest {
         Collections.reverse(list);
 
         for (int i = 0; i < array.length; i++) {
-            assertTrue(array[i].equals(list.get(i)));
+            assertEquals(array[i], list.get(i));
         }
     }
 
@@ -75,7 +74,7 @@ public class ArrayUtilsTest {
         Collections.reverse(list);
 
         for (int i = 0; i < array.length; i++) {
-            assertTrue(array[i] == list.get(i));
+            assertEquals((Integer) array[i], list.get(i));
         }
     }
 
@@ -95,8 +94,8 @@ public class ArrayUtilsTest {
         String[] toCopy = {"Big Show", "The Undertaker"};
         String[] copy = ArrayUtils.copyOf(toCopy);
 
-        assertFalse(copy == toCopy);
-        assertTrue(copy[0].equals(toCopy[0]));
-        assertTrue(copy[1].equals(toCopy[1]));
+        assertNotSame(copy, toCopy);
+        assertEquals(copy[0], toCopy[0]);
+        assertEquals(copy[1], toCopy[1]);
     }
 }
