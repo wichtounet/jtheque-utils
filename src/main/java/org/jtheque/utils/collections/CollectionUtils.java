@@ -192,6 +192,10 @@ public final class CollectionUtils {
         return new HashMap<K, V>(capacity);
     }
 
+    public static <T> Collection<T> protect(Collection<T> collection) {
+        return Collections.unmodifiableCollection(collection);
+    }
+
     /**
      * Move the iterator to the first element.
      *

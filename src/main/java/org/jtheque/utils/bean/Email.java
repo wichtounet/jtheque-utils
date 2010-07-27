@@ -23,6 +23,7 @@ import org.jtheque.utils.collections.CollectionUtils;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * An email. This class is immutable.
@@ -89,6 +90,6 @@ public final class Email {
      * @return A List containing all the files attached to the mail.
      */
     public Collection<File> getAttachedFiles() {
-        return attachedFiles;
+        return Collections.unmodifiableCollection(attachedFiles);
     }
 }
