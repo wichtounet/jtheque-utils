@@ -22,11 +22,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Provide some utilities operations on collections.
@@ -34,7 +36,7 @@ import java.util.Map.Entry;
  * @author Baptiste Wicht
  */
 public final class CollectionUtils {
-    private static final Object EMPTY_LIST = Collections.unmodifiableList(new ArrayList<Object>(0));
+    private static final Object EMPTY_LIST = Collections.unmodifiableList(newList(0));
 
     /**
      * Construct a new CollectionUtils. This constructor is private because all the methods are static.
@@ -90,7 +92,7 @@ public final class CollectionUtils {
      * @return The expanded collection.
      */
     public static <S, T> Collection<T> expand(Collection<S> collection, Expander<S, T> expander) {
-        Collection<T> expanded = new ArrayList<T>(collection.size());
+        Collection<T> expanded = newList(collection.size());
 
         for (S o : collection) {
             expanded.add(expander.expand(o));
@@ -166,6 +168,30 @@ public final class CollectionUtils {
         return (List<T>) EMPTY_LIST;
     }
 
+    public static <T> List<T> newList(){
+        return new ArrayList<T>(10);
+    }
+
+    public static <T> List<T> newList(int capacity) {
+        return new ArrayList<T>(capacity);
+    }
+
+    public static <T> Set<T> newSet() {
+        return new HashSet<T>(10);
+    }
+
+    public static <T> Set<T> newSet(int capacity) {
+        return new HashSet<T>(capacity);
+    }
+
+    public static <K, V> Map<K,V> newHashMap(){
+        return new HashMap<K, V>(10);
+    }
+
+    public static <K, V> Map<K, V> newHashMap(int capacity) {
+        return new HashMap<K, V>(capacity);
+    }
+
     /**
      * Move the iterator to the first element.
      *
@@ -199,7 +225,7 @@ public final class CollectionUtils {
      * @return A Collection containing all the elements of the enumeration.
      */
     public static <T> Collection<T> toCollection(Enumeration<T> enumeration) {
-        Collection<T> collection = new ArrayList<T>(25);
+        Collection<T> collection = newList(25);
 
         while (enumeration.hasMoreElements()) {
             collection.add(enumeration.nextElement());

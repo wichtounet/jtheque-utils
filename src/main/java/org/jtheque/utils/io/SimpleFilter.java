@@ -16,9 +16,10 @@ package org.jtheque.utils.io;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.io.File;
 import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
@@ -30,7 +31,7 @@ import java.util.StringTokenizer;
  */
 public class SimpleFilter implements FileFilter {
     private final String description;
-    private final List<String> acceptedExtensions = new ArrayList<String>(5);
+    private final List<String> acceptedExtensions = CollectionUtils.newList(5);
 
     /**
      * Construct a new FilterSimple.

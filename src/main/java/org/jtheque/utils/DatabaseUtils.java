@@ -1,5 +1,7 @@
 package org.jtheque.utils;
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
@@ -92,7 +94,7 @@ public final class DatabaseUtils {
      * @return A collection of Integer containing all the results of the specified column.
      */
     public static Collection<Integer> getAllIntResults(ResultSet rs, String column) {
-        Collection<Integer> results = new ArrayList<Integer>(25);
+        Collection<Integer> results = CollectionUtils.newList(25);
 
         try {
             while (rs.next()) {

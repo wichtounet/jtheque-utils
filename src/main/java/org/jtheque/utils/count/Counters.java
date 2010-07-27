@@ -16,7 +16,8 @@ package org.jtheque.utils.count;
  * limitations under the License.
  */
 
-import java.util.HashMap;
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,16 +28,7 @@ import java.util.Map.Entry;
  * @author Baptiste Wicht
  */
 public final class Counters implements Iterable<Entry<String, Counter>> {
-    private final Map<String, Counter> counters;
-
-    /**
-     * Construct a new Collection of counters.
-     */
-    public Counters() {
-        super();
-
-        counters = new HashMap<String, Counter>(10);
-    }
+    private final Map<String, Counter> counters = CollectionUtils.newHashMap(10);
 
     /**
      * Add a counter with a specific name to the collection.

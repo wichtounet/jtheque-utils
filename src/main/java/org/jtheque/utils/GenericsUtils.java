@@ -16,6 +16,8 @@ package org.jtheque.utils;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.GenericDeclaration;
@@ -51,7 +53,7 @@ public final class GenericsUtils {
      * @return a list of the raw classes for the actual type arguments.
      */
     public static <T> Collection<Class<?>> getTypeArguments(Class<T> baseClass, Type childClass) {
-        Map<Type, Type> resolvedTypes = new HashMap<Type, Type>(10);
+        Map<Type, Type> resolvedTypes = CollectionUtils.newHashMap();
         Type type = childClass;
         // start walking up the inheritance hierarchy until we hit baseClass
         while (!getClass(type).equals(baseClass)) {
@@ -90,7 +92,7 @@ public final class GenericsUtils {
     private static Collection<Class<?>> determineRawClasses(Map<Type, Type> resolvedTypes, Type type) {
         Type[] actualTypeArguments = type instanceof Class ? ((GenericDeclaration) type).getTypeParameters() : ((ParameterizedType) type).getActualTypeArguments();
 
-        Collection<Class<?>> typeArgumentsAsClasses = new ArrayList<Class<?>>(actualTypeArguments.length);
+        Collection<Class<?>> typeArgumentsAsClasses = CollectionUtils.newList(actualTypeArguments.length);
         // resolve types by chasing down type variables.
         for (Type baseType : actualTypeArguments) {
             while (resolvedTypes.containsKey(baseType)) {

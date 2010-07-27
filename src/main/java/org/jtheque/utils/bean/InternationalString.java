@@ -16,7 +16,8 @@ package org.jtheque.utils.bean;
  * limitations under the License.
  */
 
-import java.util.HashMap;
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class InternationalString {
-    private final Map<String, String> resources = new HashMap<String, String>(5);
+    private final Map<String, String> resources = CollectionUtils.newHashMap(5);
 
     /**
      * Put a new value.

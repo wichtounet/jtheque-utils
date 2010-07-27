@@ -34,11 +34,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -155,7 +153,7 @@ public final class FileUtils {
      * @return The lines of the stream.
      */
     public static Collection<String> getLinesOf(InputStream stream) {
-        Collection<String> lines = new ArrayList<String>(100);
+        Collection<String> lines = CollectionUtils.newList(100);
 
         Scanner scanner = null;
         try {
@@ -311,7 +309,7 @@ public final class FileUtils {
      * @return All the files of the zip
      */
     public static Collection<File> unzip(InputStream source, String destinationFolder) {
-        Collection<File> files = new ArrayList<File>(10);
+        Collection<File> files = CollectionUtils.newList();
 
         ZipInputStream zis = new ZipInputStream(source);
 
@@ -449,11 +447,11 @@ public final class FileUtils {
 
     /**
      * Delete a file.
-     * 
+     *
      * @param files The files to delete
      */
     public static void delete(File... files) {
-        for(File file : files){
+        for (File file : files) {
             if (!file.exists()) {
                 return;
             }
@@ -511,7 +509,7 @@ public final class FileUtils {
      * @param folder The folder to clean.
      */
     public static void clearFolder(File folder) {
-        Collection<File> toDelete = new HashSet<File>(10);
+        Collection<File> toDelete = CollectionUtils.newSet(10);
 
         for (File f : folder.listFiles()) {
             if (f.isFile() && f.getName().startsWith("deleted")) {
@@ -750,7 +748,7 @@ public final class FileUtils {
      */
     public static Collection<File> getFilesOfFolder(File folder, FileFilter fileFilter) {
         if (folder.isDirectory()) {
-            Collection<File> files = new ArrayList<File>(50);
+            Collection<File> files = CollectionUtils.newList(50);
 
             readFolder(folder, files, fileFilter);
 

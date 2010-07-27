@@ -1,5 +1,7 @@
 package org.jtheque.utils.bean;
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,8 @@ public class EqualsBuilder {
     private final Object o1;
     private final Object o2;
 
-    private final List<Object> fields1 = new ArrayList<Object>(5);
-    private final List<Object> fields2 = new ArrayList<Object>(5);
+    private final List<Object> fields1 = CollectionUtils.newList(5);
+    private final List<Object> fields2 = CollectionUtils.newList(5);
 
     private EqualsBuilder(Object o1, Object o2) {
         super();
