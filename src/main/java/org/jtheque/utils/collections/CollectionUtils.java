@@ -29,6 +29,8 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Provide some utilities operations on collections.
@@ -190,6 +192,10 @@ public final class CollectionUtils {
 
     public static <K, V> Map<K, V> newHashMap(int capacity) {
         return new HashMap<K, V>(capacity);
+    }
+
+    public static <K, V> ConcurrentMap<K, V> newConcurrentMap(int capacity) {
+        return new ConcurrentHashMap<K, V>(capacity);
     }
 
     public static <T> Collection<T> protect(Collection<T> collection) {
