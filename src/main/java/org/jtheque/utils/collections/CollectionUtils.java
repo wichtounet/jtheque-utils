@@ -198,8 +198,16 @@ public final class CollectionUtils {
         return new ConcurrentHashMap<K, V>(capacity);
     }
 
+    public static <T> Set<T> newConcurrentSet(int capacity) {
+        return Collections.synchronizedSet(CollectionUtils.<T>newSet(capacity));
+    }
+
     public static <T> Collection<T> protect(Collection<T> collection) {
         return Collections.unmodifiableCollection(collection);
+    }
+
+    public static <K, V> Map<K, V> protect(Map<K, V> map) {
+        return Collections.unmodifiableMap(map);
     }
 
     /**
