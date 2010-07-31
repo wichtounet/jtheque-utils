@@ -90,11 +90,7 @@ public final class HashCodeUtils {
         int result = Constants.HASH_CODE_START;
 
         for (Object property : properties) {
-            if(property == null){
-                result *= Constants.HASH_CODE_PRIME;
-            } else {
-                result = computeValue(result, property);
-            }
+            result = computeValue(result, property);
         }
 
         return result;
@@ -109,6 +105,10 @@ public final class HashCodeUtils {
      * @return The result computed with the value.
      */
     private static int computeValue(int result, Object value) {
+        if (value == null) {
+            return result * Constants.HASH_CODE_PRIME;
+        }
+
         if(value.getClass().isArray()){
             if (value instanceof long[]) {
                 return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((long[]) value);
