@@ -3,6 +3,7 @@ package org.jtheque.utils.bean;
 import org.jtheque.utils.Constants;
 
 import java.beans.PropertyDescriptor;
+import java.util.Arrays;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -89,7 +90,9 @@ public final class HashCodeUtils {
         int result = Constants.HASH_CODE_START;
 
         for (Object property : properties) {
-            if(property != null){
+            if(property == null){
+                result *= Constants.HASH_CODE_PRIME;
+            } else {
                 result = computeValue(result, property);
             }
         }
@@ -106,24 +109,42 @@ public final class HashCodeUtils {
      * @return The result computed with the value.
      */
     private static int computeValue(int result, Object value) {
-        int hash;
-
-        if (value instanceof Double) {
-            Long temp = Double.doubleToLongBits((Double) value);
-            hash = Constants.HASH_CODE_PRIME * result + (int) (temp ^ temp >>> NUMBER_BIT_LENGTH);
-        } else if (value instanceof Long) {
-            Long temp = (Long) value;
-            hash = Constants.HASH_CODE_PRIME * result + (int) (temp ^ temp >>> NUMBER_BIT_LENGTH);
-        } else if (value instanceof Boolean) {
-            hash = Constants.HASH_CODE_PRIME * result + ((Boolean) value ? 0 : 1);
-        } else if (value instanceof Float) {
-            hash = Constants.HASH_CODE_PRIME * result + Float.floatToIntBits((Float) value);
-        } else if (value instanceof Number) {
-            hash = Constants.HASH_CODE_PRIME * result + ((Number) value).intValue();
+        if(value.getClass().isArray()){
+            if (value instanceof long[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((long[]) value);
+            } else if (value instanceof int[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((int[]) value);
+            } else if (value instanceof short[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((short[]) value);
+            } else if (value instanceof char[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((char[]) value);
+            } else if (value instanceof byte[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((byte[]) value);
+            } else if (value instanceof double[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((double[]) value);
+            } else if (value instanceof float[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((float[]) value);
+            } else if (value instanceof boolean[]) {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((boolean[]) value);
+            } else {
+                return Constants.HASH_CODE_PRIME * result + Arrays.hashCode((Object[]) value);
+            }
         } else {
-            hash = Constants.HASH_CODE_PRIME * result + (value == null ? 0 : value.hashCode());
+            if (value instanceof Double) {
+                Long temp = Double.doubleToLongBits((Double) value);
+                return Constants.HASH_CODE_PRIME * result + (int) (temp ^ temp >>> NUMBER_BIT_LENGTH);
+            } else if (value instanceof Long) {
+                Long temp = (Long) value;
+                return Constants.HASH_CODE_PRIME * result + (int) (temp ^ temp >>> NUMBER_BIT_LENGTH);
+            } else if (value instanceof Boolean) {
+                return Constants.HASH_CODE_PRIME * result + ((Boolean) value ? 0 : 1);
+            } else if (value instanceof Float) {
+                return Constants.HASH_CODE_PRIME * result + Float.floatToIntBits((Float) value);
+            } else if (value instanceof Number) {
+                return Constants.HASH_CODE_PRIME * result + ((Number) value).intValue();
+            } else {
+                return Constants.HASH_CODE_PRIME * result + value.hashCode();
+            }
         }
-
-        return hash;
     }
 }
