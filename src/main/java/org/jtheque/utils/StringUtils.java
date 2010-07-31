@@ -16,7 +16,11 @@ package org.jtheque.utils;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
+
+import java.util.Collection;
 import java.util.Locale;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
@@ -281,5 +285,17 @@ public final class StringUtils {
         }
 
         return false;
+    }
+
+    public static String[] getLines(String message) {
+        Collection<String> tokens = CollectionUtils.newList(5);
+
+        Scanner scanner = new Scanner(message);
+
+        while (scanner.hasNextLine()) {
+            tokens.add(scanner.nextLine());
+        }
+
+        return tokens.toArray(new String[tokens.size()]);
     }
 }
