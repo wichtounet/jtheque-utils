@@ -16,6 +16,7 @@ package org.jtheque.utils.ui;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.utils.ui.edt.Task;
@@ -46,8 +47,10 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
+import java.awt.font.TextAttribute;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * Provide utility methods for Swing Components.
@@ -360,5 +363,12 @@ public final class SwingUtils {
 
     public static boolean isEDT() {
         return EventQueue.isDispatchThread();
+    }
+
+    public static Font underline(Font font){
+        Map<TextAttribute, Object> attributes = CollectionUtils.newHashMap(1);
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+
+        return font.deriveFont(attributes);
     }
 }
