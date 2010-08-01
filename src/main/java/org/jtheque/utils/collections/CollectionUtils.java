@@ -202,6 +202,10 @@ public final class CollectionUtils {
         return Collections.synchronizedSet(CollectionUtils.<T>newSet(capacity));
     }
 
+    public static <T> List<T> newConcurrentList(int capacity) {
+        return Collections.synchronizedList(CollectionUtils.<T>newList(capacity));
+    }
+
     public static <T> Collection<T> protect(Collection<T> collection) {
         return Collections.unmodifiableCollection(collection);
     }
