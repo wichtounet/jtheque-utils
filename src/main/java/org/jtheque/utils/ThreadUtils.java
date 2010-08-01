@@ -2,6 +2,9 @@ package org.jtheque.utils;
 
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -23,6 +26,14 @@ public class ThreadUtils {
 
     public static int processors(){
         return PROCESSORS;
+    }
+
+    public static void inNewThread(Runnable runnable){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
+        executor.submit(runnable);
+
+        executor.shutdown();
     }
 
     public static void joinAll(Iterable<Thread> threads) {
