@@ -31,6 +31,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Provide some utilities operations on collections.
@@ -198,12 +200,12 @@ public final class CollectionUtils {
         return new ConcurrentHashMap<K, V>(capacity);
     }
 
-    public static <T> Set<T> newConcurrentSet(int capacity) {
-        return Collections.synchronizedSet(CollectionUtils.<T>newSet(capacity));
+    public static <T> Set<T> newConcurrentSet() {
+        return new CopyOnWriteArraySet<T>();
     }
 
-    public static <T> List<T> newConcurrentList(int capacity) {
-        return Collections.synchronizedList(CollectionUtils.<T>newList(capacity));
+    public static <T> List<T> newConcurrentList() {
+        return new CopyOnWriteArrayList<T>();
     }
 
     public static <T> Collection<T> protect(Collection<T> collection) {
