@@ -62,6 +62,10 @@ public final class ImageUtils {
      * @return The thumbnail
      */
     public static BufferedImage createThumbnail(BufferedImage image, int requestedThumbSize) {
+        if(image == null){
+            return null;
+        }
+
         float ratio = (float) image.getWidth() / (float) image.getHeight();
         int width = image.getWidth();
         boolean divide = requestedThumbSize < width;
