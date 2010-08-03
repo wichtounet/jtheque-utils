@@ -56,6 +56,10 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
      * @param listener The listener to add.
      */
     public void add(T listener){
+        if(listener == null){
+            return;
+        }
+
         synchronized (weakListeners) {
             weakListeners.add(new WeakReference<T>(listener));
         }
@@ -70,6 +74,10 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
      * @param listener The listener to remove.
      */
     public void remove(T listener) {
+        if (listener == null) {
+            return;
+        }
+        
         synchronized (weakListeners){
             for(int i = 0; i < weakListeners.size(); i++){
                 if(weakListeners.get(i).get() == null || weakListeners.get(i).get() == listener){
