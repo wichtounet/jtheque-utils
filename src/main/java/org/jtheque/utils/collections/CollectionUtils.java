@@ -62,7 +62,7 @@ public final class CollectionUtils {
     }
 
     /**
-     * Return a copy of the list.
+     * Return a copy of the collection.
      *
      * @param list The List to copy.
      * @param <T>  The type contained in the list.
@@ -71,6 +71,18 @@ public final class CollectionUtils {
      */
     public static <T> List<T> copyOf(Collection<T> list) {
         return new ArrayList<T>(list);
+    }
+
+    /**
+     * Return a copy of the set.
+     *
+     * @param list The Set to copy.
+     * @param <T>  The type contained in the list.
+     *
+     * @return A copy of the list.
+     */
+    public static <T> Set<T> copyOf(Set<T> list) {
+        return new HashSet<T>(list);
     }
 
     /**
@@ -208,6 +220,10 @@ public final class CollectionUtils {
         return new CopyOnWriteArrayList<T>();
     }
 
+    public static <T> Collection<T> protectedCopy(Collection<T> collection) {
+        return protect(copyOf(collection));
+    }
+
     public static <T> Collection<T> protect(Collection<T> collection) {
         return Collections.unmodifiableCollection(collection);
     }
@@ -268,6 +284,16 @@ public final class CollectionUtils {
      */
     public static <T> T first(Iterable<T> collection) {
         return collection.iterator().next();
+    }
+
+    public static <T> T last(Collection<T> collection) {
+        Iterator<T> iterator = collection.iterator();
+
+        for(int i = 0; i < collection.size() - 1; i++){
+            iterator.next();
+        }
+
+        return iterator.next();
     }
 
     /**

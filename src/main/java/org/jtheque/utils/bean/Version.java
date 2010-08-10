@@ -90,9 +90,13 @@ public final class Version implements Comparable<Version>, Serializable {
      *
      * @param version The version name to get the instance for.
      *
-     * @return The Version.
+     * @return The Version or null if the passed version is empty or invalid.
      */
     public static Version get(String version) {
+        if(StringUtils.isEmpty(version)){
+            return null;
+        }
+
         Version v = VERSIONS.get(version);
 
         if (v == null) {
