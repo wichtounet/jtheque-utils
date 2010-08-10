@@ -16,6 +16,7 @@ package org.jtheque.utils.bean;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Locale;
@@ -26,17 +27,14 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class InternationalString {
-    private final Map<String, String> resources = CollectionUtils.newHashMap(5);
+    private final Map<String, String> resources;
 
-    /**
-     * Put a new value.
-     *
-     * @param language The language.
-     * @param resource The message resource.
-     */
-    public void put(String language, String resource) {
-        resources.put(language, resource);
+    public InternationalString(Map<String, String> resources) {
+        super();
+
+        this.resources = CollectionUtils.copyOf(resources);
     }
 
     @Override
