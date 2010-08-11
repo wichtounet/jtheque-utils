@@ -1,5 +1,7 @@
 package org.jtheque.utils.io;
 
+import org.jtheque.utils.collections.SimpleTimedCache;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +29,8 @@ import java.net.UnknownHostException;
  */
 
 public class WebUtils {
+    private static final SimpleTimedCache<URL> URLS = new SimpleTimedCache<URL>(30000);//30 Seconds of timeout
+
     private WebUtils() {
         throw new AssertionError();
     }
@@ -119,8 +123,16 @@ public class WebUtils {
         }
     }
 
+    public static boolean isInternetNotReachable() {
+        return !isInternetReachable();
+    }
+
     public static boolean isInternetReachable() {
         return isURLReachable("http://www.google.com");
+    }
+
+    public static boolean isURLNotReachable(String urlStr){
+        return !isURLReachable(urlStr);
     }
 
     public static boolean isURLReachable(String urlStr) {
@@ -133,7 +145,15 @@ public class WebUtils {
         }
     }
 
+    public static boolean isURLNotReachable(URL url) {
+        return !isURLReachable(url);
+    }
+
     public static boolean isURLReachable(URL url) {
+        if(URLS.contains(url)){
+            return true;
+        }
+
         try {
             HttpURLConnection urlConnect = (HttpURLConnection) url.openConnection();
 
@@ -149,6 +169,8 @@ public class WebUtils {
         } catch (IOException e) {
             return false;
         }
+
+        URLS.add(url);
 
         return true;
     }
