@@ -1,5 +1,6 @@
 package org.jtheque.utils;
 
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Map;
@@ -25,8 +26,9 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class SimplePropertiesCache {
-    private static final Map<String, Object> PROPERTIES = CollectionUtils.newHashMap(5);
+    private static final Map<String, Object> PROPERTIES = CollectionUtils.newConcurrentMap(5);
 
     /**
      * Utility class, not instantiable.
