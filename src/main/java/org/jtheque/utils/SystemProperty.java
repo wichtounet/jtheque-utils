@@ -56,6 +56,8 @@ public enum SystemProperty {
         }
     },
 
+    FILE_SEPARATOR("file.separator"),
+
     JAVA_VERSION("java.version"),
 
     OS_VERSION("os.version"),

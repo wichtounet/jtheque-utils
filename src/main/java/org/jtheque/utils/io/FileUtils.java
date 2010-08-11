@@ -17,6 +17,7 @@ package org.jtheque.utils.io;
  */
 
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import org.slf4j.LoggerFactory;
@@ -278,7 +279,7 @@ public final class FileUtils {
             }
 
             String path = sourceFile.getAbsolutePath();
-            File targetFile = new File(target.getAbsolutePath() + path.substring(path.lastIndexOf(System.getProperty("file.separator"))));
+            File targetFile = new File(target.getAbsolutePath() + path.substring(path.lastIndexOf(SystemProperty.FILE_SEPARATOR.get())));
             copy(sourceFile, targetFile);
         }
     }
