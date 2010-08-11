@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -24,6 +25,10 @@ import java.util.concurrent.Executors;
 public class ThreadUtils {
     private static final int PROCESSORS = Runtime.getRuntime().availableProcessors();
 
+    private ThreadUtils() {
+        throw new AssertionError();
+    }
+
     public static int processors(){
         return PROCESSORS;
     }
@@ -43,6 +48,21 @@ public class ThreadUtils {
             } catch (InterruptedException e) {
                 LoggerFactory.getLogger(ThreadUtils.class).error(e.getMessage(), e);
             }
+        }
+    }
+
+    public static ThreadFactory daemonThreadFactory(){
+        return new DaemonThreadFactory();
+    }
+
+    private static class DaemonThreadFactory implements ThreadFactory {
+        @Override
+        public Thread newThread(Runnable r) {
+            Thread t = new Thread(r);
+
+            t.setDaemon(true);
+
+            return t;
         }
     }
 }
