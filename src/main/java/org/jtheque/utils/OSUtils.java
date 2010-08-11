@@ -35,7 +35,7 @@ public final class OSUtils {
      * @return true if the running operating system is Windows else false.
      */
     public static boolean isWindows() {
-        return System.getProperty("os.name").contains("Windows");
+        return SystemProperty.OS_NAME.get().contains("Windows");
     }
 
     /**
@@ -44,7 +44,7 @@ public final class OSUtils {
      * @return true if the running operating system is Linux else false.
      */
     public static boolean isLinux() {
-        return System.getProperty("os.name").contains("Linux");
+        return SystemProperty.OS_NAME.get().contains("Linux");
     }
 
     /**
@@ -53,6 +53,6 @@ public final class OSUtils {
      * @return true if the running operating system is Mac else false.
      */
     public static boolean isMac() {
-        return System.getProperty("os.name").contains("Mac");
+        return SystemProperty.OS_NAME.get().contains("Mac");
     }
 }

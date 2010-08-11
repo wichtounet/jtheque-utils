@@ -48,13 +48,19 @@ public enum SystemProperty {
         public String get() {
             String value = super.get();
 
-            if (!value.endsWith("/")) {
-                return value + '/';
+            if (!value.endsWith(File.separator)) {
+                value += File.separator;
             }
 
             return value;
         }
-    };
+    },
+
+    JAVA_VERSION("java.version"),
+
+    OS_VERSION("os.version"),
+
+    OS_NAME("os.name");
 
     private final String name;
 
