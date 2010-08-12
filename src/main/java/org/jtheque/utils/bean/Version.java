@@ -20,10 +20,12 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.Immutable;
 
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.WeakHashMap;
 import java.util.regex.Pattern;
 
 /**
@@ -36,12 +38,11 @@ import java.util.regex.Pattern;
 @Immutable
 public final class Version implements Comparable<Version>, Serializable {
     private static final long serialVersionUID = -7956061709109064519L;
-    private static final Map<String, Integer> CODES = new LinkedHashMap<String, Integer>(11);
-    private static final int HIGHEST_CODE = 10;
+    
+    private static final Map<String, Integer> CODES = new LinkedHashMap<String, Integer>(7);
     private static final Pattern SNAPSHOT_PATTERN = Pattern.compile("-SNAPSHOT");
-    private static final Pattern SNAPSHOT_PATTERN_2 = Pattern.compile("-snapshot");
 
-    private static final Map<String, Version> VERSIONS = new WeakHashMap<String, Version>(16);
+    private static final Map<String, WeakReference<Version>> VERSIONS = new HashMap<String, WeakReference<Version>>(16);
 
     private final String strVersion;
     private final boolean snapshot;
@@ -51,19 +52,15 @@ public final class Version implements Comparable<Version>, Serializable {
     private static final Object LOCK = new Object();
 
     static {
-        CODES.put("beta", 2);
-        CODES.put("b", 2);
+        CODES.put("BETA", 2);
         CODES.put("B", 2);
 
-        CODES.put("alpha", 1);
-        CODES.put("a", 1);
+        CODES.put("ALPHA", 1);
         CODES.put("A", 1);
 
-        CODES.put("milestone", 3);
-        CODES.put("m", 3);
+        CODES.put("MILESTONE", 3);
         CODES.put("M", 3);
 
-        CODES.put("rc", 4);
         CODES.put("RC", 4);
     }
 
@@ -75,12 +72,14 @@ public final class Version implements Comparable<Version>, Serializable {
     private Version(String version) {
         super();
 
-        if (version.endsWith("-SNAPSHOT") || version.endsWith("-snapshot")) {
+        String normalisedVersion = version.toUpperCase(Locale.getDefault());
+
+        if (normalisedVersion.endsWith("-SNAPSHOT")) {
             snapshot = true;
-            strVersion = SNAPSHOT_PATTERN_2.matcher(SNAPSHOT_PATTERN.matcher(version).replaceAll("")).replaceAll("");
+            strVersion = SNAPSHOT_PATTERN.matcher(normalisedVersion).replaceAll("");
         } else {
             snapshot = false;
-            strVersion = version;
+            strVersion = normalisedVersion;
         }
     }
 
@@ -97,25 +96,21 @@ public final class Version implements Comparable<Version>, Serializable {
             return null;
         }
 
-        Version v = VERSIONS.get(version);
+        WeakReference<Version> v = VERSIONS.get(version);
 
-        if (v == null) {
+        if (v == null || v.get() == null) {
             synchronized (LOCK) {
                 v = VERSIONS.get(version);
 
-                if (v == null) {
-                    v = new Version(version);
+                if (v == null || v.get() == null) {
+                    v = new WeakReference<Version>(new Version(version));
 
                     VERSIONS.put(version, v);
                 }
             }
         }
 
-        return v;
-    }
-
-    public static Version get(Version version) {
-        return get(version.strVersion);
+        return v.get();
     }
 
     /**
@@ -127,58 +122,6 @@ public final class Version implements Comparable<Version>, Serializable {
      */
     public boolean isGreaterThan(Version otherVersion) {
         return compareTo(otherVersion) > 0;
-    }
-
-    /**
-     * Compare the codes of two version.
-     *
-     * @param current        The current version.
-     * @param other          The other version.
-     * @param codeStrCurrent The code of the current version.
-     * @param codeStrOther   The code of the other version.
-     *
-     * @return true if the current code is most valued than the other.
-     */
-    private static boolean compareCode(String current, String other, String codeStrCurrent, String codeStrOther) {
-        int codeCurrent = intCode(codeStrCurrent);
-        int codeOther = intCode(codeStrOther);
-
-        if (codeCurrent == codeOther) {
-            String strCurrent = current.replace(codeStrCurrent, StringUtils.EMPTY_STRING);
-            String strOther = other.replace(codeStrOther, StringUtils.EMPTY_STRING);
-
-            return Integer.valueOf(strCurrent).compareTo(Integer.valueOf(strOther)) >= 0;
-        } else {
-            return codeCurrent > codeOther;
-        }
-    }
-
-    /**
-     * Return the int code of the string code.
-     *
-     * @param strCode The string code.
-     *
-     * @return The int value of the string code.
-     */
-    private static int intCode(String strCode) {
-        return StringUtils.isEmpty(strCode) ? HIGHEST_CODE : CODES.get(strCode);
-    }
-
-    /**
-     * Extract the code contained in the version.
-     *
-     * @param version The version string.
-     *
-     * @return The code contained in the version or an empty String if there is no code in this version.
-     */
-    private static String extractCode(String version) {
-        for (Map.Entry<String, Integer> entry : CODES.entrySet()) {
-            if (version.contains(entry.getKey())) {
-                return entry.getKey();
-            }
-        }
-
-        return "";
     }
 
     /**
@@ -211,8 +154,13 @@ public final class Version implements Comparable<Version>, Serializable {
 
     @Override
     public int compareTo(Version o) {
-        if (equals(o)) {
+        if (this == o) {
             return 0;
+        }
+
+        //Snapshot versions are lower than normal versions
+        if(strVersion.equals(o.strVersion)){
+            return snapshot ? -1 : 1;
         }
 
         StringTokenizer currentTokens = new StringTokenizer(strVersion, ".");
@@ -255,7 +203,59 @@ public final class Version implements Comparable<Version>, Serializable {
         if (StringUtils.isEmpty(codeStrCurrent) && StringUtils.isEmpty(codeStrOther)) {
             return Integer.valueOf(current).compareTo(Integer.valueOf(other));
         } else {
-            return compareCode(current, other, codeStrCurrent, codeStrOther) ? 1 : -1;
+            return compareCode(current, other, codeStrCurrent, codeStrOther);
         }
+    }
+
+    /**
+     * Extract the code contained in the version.
+     *
+     * @param version The version string.
+     *
+     * @return The code contained in the version or an empty String if there is no code in this version.
+     */
+    private static String extractCode(String version) {
+        for (Map.Entry<String, Integer> entry : CODES.entrySet()) {
+            if (version.contains(entry.getKey())) {
+                return entry.getKey();
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Compare the codes of two version.
+     *
+     * @param current        The current version.
+     * @param other          The other version.
+     * @param codeStrCurrent The code of the current version.
+     * @param codeStrOther   The code of the other version.
+     *
+     * @return true if the current code is most valued than the other.
+     */
+    private static int compareCode(String current, String other, String codeStrCurrent, String codeStrOther) {
+        int codeCurrent = intCode(codeStrCurrent);
+        int codeOther = intCode(codeStrOther);
+
+        if (codeCurrent == codeOther) {
+            String strCurrent = StringUtils.delete(current, codeStrCurrent);
+            String strOther = StringUtils.delete(other, codeStrOther);
+
+            return Integer.valueOf(strCurrent).compareTo(Integer.valueOf(strOther));
+        } else {
+            return new Integer(codeCurrent).compareTo(codeOther);
+        }
+    }
+
+    /**
+     * Return the int code of the string code.
+     *
+     * @param strCode The string code.
+     *
+     * @return The int value of the string code.
+     */
+    private static int intCode(String strCode) {
+        return StringUtils.isEmpty(strCode) ? Integer.MAX_VALUE : CODES.get(strCode);
     }
 }
