@@ -78,10 +78,10 @@ public class VersionTest {
         Version version3 = Version.get("5.5.6.9");
         Version version4 = Version.get("1.0.0.0.0.1.beta9");
 
-        assertEquals(version1.getVersion(), "1.0.beta2");
-        assertEquals(version2.getVersion(), "5.0.5.beta19");
+        assertEquals(version1.getVersion(), "1.0.BETA2");
+        assertEquals(version2.getVersion(), "5.0.5.BETA19");
         assertEquals(version3.getVersion(), "5.5.6.9");
-        assertEquals(version4.getVersion(), "1.0.0.0.0.1.beta9");
+        assertEquals(version4.getVersion(), "1.0.0.0.0.1.BETA9");
     }
 
     /**
@@ -95,10 +95,10 @@ public class VersionTest {
         Object version4 = Version.get("1.0.0.0.0.1.beta9");
         Object version5 = Version.get("1.0.1-SNAPSHOT");
 
-        assertEquals(version1.toString(), "1.0.beta2");
-        assertEquals(version2.toString(), "5.0.5.beta19");
+        assertEquals(version1.toString(), "1.0.BETA2");
+        assertEquals(version2.toString(), "5.0.5.BETA19");
         assertEquals(version3.toString(), "5.5.6.9");
-        assertEquals(version4.toString(), "1.0.0.0.0.1.beta9");
+        assertEquals(version4.toString(), "1.0.0.0.0.1.BETA9");
         assertEquals(version5.toString(), "1.0.1-SNAPSHOT");
     }
 
