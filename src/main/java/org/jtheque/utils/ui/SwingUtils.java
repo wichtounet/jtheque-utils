@@ -62,9 +62,14 @@ public final class SwingUtils {
     private static final GraphicsDevice GRAPHICS_DEVICE;
 
     static {
-        GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GRAPHICS_DEVICE = gEnv.getDefaultScreenDevice();
-        DISPLAY_MODE = GRAPHICS_DEVICE.getDisplayMode();
+        if(ImageUtils.isHeadless()){
+            GRAPHICS_DEVICE = null;
+            DISPLAY_MODE = null;
+        } else {
+            GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GRAPHICS_DEVICE = gEnv.getDefaultScreenDevice();
+            DISPLAY_MODE = GRAPHICS_DEVICE.getDisplayMode();
+        }
     }
 
     private static Font defaultFont;
@@ -92,6 +97,10 @@ public final class SwingUtils {
      * @param frame The frame to be centered
      */
     public static void centerFrame(Window frame) {
+        if(ImageUtils.isHeadless()){
+            throw new IllegalStateException("Cannot be used in headless mode");
+        }
+
         frame.setLocation((getWidth() - frame.getWidth()) / 2,
                 (getHeight() - frame.getHeight()) / 2);
     }
