@@ -9,13 +9,13 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${user.dir}/logs/jtheque.log</file>
+        <file>/home/wichtounet/Desktop/jtheque.log</file>
         <append>false</append>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <FileNamePattern>${user.dir}/logs/jtheque.%i.log.zip</FileNamePattern>
+            <FileNamePattern>/home/wichtounet/Desktop/jtheque.%i.log.zip</FileNamePattern>
             <MinIndex>1</MinIndex>
-            <MaxIndex>5</MaxIndex>
+            <MaxIndex>10</MaxIndex>
         </rollingPolicy>
 
         <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
@@ -27,8 +27,12 @@
         </layout>
     </appender>
 
-    <root level="TRACE">
+    <appender name="ASYNC" class="org.jtheque.utils.AsyncAppender">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
+    </appender>
+
+    <root level="TRACE">
+        <appender-ref ref="ASYNC"/>
     </root>
 </configuration>

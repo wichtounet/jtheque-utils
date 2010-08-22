@@ -8,13 +8,19 @@ import org.slf4j.Marker;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Loggers {
     private static final Map<Class<?>, AsyncLogger> CACHE = CollectionUtils.newConcurrentMap(100);
 
+    private static final BlockingQueue<Message> MESSAGES = new LinkedBlockingQueue<Message>();
+
     private static final Message DUMMY = new SimpleMessage(null, null, null);
+    private static final int threads = 16;
+    private static CountDownLatch latch;
 
     private Loggers() {
         throw new AssertionError();
@@ -24,11 +30,28 @@ public class Loggers {
         //warmup(getLogger(Loggers.class));
         warmup(LoggerFactory.getLogger(Loggers.class));
 
+        //testLoggers();
+        testSLF4J();
+    }
+
+    private static void testLoggers() {
         long startTime = System.nanoTime();
 
-        final CountDownLatch latch = new CountDownLatch(8);
+        latch = new CountDownLatch(threads + 1);
 
-        launchThreads(LoggerFactory.getLogger(Loggers.class), latch, 8);
+        CyclicBarrier barrier = new CyclicBarrier(threads + 1);
+
+        launchThreads(getLogger(Loggers.class), latch, threads, barrier);
+
+        try {
+            barrier.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        MESSAGES.add(DUMMY);
 
         try {
             latch.await();
@@ -37,15 +60,42 @@ public class Loggers {
             e.printStackTrace();
         }
 
-        LoggerFactory.getLogger(Loggers.class).error("Results : {} ms", (System.nanoTime() - startTime) / 1000 / 1000);
+        System.out.println("Results : " + (System.nanoTime() - startTime) / 1000 / 1000 + " ms");
     }
 
-    private static void launchThreads(final Logger logger, final CountDownLatch latch, int threads) {
-        for(int i = 0; i < threads; i++){
-            new Thread(new Runnable(){
+    private static void testSLF4J() {
+        long startTime = System.nanoTime();
+
+        latch = new CountDownLatch(threads);
+
+        CyclicBarrier barrier = new CyclicBarrier(threads + 1);
+
+        launchThreads(LoggerFactory.getLogger(Loggers.class), latch, threads, barrier);
+
+        try {
+            barrier.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
+
+        System.out.println("Results : " + (System.nanoTime() - startTime) / 1000 / 1000 + " ms");
+    }
+
+    private static void launchThreads(final Logger logger, final CountDownLatch latch, int threads, final CyclicBarrier barrier) {
+        for (int i = 0; i < threads; i++) {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for(int a = 0; a < 1000; a++){
+                    for (int a = 0; a < 5000; a++) {
                         logger.trace("Test 1");
                         logger.trace("Test 1 {}", 1);
                         logger.trace("Test 1 {}{}", 1, 2);
@@ -70,9 +120,17 @@ public class Loggers {
                         logger.error("Test 5 {}", 1);
                         logger.error("Test 5 {}{}", 1, 2);
                         logger.error("Test 5 {}{}{}", new Object[]{1, 2, 3});
-
-                        latch.countDown();
                     }
+
+                    try {
+                        barrier.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    } catch (BrokenBarrierException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+
+                    latch.countDown();
                 }
             }).start();
         }
@@ -367,8 +425,6 @@ public class Loggers {
 
     private static class AsyncLogger implements Logger {
         private final Logger logger;
-
-        private static final BlockingQueue<Message> MESSAGES = new LinkedBlockingQueue<Message>();
 
         static {
             Thread loggingThread = new Thread(new LoggingThread());
@@ -836,14 +892,16 @@ public class Loggers {
                         Message message = MESSAGES.take();
 
                         if (message == DUMMY) {
-                            return;
+                            thread.interrupt();
+                        } else {
+                            message.log();
                         }
-
-                        message.log();
                     } catch (InterruptedException e) {
                         thread.interrupt();
                     }
                 }
+
+                latch.countDown();
             }
         }
 
