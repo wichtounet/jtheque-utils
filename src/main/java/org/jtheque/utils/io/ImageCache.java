@@ -1,5 +1,6 @@
 package org.jtheque.utils.io;
 
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.ImageUtils;
@@ -34,6 +35,7 @@ import java.util.concurrent.FutureTask;
 
 @ThreadSafe
 public class ImageCache {
+    @GuardedInternally
     private final ConcurrentMap<String, Future<SoftImage>> cache;
 
     public ImageCache() {

@@ -1,5 +1,6 @@
 package org.jtheque.utils;
 
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -28,6 +29,7 @@ import java.util.Map;
  */
 @ThreadSafe
 public final class SimplePropertiesCache {
+    @GuardedInternally
     private static final Map<String, Object> PROPERTIES = CollectionUtils.newConcurrentMap(5);
 
     /**

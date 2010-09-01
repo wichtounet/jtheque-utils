@@ -17,6 +17,7 @@ package org.jtheque.utils.collections;
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -160,6 +161,24 @@ public final class CollectionUtils {
      */
     public static void reverse(List<?> list) {
         Collections.reverse(list);
+    }
+
+    public static <E extends Comparable<E>> void sort(CopyOnWriteArrayList<E> list) {
+        Object[] content = list.toArray();
+        Arrays.sort(content);
+
+        for (int i = 0; i < content.length; i++) {
+            list.set(i, (E) content[i]);
+        }
+    }
+
+    public static <E> void sort(CopyOnWriteArrayList<E> list, Comparator<E> comparator) {
+        Object[] content = list.toArray();
+        Arrays.sort(content, (Comparator) comparator);
+
+        for (int i = 0; i < content.length; i++) {
+            list.set(i, (E) content[i]);
+        }
     }
 
     /**
