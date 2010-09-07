@@ -30,8 +30,6 @@ import java.util.Locale;
 public final class IntDate implements Serializable, Comparable<IntDate> {
     private static final long serialVersionUID = -5493916511769583774L;
 
-    private static final IntDate TODAY_DATE = new IntDate(Calendar.getInstance());
-
     private final DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     private final Calendar calendar;
 
@@ -183,7 +181,7 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
      * @return The today IntDate
      */
     public static IntDate today() {
-        return TODAY_DATE;
+        return new IntDate(Calendar.getInstance());
     }
 
     /**
@@ -213,7 +211,6 @@ public final class IntDate implements Serializable, Comparable<IntDate> {
         IntDate other = (IntDate) o;
 
         return calendar.equals(other.calendar);
-
     }
 
     @Override
