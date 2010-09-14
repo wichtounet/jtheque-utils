@@ -16,7 +16,7 @@ package org.jtheque.utils.bean;
  * limitations under the License.
  */
 
-public class Numbers {
+public final class Numbers {
     private Numbers() {
         throw new AssertionError();
     }

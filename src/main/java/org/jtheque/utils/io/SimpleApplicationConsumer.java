@@ -134,12 +134,12 @@ public final class SimpleApplicationConsumer {
         private final StringBuilder result = new StringBuilder(250);
 
         @Override
-        public void write(int b) throws IOException {
+        public void write(int b) {
             result.append(String.valueOf((char) b));
         }
 
         @Override
-        public void write(byte[] b, int off, int len) throws IOException {
+        public void write(byte[] b, int off, int len) {
             result.append(new String(b, off, len));
         }
 

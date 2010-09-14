@@ -28,7 +28,7 @@ import java.net.UnknownHostException;
  * limitations under the License.
  */
 
-public class WebUtils {
+public final class WebUtils {
     private static final SimpleTimedCache<URL> URLS = new SimpleTimedCache<URL>(30000);//30 Seconds of timeout
 
     private WebUtils() {

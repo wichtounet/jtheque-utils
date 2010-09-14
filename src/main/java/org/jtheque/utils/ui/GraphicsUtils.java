@@ -31,7 +31,7 @@ import java.awt.geom.RoundRectangle2D;
  *
  * @author Baptiste Wicht
  */
-public class GraphicsUtils {
+public final class GraphicsUtils {
     /**
      * Utility class, not instantiable.
      */

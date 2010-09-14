@@ -2,7 +2,6 @@ package org.jtheque.utils.bean;
 
 import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*

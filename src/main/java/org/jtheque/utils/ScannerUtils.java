@@ -23,7 +23,7 @@ import java.util.Scanner;
  *
  * @author Baptiste Wicht
  */
-public class ScannerUtils {
+public final class ScannerUtils {
     /**
      * Utility class, not instantiable.
      */

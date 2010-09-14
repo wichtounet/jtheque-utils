@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author Baptiste Wicht
  */
-public class CryptoUtils {
+public final class CryptoUtils {
     /**
      * Utility class, not instantiable.
      */
