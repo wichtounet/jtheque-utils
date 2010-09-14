@@ -27,7 +27,6 @@ import java.lang.ref.SoftReference;
  * An image container. This image container stock the image as a SoftReference.
  *
  * @author Baptiste Wicht
- *
  * @see java.lang.ref.SoftReference
  */
 @ThreadSafe
@@ -63,6 +62,11 @@ public final class SoftImage {
         return image == null ? null : image.get();
     }
 
+    /**
+     * Indicate if the image has been cleared.
+     *
+     * @return {@code true} if the image has been cleared else {@code false}.
+     */
     public boolean hasBeenCleared() {
         return image == null || image.get() == null;
     }

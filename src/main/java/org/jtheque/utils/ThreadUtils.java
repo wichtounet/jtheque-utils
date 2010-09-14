@@ -1,7 +1,5 @@
 package org.jtheque.utils;
 
-import org.slf4j.LoggerFactory;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -22,18 +20,36 @@ import java.util.concurrent.ThreadFactory;
  * limitations under the License.
  */
 
+/**
+ * An utility class to manipulate threads.
+ *
+ * @author Baptiste Wicht
+ */
 public class ThreadUtils {
     private static final int PROCESSORS = Runtime.getRuntime().availableProcessors();
 
+    /**
+     * Utility class, not instantiable.
+     */
     private ThreadUtils() {
         throw new AssertionError();
     }
 
-    public static int processors(){
+    /**
+     * Return the number of processors of the computer.
+     *
+     * @return The number of processors of the computer.
+     */
+    public static int processors() {
         return PROCESSORS;
     }
 
-    public static void inNewThread(Runnable runnable){
+    /**
+     * Run the given runnable in a new thread.
+     *
+     * @param runnable The runnable to run in a new thread.
+     */
+    public static void inNewThread(Runnable runnable) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
         executor.submit(runnable);
@@ -41,20 +57,33 @@ public class ThreadUtils {
         executor.shutdown();
     }
 
-    public static void joinAll(Iterable<Thread> threads) {
+    /**
+     * Join all the threads.
+     *
+     * @param threads The threads to join.
+     *
+     * @throws InterruptedException If the thread is interrupted during joining.
+     */
+    public static void joinAll(Iterable<Thread> threads) throws InterruptedException {
         for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                LoggerFactory.getLogger(ThreadUtils.class).error(e.getMessage(), e);
-            }
+            thread.join();
         }
     }
 
-    public static ThreadFactory daemonThreadFactory(){
+    /**
+     * Create a thread factory were all the threads are daemon threads.
+     *
+     * @return The thread factory.
+     */
+    public static ThreadFactory daemonThreadFactory() {
         return new DaemonThreadFactory();
     }
 
+    /**
+     * A ThreadFactory to create daemon threads.
+     *
+     * @author Baptiste Wicht
+     */
     private static class DaemonThreadFactory implements ThreadFactory {
         @Override
         public Thread newThread(Runnable r) {

@@ -136,6 +136,13 @@ public final class FileUtils {
         return content.toString();
     }
 
+    /**
+     * Return the lines of the file. 
+     *
+     * @param file The file.
+     *
+     * @return A Collection of String, each element is a line of the file.
+     */
     public static Collection<String> getLinesOf(File file) {
         try {
             return getLinesOf(asInputStream(file));

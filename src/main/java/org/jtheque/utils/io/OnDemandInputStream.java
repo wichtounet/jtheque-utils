@@ -22,9 +22,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+/**
+ * An on demand input stream.
+ *
+ * @author Baptiste Wicht
+ */
 public class OnDemandInputStream implements OnDemandStream {
     private final File file;
 
+    /**
+     * Create a new OnDemandInputStream.
+     *
+     * @param file The file of the stream. 
+     */
     public OnDemandInputStream(File file) {
         super();
 

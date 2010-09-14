@@ -23,14 +23,26 @@ import java.util.concurrent.TimeUnit;
  * limitations under the License.
  */
 
+/**
+ * A simple cached with a timeout on each element. The eviction thread is a daemon, so there is no need to shutdown the
+ * cache. This cache doesn't support null objects.
+ *
+ * @author Baptiste Wicht
+ * @param <T> The type of object in the cache.
+ */
 public class SimpleTimedCache<T> {
     private final long timeout;
     private final Collection<TimedElement> elements = CollectionUtils.newConcurrentList();
 
+    /**
+     * Create a new SimpleTimedCache.
+     *
+     * @param timeout The timeout to evict the objects.
+     */
     public SimpleTimedCache(long timeout) {
         super();
 
-        if(timeout <= 0){
+        if (timeout <= 0) {
             throw new IllegalArgumentException("The timeout is less than or equals to zero. ");
         }
 
@@ -41,17 +53,31 @@ public class SimpleTimedCache<T> {
         executor.scheduleAtFixedRate(new EvictionTask(), timeout, timeout, TimeUnit.MILLISECONDS);
     }
 
-    public void add(T element){
-        if(element == null){
+    /**
+     * Add the given element to the cache.
+     *
+     * @param element The element to add to the cache.
+     *
+     * @throws IllegalArgumentException If the element is null.
+     */
+    public void add(T element) {
+        if (element == null) {
             throw new IllegalArgumentException("The cache doesn't support null elements");
         }
 
-        elements.add(new TimedElement(element, System.currentTimeMillis()));
+        elements.add(new TimedElement(element));
     }
 
-    public boolean contains(T element){
-        for(TimedElement timedElement : elements){
-            if(timedElement.get().equals(element)){
+    /**
+     * Indicate if the cache contains the given element or not.
+     *
+     * @param element The element to test.
+     *
+     * @return {@code true} if the cache contains the object otherwise {@code false}.
+     */
+    public boolean contains(T element) {
+        for (TimedElement timedElement : elements) {
+            if (timedElement.get().equals(element)) {
                 return true;
             }
         }
@@ -59,29 +85,57 @@ public class SimpleTimedCache<T> {
         return false;
     }
 
+    /**
+     * A timed element.
+     *
+     * @author Baptiste Wicht
+     */
     private final class TimedElement {
         private final T element;
         private final long time;
 
-        private TimedElement(T element, long time) {
+        /**
+         * Create a new TimedElement.
+         *
+         * @param element The element.
+         */
+        private TimedElement(T element) {
+            super();
+
             this.element = element;
-            this.time = time;
+
+            time = System.currentTimeMillis();
         }
 
-        private boolean isTooOld(){
+        /**
+         * Indicate if the element is too old.
+         *
+         * @return {@code true} if the element is too old otherwise {@code false}.
+         */
+        private boolean isTooOld() {
             return System.currentTimeMillis() > time + timeout;
         }
 
-        private T get(){
+        /**
+         * Return the element.
+         *
+         * @return The element.
+         */
+        private T get() {
             return element;
         }
     }
 
+    /**
+     * The task to evict the old elements.
+     *
+     * @author Baptiste Wicht
+     */
     private class EvictionTask implements Runnable {
         @Override
         public void run() {
-            for(TimedElement element : elements){
-                if(element.isTooOld()){
+            for (TimedElement element : elements) {
+                if (element.isTooOld()) {
                     elements.remove(element);
                 }
             }

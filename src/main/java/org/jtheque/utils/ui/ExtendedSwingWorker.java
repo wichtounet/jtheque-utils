@@ -18,13 +18,28 @@ import javax.swing.SwingWorker;
  * limitations under the License.
  */
 
+/**
+ * An extended swing worker allowing to execute something in the EDT before the current task. You must call the
+ * start() method to guarantee that the before() will be executed.
+ *
+ * @param <T> the result type returned by this SwingWorker's doInBackground and get methods
+ * @param <V>the type used for carrying out intermediate results by this SwingWorker's publish and process methods
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class ExtendedSwingWorker<T, V> extends SwingWorker<T, V> {
-    protected void before(){
+    /**
+     * Executed before the execute() of the swing worker.
+     */
+    protected void before() {
         //Nothing by default
     }
 
-    public void start(){
-        SwingUtils.inEdt(new Runnable(){
+    /**
+     * Launch the swing worker. 
+     */
+    public void start() {
+        SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
                 before();

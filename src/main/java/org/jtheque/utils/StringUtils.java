@@ -277,9 +277,17 @@ public final class StringUtils {
         return string.replace(toDelete, "");
     }
 
+    /**
+     * Indicate if the value equals one of the other given value.
+     *
+     * @param value  The value to test.
+     * @param values The other values to compare the first with.
+     *
+     * @return {@code true} if the value equals one of the other given value.
+     */
     public static boolean equalsOneOf(String value, String... values) {
-        for(String v : values){
-            if(value.equals(v)){
+        for (String v : values) {
+            if (value.equals(v)) {
                 return true;
             }
         }
@@ -287,6 +295,13 @@ public final class StringUtils {
         return false;
     }
 
+    /**
+     * Return the lines of the message.
+     *
+     * @param message The message to cut in lines.
+     *
+     * @return An array containing all the lines of the message.
+     */
     public static String[] getLines(String message) {
         Collection<String> tokens = CollectionUtils.newList(5);
 

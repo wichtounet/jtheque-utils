@@ -1,5 +1,7 @@
 package org.jtheque.utils.bean;
 
+import org.jtheque.utils.annotations.Immutable;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -16,10 +18,25 @@ package org.jtheque.utils.bean;
  * limitations under the License.
  */
 
+/**
+ * A simple pair of object.
+ * 
+ * @param <A> The type of the first object.
+ * @param <B> The type of the second object.
+ *
+ * @author Baptiste Wicht
+ */
+@Immutable
 public class Pair<A, B> {
     private final A a;
     private final B b;
 
+    /**
+     * Create a Pair of object.
+     *
+     * @param a The first object.
+     * @param b The second object.
+     */
     public Pair(A a, B b) {
         super();
 
@@ -27,10 +44,20 @@ public class Pair<A, B> {
         this.b = b;
     }
 
+    /**
+     * Return the first object.
+     *
+     * @return The first object.
+     */
     public A getA() {
         return a;
     }
 
+    /**
+     * Return the second object.
+     *
+     * @return The second object.
+     */
     public B getB() {
         return b;
     }

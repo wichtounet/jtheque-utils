@@ -163,6 +163,12 @@ public final class CollectionUtils {
         Collections.reverse(list);
     }
 
+    /**
+     * Sort the CopyOnWriteArrayList.
+     *
+     * @param list The list to sort.
+     * @param <E>  The type of data.
+     */
     public static <E extends Comparable<E>> void sort(CopyOnWriteArrayList<E> list) {
         Object[] content = list.toArray();
         Arrays.sort(content);
@@ -172,6 +178,13 @@ public final class CollectionUtils {
         }
     }
 
+    /**
+     * Sort the CopyOnWriteArrayList using the given comparator.
+     *
+     * @param list       The list to sort.
+     * @param comparator The comparator to use.
+     * @param <E>        The type of data.
+     */
     public static <E> void sort(CopyOnWriteArrayList<E> list, Comparator<E> comparator) {
         Object[] content = list.toArray();
         Arrays.sort(content, (Comparator) comparator);
@@ -203,50 +216,146 @@ public final class CollectionUtils {
         return (List<T>) EMPTY_LIST;
     }
 
-    public static <T> List<T> newList(){
+    /**
+     * Create a new list with a capacity of 10.
+     *
+     * @param <T> The type of data.
+     *
+     * @return The new list.
+     */
+    public static <T> List<T> newList() {
         return new ArrayList<T>(10);
     }
 
+    /**
+     * Create a new list with the given capacity.
+     *
+     * @param <T>      The type of data.
+     * @param capacity The initial capacity of the list.
+     *
+     * @return The new list.
+     */
     public static <T> List<T> newList(int capacity) {
         return new ArrayList<T>(capacity);
     }
 
+    /**
+     * Create a new Set with a capacity of 10.
+     *
+     * @param <T> The type of data.
+     *
+     * @return The new set.
+     */
     public static <T> Set<T> newSet() {
         return new HashSet<T>(10);
     }
 
+    /**
+     * Create a new Set with the given capacity.
+     *
+     * @param <T>      The type of data.
+     * @param capacity The initial capacity of the list.
+     *
+     * @return The new set.
+     */
     public static <T> Set<T> newSet(int capacity) {
         return new HashSet<T>(capacity);
     }
 
-    public static <K, V> Map<K,V> newHashMap(){
+    /**
+     * Create a new hash map.
+     *
+     * @param <K> The type of key.
+     * @param <V> The type of value.
+     *
+     * @return The new hash map.
+     */
+    public static <K, V> Map<K, V> newHashMap() {
         return new HashMap<K, V>(10);
     }
 
+    /**
+     * Create a new hash map.
+     *
+     * @param <K>      The type of key.
+     * @param <V>      The type of value.
+     * @param capacity The initial capacity of the map.
+     *
+     * @return The new hash map.
+     */
     public static <K, V> Map<K, V> newHashMap(int capacity) {
         return new HashMap<K, V>(capacity);
     }
 
+    /**
+     * Create a new ConcurrentMap.
+     *
+     * @param capacity The capacity of the map.
+     * @param <K>      The type of key.
+     * @param <V>      The type of value.
+     *
+     * @return The new concurrent map.
+     */
     public static <K, V> ConcurrentMap<K, V> newConcurrentMap(int capacity) {
         return new ConcurrentHashMap<K, V>(capacity);
     }
 
+    /**
+     * Create a new concurrent set.
+     *
+     * @param <T> The type of value.
+     *
+     * @return The new concurrent set.
+     */
     public static <T> Set<T> newConcurrentSet() {
         return new CopyOnWriteArraySet<T>();
     }
 
+    /**
+     * Create a new concurrent list.
+     *
+     * @param <T> The type of value.
+     *
+     * @return The new concurrent list.
+     */
     public static <T> List<T> newConcurrentList() {
         return new CopyOnWriteArrayList<T>();
     }
 
+    /**
+     * Create a protected copy of the collection. The copy is unmodifiable.
+     *
+     * @param collection The collection to copy.
+     * @param <T>        The type of value.
+     *
+     * @return The protected copy of the collection.
+     */
     public static <T> Collection<T> protectedCopy(Collection<T> collection) {
         return protect(copyOf(collection));
     }
 
+    /**
+     * Protect the collection. It returns a unmodifiable view of the given collection. The given collection is not
+     * modified.
+     *
+     * @param collection The collection to protect.
+     * @param <T>        The type of value.
+     *
+     * @return The protected Collection.
+     */
     public static <T> Collection<T> protect(Collection<T> collection) {
         return Collections.unmodifiableCollection(collection);
     }
 
+    /**
+     * Protect the map. It returns a unmodifiable view of the given map. The map collection is not modified.
+     *
+     * @param map The map to protect.
+     * @param <K> The type of key.
+     * @param <V> The type of value.
+     *
+     * @return The protected Map.
+     */
     public static <K, V> Map<K, V> protect(Map<K, V> map) {
         return Collections.unmodifiableMap(map);
     }
@@ -301,14 +410,30 @@ public final class CollectionUtils {
      *
      * @return The first element of the collection or null if the collection is empty.
      */
-    public static <T> T first(Iterable<T> collection) {
+    public static <T> T first(Collection<T> collection) {
+        if (collection.isEmpty()) {
+            return null;
+        }
+        
         return collection.iterator().next();
     }
 
+    /**
+     * Return the last element of a collection. This method iterates over the complete collection to found
+     * the last element.
+     *
+     * @param collection The collection to get the last element from.
+     * @param <T> The type of value.
+     * @return The last element of the collection. If there is no element, the method return null.
+     */
     public static <T> T last(Collection<T> collection) {
+        if(collection.isEmpty()){
+            return null;
+        }
+
         Iterator<T> iterator = collection.iterator();
 
-        for(int i = 0; i < collection.size() - 1; i++){
+        for (int i = 0; i < collection.size() - 1; i++) {
             iterator.next();
         }
 

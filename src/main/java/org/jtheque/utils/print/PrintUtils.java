@@ -190,6 +190,11 @@ public final class PrintUtils {
         printArrayString(FileUtils.getLinesOf(stream));
     }
 
+    /**
+     * Print each line of the file.
+     *
+     * @param file The file.
+     */
     public static void printLineFiles(File file) {
         printArrayString(FileUtils.getLinesOf(file));
     }

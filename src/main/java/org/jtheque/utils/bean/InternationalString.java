@@ -31,6 +31,11 @@ import java.util.Map;
 public final class InternationalString {
     private final Map<String, String> resources;
 
+    /**
+     * Construct a new InternationalString.
+     *
+     * @param resources The internationalized values.
+     */
     public InternationalString(Map<String, String> resources) {
         super();
 

@@ -26,12 +26,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 
 /**
- * A simple thread safe weak listener list. All the listeners are stored using WeakReference. The list use
- * a CopyOnWriteArrayList to make sure that the iteration over the listeners is thread safe. The iterator
- * does not permit modifications. 
+ * A simple thread safe weak listener list. All the listeners are stored using WeakReference. The list use a
+ * CopyOnWriteArrayList to make sure that the iteration over the listeners is thread safe. The iterator does not permit
+ * modifications.
  *
+ * Use the create() static method to create a new instance.
+ *
+ * @author Baptiste Wicht
  * @param <T> The type of listener to store in the list.
- *
  * @see java.lang.ref.WeakReference
  * @see java.util.concurrent.CopyOnWriteArrayList
  */
@@ -40,12 +42,22 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
     @GuardedInternally
     @GuardedBy("weakListeners")
     private final CopyOnWriteArrayList<WeakReference<T>> weakListeners = new CopyOnWriteArrayList<WeakReference<T>>();
-    
+
+    /**
+     * Not instantiable directly.
+     */
     private WeakEventListenerList() {
         super();
     }
 
-    public static <T extends EventListener> WeakEventListenerList<T> create(){
+    /**
+     * Create a new WeakEventListenerList.
+     *
+     * @param <T> The type of listener.
+     *
+     * @return The created WeakEventListenerList.
+     */
+    public static <T extends EventListener> WeakEventListenerList<T> create() {
         return new WeakEventListenerList<T>();
     }
 
@@ -55,8 +67,8 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
      *
      * @param listener The listener to add.
      */
-    public void add(T listener){
-        if(listener == null){
+    public void add(T listener) {
+        if (listener == null) {
             return;
         }
 
@@ -69,7 +81,7 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
      * Add the listener to the list. This operation is provided in O(n) + the cost of the n remove() operation of the
      * CopyOnWriteArrayList.
      *
-     * The weak references are cleaned during the remove operation. 
+     * The weak references are cleaned during the remove operation.
      *
      * @param listener The listener to remove.
      */
@@ -77,10 +89,10 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
         if (listener == null) {
             return;
         }
-        
-        synchronized (weakListeners){
-            for(int i = 0; i < weakListeners.size(); i++){
-                if(weakListeners.get(i).get() == null || weakListeners.get(i).get() == listener){
+
+        synchronized (weakListeners) {
+            for (int i = 0; i < weakListeners.size(); i++) {
+                if (weakListeners.get(i).get() == null || weakListeners.get(i).get() == listener) {
                     weakListeners.remove(i);
                 }
             }
@@ -104,9 +116,18 @@ public class WeakEventListenerList<T extends EventListener> implements Iterable<
         return iterator;
     }
 
+    /**
+     * An iterator on the listeners.
+     *
+     * @author Baptiste Wicht
+     */
     private class ListenersIterator implements Iterator<T> {
         private final Iterator<WeakReference<T>> weakReferenceIterator;
 
+        /**
+         * Create a new ListenersIterator.
+         * @param weakReferenceIterator The Iterator on the weak references of the listeners.  
+         */
         private ListenersIterator(Iterator<WeakReference<T>> weakReferenceIterator) {
             super();
 

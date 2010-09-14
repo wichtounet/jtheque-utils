@@ -62,7 +62,7 @@ public final class SwingUtils {
     private static final GraphicsDevice GRAPHICS_DEVICE;
 
     static {
-        if(ImageUtils.isHeadless()){
+        if (ImageUtils.isHeadless()) {
             GRAPHICS_DEVICE = null;
             DISPLAY_MODE = null;
         } else {
@@ -97,7 +97,7 @@ public final class SwingUtils {
      * @param frame The frame to be centered
      */
     public static void centerFrame(Window frame) {
-        if(ImageUtils.isHeadless()){
+        if (ImageUtils.isHeadless()) {
             throw new IllegalStateException("Cannot be used in headless mode");
         }
 
@@ -362,19 +362,41 @@ public final class SwingUtils {
         return null;
     }
 
-    public static void assertNotEDT(String point){
+    /**
+     * Assert that the current thread is not the EDT.
+     *
+     * @param point The current method.
+     */
+    public static void assertNotEDT(String point) {
         assert !isEDT() : "EDT Violation : " + point + " must not be called in EDT";
     }
 
+    /**
+     * Assert that the current thread is the EDT.
+     *
+     * @param point The current method.
+     */
     public static void assertEDT(String point) {
         assert isEDT() : "EDT Violation : " + point + " must be called in EDT";
     }
 
+    /**
+     * Indicate if the current thread is the EDT.
+     *
+     * @return {@code true} if the current thread is the EDT else {@code false}.
+     */
     public static boolean isEDT() {
         return EventQueue.isDispatchThread();
     }
 
-    public static Font underline(Font font){
+    /**
+     * Create an underline font from the given font.
+     *
+     * @param font The font to add underline.
+     *
+     * @return The new Font with underline.
+     */
+    public static Font underline(Font font) {
         Map<TextAttribute, Object> attributes = CollectionUtils.newHashMap(1);
         attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 

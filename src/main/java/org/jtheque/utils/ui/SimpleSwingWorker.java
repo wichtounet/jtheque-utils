@@ -16,6 +16,11 @@ package org.jtheque.utils.ui;
  * limitations under the License.
  */
 
+/**
+ * A simple swing worker that doesn't return anything.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class SimpleSwingWorker extends ExtendedSwingWorker<Object, Object> {
     @Override
     protected final Object doInBackground() throws Exception {
@@ -24,5 +29,8 @@ public abstract class SimpleSwingWorker extends ExtendedSwingWorker<Object, Obje
         return null;
     }
 
+    /**
+     * Do the work in the background. 
+     */
     protected abstract void doWork();
 }

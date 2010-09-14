@@ -54,9 +54,19 @@ import java.lang.annotation.Target;
  * limitations under the License.
  */
 
+/**
+ * An annotation to document the fields of a thread safe class to indicate by which lock the field is guarded.
+ *
+ * @author Baptiste Wicht
+ */
 @Documented
 @Retention(value = RetentionPolicy.SOURCE)
 @Target(value = ElementType.FIELD)
 public @interface GuardedBy {
+    /**
+     * The lock by which the field is guarded.
+     *
+     * @return The lock by which the field is guarded.
+     */
     String value();
 }

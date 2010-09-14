@@ -37,6 +37,15 @@ public final class Email {
     private final String message;
     private final Collection<File> attachedFiles;
 
+    /**
+     * Create a new Email.
+     *
+     * @param from          The from address.
+     * @param to            The to address.
+     * @param subject       The subject of the mail.
+     * @param message       The message of the mail.
+     * @param attachedFiles The File to attach to the mail.
+     */
     public Email(String from, String[] to, String subject, String message, Collection<File> attachedFiles) {
         super();
 

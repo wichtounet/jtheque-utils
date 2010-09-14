@@ -70,6 +70,12 @@ import java.lang.annotation.Target;
  * limitations under the License.
  */
 
+/**
+ * An annotation to document the fields of a thread safe class to indicate that the field is thread safe and
+ * internally guarded. 
+ *
+ * @author Baptiste Wicht
+ */
 @Documented
 @Retention(value = RetentionPolicy.SOURCE)
 @Target(value = ElementType.FIELD)

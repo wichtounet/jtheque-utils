@@ -28,9 +28,19 @@ import java.net.UnknownHostException;
  * limitations under the License.
  */
 
+/**
+ * A simple utility class to manipulate web things.
+ *
+ * @author Baptiste Wicht
+ */
 public final class WebUtils {
-    private static final SimpleTimedCache<URL> URLS = new SimpleTimedCache<URL>(30000);//30 Seconds of timeout
+    private static final SimpleTimedCache<URL> URLS = new SimpleTimedCache<URL>(60000);//60 Seconds of timeout
 
+    private static final String INTERNET_URL = "http://www.google.com";
+
+    /**
+     * Utility class, not instantiable.
+     */
     private WebUtils() {
         throw new AssertionError();
     }
@@ -123,34 +133,70 @@ public final class WebUtils {
         }
     }
 
+    /**
+     * Indicate if the internet is not reachable.
+     *
+     * @return {@code true} if the internet is not reachable otherwise {@code false}.
+     */
     public static boolean isInternetNotReachable() {
-        return !isInternetReachable();
+        return !isURLReachable(INTERNET_URL);
     }
 
+    /**
+     * Indicate if the internet is reachable.
+     *
+     * @return {@code true} if the internet is reachable otherwise {@code false}.
+     */
     public static boolean isInternetReachable() {
-        return isURLReachable("http://www.google.com");
+        return isURLReachable(INTERNET_URL);
     }
 
-    public static boolean isURLNotReachable(String urlStr){
-        return !isURLReachable(urlStr);
+    /**
+     * Indicate if the URL is not reachable or not.
+     *
+     * @param url The URL to test.
+     *
+     * @return {@code true} if the URL is not reachable otherwise {@code false}.
+     */
+    public static boolean isURLNotReachable(String url) {
+        return !isURLReachable(url);
     }
 
-    public static boolean isURLReachable(String urlStr) {
+    /**
+     * Indicate if the URL is reachable or not.
+     *
+     * @param url The URL to test.
+     *
+     * @return {@code true} if the URL is reachable otherwise {@code false}.
+     */
+    public static boolean isURLReachable(String url) {
         try {
-            URL url = new URL(urlStr);
-
-            return isURLReachable(url);
+            return isURLReachable(new URL(url));
         } catch (MalformedURLException e) {
             return false;
         }
     }
 
+    /**
+     * Indicate if the URL is not reachable or not.
+     *
+     * @param url The URL to test.
+     *
+     * @return {@code true} if the URL is not reachable otherwise {@code false}.
+     */
     public static boolean isURLNotReachable(URL url) {
         return !isURLReachable(url);
     }
 
+    /**
+     * Indicate if the URL is reachable or not.
+     *
+     * @param url The URL to test.
+     *
+     * @return {@code true} if the URL is reachable otherwise {@code false}.
+     */
     public static boolean isURLReachable(URL url) {
-        if(URLS.contains(url)){
+        if (URLS.contains(url)) {
             return true;
         }
 

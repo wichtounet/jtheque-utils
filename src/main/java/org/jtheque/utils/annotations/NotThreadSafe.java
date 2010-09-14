@@ -38,6 +38,11 @@ import java.lang.annotation.Target;
  * limitations under the License.
  */
 
+/**
+ * An annotation to document a class and indicate that the class is not thread safe.
+ *
+ * @author Baptiste Wicht
+ */
 @Documented
 @Retention(value = RetentionPolicy.SOURCE)
 @Target(value = ElementType.TYPE)

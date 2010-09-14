@@ -18,6 +18,16 @@ package org.jtheque.utils.io;
 
 import java.io.InputStream;
 
+/**
+ * A stream on demand. The stream must be opened only on the get() method invocation.
+ *
+ * @author Baptiste Wicht
+ */
 public interface OnDemandStream {
+    /**
+     * Return the InputStream. Create the stream if it has not been created before.
+     *
+     * @return The input stream. 
+     */
     InputStream get();
 }

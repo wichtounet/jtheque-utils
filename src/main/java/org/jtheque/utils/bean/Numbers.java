@@ -16,19 +16,51 @@ package org.jtheque.utils.bean;
  * limitations under the License.
  */
 
+/**
+ * A simple utility class to compare numbers.
+ *
+ * @author Baptiste Wicht
+ */
 public final class Numbers {
+    /**
+     * Utility class, not instantiable.
+     */
     private Numbers() {
         throw new AssertionError();
     }
 
-    public static int compare(int i1, int i2){
+    /**
+     * Compare the two numbers and return the compare code.
+     *
+     * @param i1 The first number.
+     * @param i2 The second number.
+     *
+     * @return 1 if the first number is greater than the second, -1 if the second is greater and 0 if they are equals.
+     */
+    public static int compare(int i1, int i2) {
         return i1 < i2 ? -1 : i1 == i2 ? 0 : 1;
     }
 
+    /**
+     * Compare the two numbers and return the compare code.
+     *
+     * @param d1 The first number.
+     * @param d2 The second number.
+     *
+     * @return 1 if the first number is greater than the second, -1 if the second is greater and 0 if they are equals.
+     */
     public static int compare(double d1, double d2) {
         return d1 < d2 ? -1 : d1 == d2 ? 0 : 1;
     }
 
+    /**
+     * Compare the two numbers and return the compare code.
+     *
+     * @param l1 The first number.
+     * @param l2 The second number.
+     *
+     * @return 1 if the first number is greater than the second, -1 if the second is greater and 0 if they are equals.
+     */
     public static int compare(long l1, long l2) {
         return l1 < l2 ? -1 : l1 == l2 ? 0 : 1;
     }

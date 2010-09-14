@@ -18,9 +18,19 @@ package org.jtheque.utils.io;
 
 import java.io.InputStream;
 
+/**
+ * A simple on demand stream.
+ *
+ * @author Baptiste Wicht
+ */
 public class SimpleStream implements OnDemandStream {
     private final InputStream stream;
 
+    /**
+     * A simple on demand stream for the given stream.
+     *
+     * @param stream The stream to be directly returned by the on demand stream. 
+     */
     public SimpleStream(InputStream stream) {
         super();
 
