@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
  *
  * @author Baptiste Wicht
  */
-public class StringUtilsTest {
+public final class StringUtilsTest {
     /**
      * Test the setFirstLetterUpper method.
      */
@@ -40,11 +40,11 @@ public class StringUtilsTest {
         String test5 = "";
         String test6 = null;
 
-        assertEquals(StringUtils.setFirstLetterOnlyUpper(test1), "Tasf");
-        assertEquals(StringUtils.setFirstLetterOnlyUpper(test2), "Test");
-        assertEquals(StringUtils.setFirstLetterOnlyUpper(test3), "Test097896");
-        assertEquals(StringUtils.setFirstLetterOnlyUpper(test4), "000899test097896");
-        assertEquals(StringUtils.setFirstLetterOnlyUpper(test5), "");
+        assertEquals("Tasf", StringUtils.setFirstLetterOnlyUpper(test1));
+        assertEquals("Test", StringUtils.setFirstLetterOnlyUpper(test2));
+        assertEquals("Test097896", StringUtils.setFirstLetterOnlyUpper(test3));
+        assertEquals("000899test097896", StringUtils.setFirstLetterOnlyUpper(test4));
+        assertEquals("", StringUtils.setFirstLetterOnlyUpper(test5));
         assertNull(StringUtils.setFirstLetterOnlyUpper(test6));
     }
 
@@ -57,11 +57,11 @@ public class StringUtilsTest {
         String test5 = "";
         String test6 = null;
 
-        assertEquals(StringUtils.setFirstLetterUpper(test1), "TASF");
-        assertEquals(StringUtils.setFirstLetterUpper(test2), "Test");
-        assertEquals(StringUtils.setFirstLetterUpper(test3), "TeSt097896");
-        assertEquals(StringUtils.setFirstLetterUpper(test4), "000899tEst097896");
-        assertEquals(StringUtils.setFirstLetterUpper(test5), "");
+        assertEquals("TASF", StringUtils.setFirstLetterUpper(test1));
+        assertEquals("Test", StringUtils.setFirstLetterUpper(test2));
+        assertEquals("TeSt097896", StringUtils.setFirstLetterUpper(test3));
+        assertEquals("000899tEst097896", StringUtils.setFirstLetterUpper(test4));
+        assertEquals("", StringUtils.setFirstLetterUpper(test5));
         assertNull(StringUtils.setFirstLetterUpper(test6));
     }
 
@@ -87,11 +87,11 @@ public class StringUtilsTest {
     @Test
     public void testIsEmptyStrings() {
         String[] empty1 = null;
-        String[] empty2 = new String[]{};
+        String[] empty2 = {};
         String[] empty3 = new String[2];
-        String[] empty4 = new String[]{"", "", ""};
-        String[] notEmpty1 = new String[]{"asdf"};
-        String[] notEmpty2 = new String[]{"", "", "d"};
+        String[] empty4 = {"", "", ""};
+        String[] notEmpty1 = {"asdf"};
+        String[] notEmpty2 = {"", "", "d"};
 
         assertTrue(StringUtils.isEmpty(empty1));
         assertTrue(StringUtils.isEmpty(empty2));
@@ -104,11 +104,11 @@ public class StringUtilsTest {
     @Test
     public void testIsNotEmptyStrings() {
         String[] empty1 = null;
-        String[] empty2 = new String[]{};
+        String[] empty2 = {};
         String[] empty3 = new String[2];
-        String[] empty4 = new String[]{"", "", ""};
-        String[] notEmpty1 = new String[]{"asdf"};
-        String[] notEmpty2 = new String[]{"", "", "d"};
+        String[] empty4 = {"", "", ""};
+        String[] notEmpty1 = {"asdf"};
+        String[] notEmpty2 = {"", "", "d"};
 
         assertFalse(StringUtils.isNotEmpty(empty1));
         assertFalse(StringUtils.isNotEmpty(empty2));
@@ -131,9 +131,9 @@ public class StringUtilsTest {
         StringUtils.removeLastSpace(builder2);
         StringUtils.removeLastSpace(builder3);
 
-        assertEquals(builder1.toString(), "tes");
-        assertEquals(builder2.toString(), "");
-        assertEquals(builder3.toString(), "");
+        assertEquals("tes", builder1.toString());
+        assertEquals("", builder2.toString());
+        assertEquals("", builder3.toString());
     }
 
     /**
@@ -148,12 +148,12 @@ public class StringUtilsTest {
         String test5 = " <br/> ";
         String test6 = "asdf7<br>7asdf";
 
-        assertEquals(StringUtils.removeHTMLEntities(test1), "\n");
-        assertEquals(StringUtils.removeHTMLEntities(test2), "\n");
-        assertEquals(StringUtils.removeHTMLEntities(test3), "\n");
-        assertEquals(StringUtils.removeHTMLEntities(test4), "\n");
-        assertEquals(StringUtils.removeHTMLEntities(test5), " \n ");
-        assertEquals(StringUtils.removeHTMLEntities(test6), "asdf7\n7asdf");
+        assertEquals("\n", StringUtils.removeHTMLEntities(test1));
+        assertEquals("\n", StringUtils.removeHTMLEntities(test2));
+        assertEquals("\n", StringUtils.removeHTMLEntities(test3));
+        assertEquals("\n", StringUtils.removeHTMLEntities(test4));
+        assertEquals(" \n ", StringUtils.removeHTMLEntities(test5));
+        assertEquals("asdf7\n7asdf", StringUtils.removeHTMLEntities(test6));
     }
 
     /**
@@ -186,12 +186,12 @@ public class StringUtilsTest {
         String test5 = "*asdf*";
         String test6 = "++asdf++";
 
-        assertEquals(StringUtils.removeSurroundedChars(test1), "es");
-        assertEquals(StringUtils.removeSurroundedChars(test2), "");
-        assertEquals(StringUtils.removeSurroundedChars(test3), "asdf");
-        assertEquals(StringUtils.removeSurroundedChars(test4), "sdf");
-        assertEquals(StringUtils.removeSurroundedChars(test5), "asdf");
-        assertEquals(StringUtils.removeSurroundedChars(test6), "+asdf+");
+        assertEquals("es", StringUtils.removeSurroundedChars(test1));
+        assertEquals("", StringUtils.removeSurroundedChars(test2));
+        assertEquals("asdf", StringUtils.removeSurroundedChars(test3));
+        assertEquals("sdf", StringUtils.removeSurroundedChars(test4));
+        assertEquals("asdf", StringUtils.removeSurroundedChars(test5));
+        assertEquals("+asdf+", StringUtils.removeSurroundedChars(test6));
     }
 
     @Test
@@ -209,6 +209,6 @@ public class StringUtilsTest {
         String test2 = "00884772with234num4345bers1234";
 
         assertEquals(StringUtils.removeNumbers(test1), test1);
-        assertEquals(StringUtils.removeNumbers(test2), "withnumbers");
+        assertEquals("withnumbers", StringUtils.removeNumbers(test2));
     }
 }

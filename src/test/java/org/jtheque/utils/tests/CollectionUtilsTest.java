@@ -51,7 +51,7 @@ public class CollectionUtilsTest {
 
         copyStrings.clear();
 
-        assertEquals(strings.size(), 2);
+        assertEquals(2, strings.size());
     }
 
     @Test
@@ -83,8 +83,8 @@ public class CollectionUtilsTest {
 
     @Test
     public void first() {
-        Iterable<String> list = Arrays.asList("asdf", "bsadf", "rtert");
+        Collection<String> list = Arrays.asList("asdf", "bsadf", "rtert");
 
-        assertEquals(CollectionUtils.first(list), "asdf");
+        assertEquals("asdf", CollectionUtils.first(list));
     }
 }

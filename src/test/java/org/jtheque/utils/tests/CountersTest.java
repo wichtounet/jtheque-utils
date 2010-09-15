@@ -42,8 +42,8 @@ public class CountersTest {
         Counter counter2 = counters.getCounter("test2");
         Counter counter1 = counters.getCounter("test1");
 
-        assertEquals(counter1, counters.getCounter("test1"));
-        assertEquals(counter2, counters.getCounter("test2"));
+        assertSame(counter1, counters.getCounter("test1"));
+        assertSame(counter2, counters.getCounter("test2"));
 
         assertNotNull(counter1);
         assertNotNull(counter2);
@@ -63,15 +63,15 @@ public class CountersTest {
 
         Counter testCounter = counters.getCounterOrAdd("test");
 
-        assertEquals(testCounter.getValue(), 0);
+        assertEquals(0, testCounter.getValue());
 
         testCounter.increment();
 
-        assertEquals(testCounter.getValue(), 1);
+        assertEquals(1, testCounter.getValue());
 
         testCounter.decrement();
 
-        assertEquals(testCounter.getValue(), 0);
+        assertEquals(0, testCounter.getValue());
 
         int baseValue = 150;
 
@@ -89,7 +89,7 @@ public class CountersTest {
 
         testCounter.clear();
 
-        assertEquals(testCounter.getValue(), 0);
+        assertEquals(0, testCounter.getValue());
 
         testCounter.add(baseValue);
 

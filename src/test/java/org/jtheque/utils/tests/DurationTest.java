@@ -56,8 +56,8 @@ public class DurationTest {
         Object d1 = new Duration(138);
         Object d2 = new Duration();
 
-        assertEquals(d1.toString(), "2:18");
-        assertEquals(d2.toString(), "0:0");
+        assertEquals("2:18", d1.toString());
+        assertEquals("0:0", d2.toString());
     }
 
     /**

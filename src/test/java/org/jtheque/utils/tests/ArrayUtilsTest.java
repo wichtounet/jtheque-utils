@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
  *
  * @author Baptiste Wicht
  */
-public class ArrayUtilsTest {
+public final class ArrayUtilsTest {
     /**
      * Test the indexOf method.
      */
@@ -80,7 +80,7 @@ public class ArrayUtilsTest {
 
     @Test
     public void isEmpty() {
-        Object[] a1 = new Object[]{};
+        Object[] a1 = {};
         Object[] a2 = {null};
         Object[] a3 = {"test"};
 

@@ -29,7 +29,7 @@ import static org.junit.Assert.*;
  *
  * @author Baptiste Wicht
  */
-public class IntDateTest {
+public final class IntDateTest {
     /**
      * Test the constructor copy.
      */
@@ -68,9 +68,9 @@ public class IntDateTest {
         date.set(IntDate.Fields.YEAR, 2000);
         date.set(IntDate.Fields.MONTH, 1);
 
-        assertEquals(date.getDay(), 1);
-        assertEquals(date.getYear(), 2000);
-        assertEquals(date.getMonth(), 1);
+        assertEquals(1, date.getDay());
+        assertEquals(2000, date.getYear());
+        assertEquals(1, date.getMonth());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -89,15 +89,15 @@ public class IntDateTest {
 
         date.add(IntDate.Fields.DAY, 5);
 
-        assertEquals(date.getDay(), 6);
+        assertEquals(6, date.getDay());
 
         date.add(IntDate.Fields.MONTH, 5);
 
-        assertEquals(date.getMonth(), 6);
+        assertEquals(6, date.getMonth());
 
         date.add(IntDate.Fields.YEAR, 5);
 
-        assertEquals(date.getYear(), 2005);
+        assertEquals(2005, date.getYear());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -114,7 +114,7 @@ public class IntDateTest {
     public void format() {
         Object date = new IntDate(20080105);
 
-        assertEquals(date.toString(), "05.01.2008");
+        assertEquals("05.01.2008", date.toString());
     }
 
     /**
@@ -124,7 +124,7 @@ public class IntDateTest {
     public void testToString() {
         IntDate date = new IntDate(20080105);
 
-        assertEquals(date.getStrDate(), "20080105");
+        assertEquals("20080105", date.getStrDate());
     }
 
     /**
@@ -134,9 +134,9 @@ public class IntDateTest {
     public void testGetters() {
         IntDate date = new IntDate(20090409);
 
-        assertEquals(date.getDay(), 9);
-        assertEquals(date.getYear(), 2009);
-        assertEquals(date.getMonth(), 4);
+        assertEquals(9, date.getDay());
+        assertEquals(2009, date.getYear());
+        assertEquals(4, date.getMonth());
     }
 
     /**

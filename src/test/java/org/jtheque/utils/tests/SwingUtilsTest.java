@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Baptiste Wicht
  */
-public class SwingUtilsTest {
+public final class SwingUtilsTest {
     @Test
     public void testGetDefaultFont() {
         assertNotNull(SwingUtils.getDefaultFont());

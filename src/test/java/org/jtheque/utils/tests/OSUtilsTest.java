@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Baptiste Wicht
  */
-public class OSUtilsTest {
+public final class OSUtilsTest {
     @Test
     public void isWindows() {
         System.setProperty("os.name", "Windows XP");
