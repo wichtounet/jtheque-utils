@@ -19,7 +19,7 @@ To use this library in your projects, add the following to the `dependencies` se
     <dependency>
        <groupId>org.jtheque</groupId>
        <artifactId>org.jtheque.utils</artifactId>
-       <version>1.1.4-SNAPSHOT</version>
+       <version>1.1.5</version>
     </dependency>
 
 ## Troubleshooting ##
