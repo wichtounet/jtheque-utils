@@ -2,6 +2,8 @@
 
 This library provide some utility classes to make easier the development of Java projects. 
 
+The last stable version is the 1.1.5 version. The current development version is the 1.2.0 version. 
+
 ## Building ##
 
 You need a Java 6 (or newer) environment and Maven 2.0.9 (or newer) installed. You also need to have installed
